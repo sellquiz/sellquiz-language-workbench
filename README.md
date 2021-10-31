@@ -11,4 +11,6 @@ Authoring Tool and Language Workbench for Online Courses
 1. Download:
    ```git clone git@github.com:sellquiz/sellquiz-language-workbench.git```
 2. Run the following command to install NodeJS packages:
-   ```sellquiz-language-workbench && npm install```
+   ```cd sellquiz-language-workbench
+./install.sh
+./configure.sh```
