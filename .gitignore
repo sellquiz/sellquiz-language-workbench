@@ -2,6 +2,7 @@ node_modules/
 cache/
 tmp/
 config.txt
+package-lock.json
 
 # ----- macos -----
 
