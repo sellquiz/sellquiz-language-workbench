@@ -12,7 +12,7 @@ Authoring Tool and Language Workbench for Online Courses
 ```
 git clone git@github.com:sellquiz/sellquiz-language-workbench.git
 ```
-2. Run the following command to install NodeJS packages:
+2. Run the following commands:
 ```
 cd sellquiz-language-workbench
 ./install.sh
