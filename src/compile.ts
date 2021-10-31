@@ -78,6 +78,7 @@ export class Compiler {
         let unordereditems = [];
         let ordereditems = [];
         let box = "";
+        let box_startline = 0;
         let boxtype = "";
         let parsing_box = false;
         
@@ -105,17 +106,17 @@ export class Compiler {
                 }
             }
             else if(unordereditems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
-                unordereditems[unordereditems.length-1] += '<br/>' + x;
+                unordereditems[unordereditems.length-1] += x;
             }
             else if(unordereditems.length > 0 && !x.startsWith("* ")) {
                 content += "<ul>";
                 for(let item of unordereditems)
-                    content += "<li>" + item + "</li>";
+                    content += "<li>" + item.replaceAll("$","`") + "</li>";
                 content += "</ul>";
                 unordereditems = [];
             }
             else if(ordereditems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
-                ordereditems[ordereditems.length-1] += '<br/>' + x;
+                ordereditems[ordereditems.length-1] += x;
             }
             else if(ordereditems.length > 0 && !x.startsWith("- ")) {
                 content += "<ol>";
@@ -148,16 +149,22 @@ export class Compiler {
                 co.title = x.substring(5).trim();
             }
             else if(x.startsWith("###")) {
+                content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
                 content += "<h3>" + sec + "." + subsec + "." + subsubsec + ". " + x.substring(3).trim() + "</h3>\n";
+                content += "</a>\n";
                 subsubsec += 1;
             }
             else if(x.startsWith("##")) {
+                content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
                 content += "<h2>" + sec + "." + subsec + ". " + x.substring(2).trim() + "</h2>\n";
+                content += "</a>\n";
                 subsec += 1;
                 subsubsec = 1;
             }
             else if(x.startsWith("#")) {
-                content += "<h1>" + sec + ". " + x.substring(1).trim() + "</h1>\n"
+                content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
+                content += "<h1>" + sec + ". " + x.substring(1).trim() + "</h1>";
+                content += "</a>\n";
                 sec += 1;
                 subsec = 1;
                 subsubsec = 1;
@@ -236,15 +243,17 @@ export class Compiler {
                             no = " " + (sec-1) + "." + definition;
                             definition ++;
                         }
-                        if(boxtype.length > 0)
-                            box_title = "<b>" + lang.text(boxtype) + no + "</b> ";
-    
+                        if(boxtype.length > 0) {
+                            box_title = "<a onclick=\"slw.jump(" + box_startline + ");\" style=\"cursor:pointer;\">";
+                            box_title += "<b>" + lang.text(boxtype) + no + "</b> ";
+                            box_title += "</a>";
+                        }
                         let y = this.compile(box, false);
                         if(y.html.startsWith("<p>"))
                             y.html = "<p>" + box_title + y.html.substring(3);
                         else
-                            y.html= box_title + y.html;
-    
+                            y.html = box_title + y.html;
+
                         content += y.html;
     
                         content += "</div>\n"; // end of card body
@@ -252,6 +261,7 @@ export class Compiler {
                     }
                     box = "";
                 } else {
+                    box_startline = i;
                     boxtype = "";
                 }
             }

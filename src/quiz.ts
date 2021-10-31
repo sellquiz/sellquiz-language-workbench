@@ -48,7 +48,7 @@ export class StackQuiz {
                 input: this.code
             },
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 let lines = data.split("\n");
                 let state = "";
                 let values = "";
@@ -162,33 +162,45 @@ export class StackQuiz {
     }
 
     updateHTML() {
-        let html = "";
-        html += "<div class=\"card border-dark\">";
-        html += "<div class=\"card-body\">\n";
-        html += "<span class=\"h2 py-1 my-1\">" 
-            + '<i class="fas fa-question-circle"></i> '
-            + this.title + "</span><br/>\n";
-
-        html += this.placeVariables(this.text.replaceAll("$","`"));
-
-        html += '<span>';
-        let evalStr = "Auswerten"; // TODO: language!
-        html += '<button type="button" class="btn btn-primary" onclick="">' + evalStr + '</button>';
-        html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback">';
-
         let var_text = "";
         for(let sol in this.solution) {
             if(var_text.length > 0)
                 var_text += ", ";
             var_text += sol + "=" + this.solution[sol];
         }
-        html += "<span id=\"stackquiz-" + this.id + "-variables\" class=\"my-1 font-monospace text-primary\">" + var_text + "</span>";
-        html += '</span>';
+        
+        let html = "";
+        html += "<div class=\"card border-dark\">";
+        html += "<div class=\"card-body\">\n";
+        html += "<span class=\"h2 py-1 my-1\">" 
+            + '<i class="fas fa-question-circle"></i> '
+            + this.title + "</span><br/>\n";
+        
+        /*html += "<p class=\"my-1 p-1 small font-monospace text-light bg-dark\">" 
+            + var_text + "</span>";
+        html += '</p>';*/
+            
+        html += this.placeVariables(this.text.replaceAll("$","`"));
 
-        html += "<hr/\n>";
-        html += this.placeVariables(this.solutiontext.replaceAll("$","`"));
+        html += '<span>';
+        let evalStr = "Auswerten"; // TODO: language!
+        //let showSolStr = "Lösung anzeigen"; // TODO: language!
+        html += '<button type="button" class="btn btn-primary" onclick="">' + evalStr + '</button>' + ' ';
+        //html += '<button type="button" class="btn btn-primary" onclick="">' + showSolStr + '</button>';
+        html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"><br/>';
 
         html += "</div>\n"; // end of card body
+
+        html += "<div class=\"card-footer text-muted\">";
+        html += "<b>Variablen:</b>";
+        html += "<p class=\"font-monospace\">" + var_text + "</p>";
+        html += "</div>\n"; // end of card footer
+
+        html += "<div class=\"card-footer text-muted\">";
+        html += "<b>Lösung:</b> ";
+        html += this.placeVariables(this.solutiontext.replaceAll("$","`"));
+        html += "</div>\n"; // end of card footer
+
         html += "</div>\n"; // end of card
 
         document.getElementById("stackquiz-" + this.id).innerHTML = html;

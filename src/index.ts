@@ -103,6 +103,10 @@ export function init() {
     });
 }
 
+export function jump(lineNo : number) {
+    editor.scrollTo(null, editor.charCoords({line: lineNo, ch: 0}, "local").top); 
+}
+
 export function insertCode(text : string) {
     var doc = editor.getDoc();
     var cursor = doc.getCursor();
