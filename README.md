@@ -16,5 +16,4 @@ git clone git@github.com:sellquiz/sellquiz-language-workbench.git
 ```
 cd sellquiz-language-workbench
 ./install.sh
-./configure.sh
 ```
