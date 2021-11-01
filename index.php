@@ -103,9 +103,38 @@
             </div>
             <div class="row m-0 p-0 w-100">
                 <div class="col m-0 p-0 w-100">
-                    <ul class="nav nav-tabs m-0 p-0 w-100 bg-dark">
+                    <ul class="nav nav-tabs m-0 p-0 w-100 bg-dark">                        
                         <li class="nav-item">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </li>
+                        <li class="nav-item">
+                            <span data-bs-toggle="modal" 
+                                data-bs-target="#modal-login">
+                                <button id="login" 
+                                    type="button" class="btn btn-success mx-0 btn-sm"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                    title="login">
+                                    <?php 
+                                        $user = $_SESSION['slw_user'];
+                                        if(strcmp($user, "demo") == 0)
+                                            echo "<i class=\"fas fa-sign-in-alt\"></i>";
+                                        else
+                                            echo $user;
+                                    ?>
+                                </button>
+                            </span>                            
+                        </li>
+                        <li class="nav-item">
+                            <a id="logout" 
+                                type="button" class="btn btn-danger mx-1 btn-sm"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                title="logout"
+                                href="services/logout.php">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </li>
                         <li class="nav-item">
                             <a id="tab-editor" class="nav-link active"
@@ -169,31 +198,37 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col m-0 p-0">
-                    <ul class="nav nav-tabs m-0 p-0 w-100">
-                        <li class="nav-item">
-                            <a id="" class="nav-link disabled text-light">
-                                Sellquiz Language Workbench
-                                &emsp;&emsp;&emsp;&emsp;&emsp;
-                            </a>
-                        </li>
+                <div class="col m-0 p-0 text-end border-bottom text-secondary">
+                    <span class="lead fw-lighter" style="cursor:default;">Sellquiz Language Workbench</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
 
-                        <li class="nav-item">
-                            <a id="" class="nav-link disabled text-primary">
-                                <b><?php echo $_SESSION['slw_user']; ?></b>   
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a id="" class="nav-link text-danger"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                title="sign out" 
-                                onclick="hide_tooltips();">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </a>
-                        </li>
-
-                    </ul>
+        <div class="modal" id="modal-login" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="services/login.php" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Login</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input id="login-user" name="login-user" type="text" class="form-control" 
+                                    placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                <input id="login-password" name="login-password" type="password" class="form-control" 
+                                    placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Login</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

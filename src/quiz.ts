@@ -48,7 +48,7 @@ export class StackQuiz {
                 input: this.code
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 let lines = data.split("\n");
                 let state = "";
                 let values = "";
