@@ -1,0 +1,8 @@
+{
+    "COMMENT": "initial password is 'admin'",
+    "id": "admin",
+    "mail": "admin@localhost",
+    "password-hash": "$2y$10$po0c0INBGffMzaaZLSI0/e.pc7RD99qlITKoL1WTycalynBt7MrT2",
+    "permit-user-mngt": true,
+    "permit-file-tree": true
+}

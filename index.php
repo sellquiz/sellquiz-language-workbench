@@ -18,6 +18,12 @@
  ******************************************************************************/
 ?>
 
+<?php
+    session_start();
+    if(isset($_SESSION['slw_user']) == false)
+        $_SESSION['slw_user'] = 'demo';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -174,7 +180,7 @@
 
                         <li class="nav-item">
                             <a id="" class="nav-link disabled text-primary">
-                                <b>demo</b>   
+                                <b><?php echo $_SESSION['slw_user']; ?></b>   
                             </a>
                         </li>
 

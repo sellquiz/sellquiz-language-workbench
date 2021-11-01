@@ -1,18 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+include 'lib.php';
 
 //$maxima_path = "/usr/local/bin/maxima"; // TODO: depends on system
-
-function endsWith( $haystack, $needle ) {
-    $length = strlen( $needle );
-    if( !$length ) {
-        return true;
-    }
-    return substr( $haystack, -$length ) === $needle;
-}
 
 $maxima_path = "";
 $config = file("../config.txt");
