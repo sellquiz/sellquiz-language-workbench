@@ -67,10 +67,10 @@
                             type="button" class="btn btn-danger mx-0"
                             data-bs-toggle="tooltip" data-bs-placement="bottom" 
                             title="No account? register here!">
-                            Register
+                            Registration
                         </button>
                     </span>
-                    <button type="submit" class="btn btn-success">Login</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </form>
         </div>
@@ -82,7 +82,7 @@
         <div class="modal-content">
             <form action="services/register.php" method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title">Register</h5>
+                    <h5 class="modal-title">Registration</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -90,48 +90,56 @@
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-lock-open"></i>
                         </span>
-                        <input id="register-access" name="register-access" type="password" class="form-control" 
+                        <input id="register-access" name="register-access" type="password" class="form-control"
                             placeholder="Access Password">
+                        <span>
+                            <button
+                                type="button" class="btn btn-success mx-0 btn"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                title="validate access password">
+                                validate
+                            </button>
+                        </span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             @
                         </span>
                         <input id="register-user" name="register-user" type="text" class="form-control" 
-                            placeholder="Username">
+                            placeholder="Username" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-users"></i>
                         </span>
                         <input id="register-name" name="register-name" type="text" class="form-control" 
-                            placeholder="Full name">
+                            placeholder="Full name" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-envelope"></i>
                         </span>
                         <input id="register-mail" name="register-mail" type="text" class="form-control" 
-                            placeholder="Mail address">
+                            placeholder="Mail address" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-key"></i>
                         </span>
                         <input id="register-password-1" name="register-password-1" type="password" class="form-control" 
-                            placeholder="User Password (at least 8 characters)">
+                            placeholder="User Password (at least 8 characters)" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-key"></i>
                         </span>
                         <input id="register-password-2" name="register-password-2" type="password" class="form-control" 
-                            placeholder="Repeat User Password">
+                            placeholder="Repeat User Password" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Register</button>
+                    <button type="submit" class="btn btn-success" disabled>Submit</button>
                 </div>
             </form>
         </div>

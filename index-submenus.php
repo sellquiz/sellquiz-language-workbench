@@ -30,32 +30,32 @@
             <span data-bs-toggle="modal" 
                 data-bs-target="#insertCodeModal">
                 <button id="insertCodeButton" 
-                    type="button" class="btn btn-primary mx-0 btn-sm"
+                    type="button" class="btn btn-dark mx-0 btn-sm"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" 
                     title="insert template [F2]">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </span>
-            <button type="button" class="btn btn-primary mx-0 btn-sm"
+            <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="undo [Ctrl+Z]" 
                 onclick="hide_tooltips();slw.undo();">
                 <i class="fas fa-undo"></i>
             </button>
-            <button type="button" class="btn btn-primary mx-0 btn-sm"
+            <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="redo [Ctrl+Y]" 
                 onclick="hide_tooltips();slw.redo();">
                 <i class="fas fa-redo"></i>
             </button>
-            <button type="button" class="btn btn-primary mx-0 btn-sm"
+            <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="save [Ctrl+S]" 
                 onclick="hide_tooltips();slw.save();">
                 <i class="fas fa-hdd"></i>
             </button>
             <div class="dropdown" style="display:inline-block">
-                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                     hello.txt
                 </button>
                 <ul class="dropdown-menu">

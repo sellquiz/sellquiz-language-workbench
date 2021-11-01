@@ -47,13 +47,13 @@
                     </span>                            
                 </li>
                 <li class="nav-item">
-                    <a id="logout" 
+                    <button id="logout" 
                         type="button" class="btn btn-danger mx-1 btn-sm"
                         data-bs-toggle="tooltip" data-bs-placement="bottom" 
                         title="logout"
-                        href="services/logout.php">
+                        onclick="window.location.href='services/logout.php';">
                         <i class="fas fa-sign-out-alt"></i>
-                    </a>
+                    </button>
                 </li>
                 <li class="nav-item">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
