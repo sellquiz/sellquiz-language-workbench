@@ -6,6 +6,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+function is_identifier($s) {
+    $n = strlen($s);
+    for($i=0; $i<$n; $i++) {
+        $ch = $s[$i];
+        $is_alpha = ($ch == '_') || ($ch >= 'A' && $ch <= 'Z') || ($ch >= 'a' && $ch <= 'z');
+        $is_number = ($ch >= '0' && $ch <= '9');
+        if($i==0 && !$is_alpha)
+            return false;
+        if($i>0 && !$is_alpha && !$is_number)
+            return false;
+    }
+    return true;
+}
 
 // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
 function startsWith( $haystack, $needle ) {

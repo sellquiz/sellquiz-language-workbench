@@ -73,7 +73,7 @@ export class Compiler {
         let definition = 1;
         let eqn = 1;
     
-        let block_types = ["def", "theorem", "remark", "sell", "stack"];
+        let block_types = ["definition", "theorem", "remark", "sell", "stack"];
     
         let unordereditems = [];
         let ordereditems = [];
@@ -239,7 +239,7 @@ export class Compiler {
     
                         let box_title = "";
                         let no = "";
-                        if(["def","theorem"].includes(boxtype)) {
+                        if(["definition","theorem"].includes(boxtype)) {
                             no = " " + (sec-1) + "." + definition;
                             definition ++;
                         }

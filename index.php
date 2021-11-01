@@ -22,6 +22,8 @@
     session_start();
     if(isset($_SESSION['slw_user']) == false)
         $_SESSION['slw_user'] = 'demo';
+    if(isset($_SESSION['slw_error']) == false)
+        $_SESSION['slw_error'] = '';
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +59,7 @@
         <script src="node_modules/sellquiz/build/js/sellquiz.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
         <script src="node_modules/sellquiz/build/js/sellquiz.ide.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
 
-        <script src="dist/sellquiz-language-workbench.min.js"></script>
+        <script src="dist/sellquiz-language-workbench.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
 
         <script>MathJax = { 
             loader: {
@@ -204,6 +206,23 @@
             </div>
         </div>
 
+        <div class="modal" id="modal-error" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><?php echo $_SESSION['slw_error']; ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
         <div class="modal" id="modal-login" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -214,19 +233,93 @@
                         </div>
                         <div class="modal-body">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    @
+                                </span>
                                 <input id="login-user" name="login-user" type="text" class="form-control" 
                                     placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-key"></i>
+                                </span>
                                 <input id="login-password" name="login-password" type="password" class="form-control" 
                                     placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <span data-bs-toggle="modal" 
+                                data-bs-target="#modal-register">
+                                <button id="register" 
+                                    type="button" class="btn btn-danger mx-0"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                    title="No account? register here!">
+                                    Register
+                                </button>
+                            </span>
                             <button type="submit" class="btn btn-success">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-register" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="services/register.php" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Register</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-lock-open"></i>
+                                </span>
+                                <input id="register-access" name="register-access" type="password" class="form-control" 
+                                    placeholder="Access Password" aria-label="Password" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    @
+                                </span>
+                                <input id="register-user" name="register-user" type="text" class="form-control" 
+                                    placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                                <input id="register-name" name="register-name" type="text" class="form-control" 
+                                    placeholder="Full name" aria-label="Name" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input id="register-mail" name="register-mail" type="text" class="form-control" 
+                                    placeholder="Mail address" aria-label="Mail" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                                <input id="register-password-1" name="register-password-1" type="password" class="form-control" 
+                                    placeholder="User Password (at least 8 characters)" aria-label="Password" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1" style="width:50px;">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                                <input id="register-password-2" name="register-password-2" type="password" class="form-control" 
+                                    placeholder="Repeat User Password" aria-label="Password" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success">Register</button>
                         </div>
                     </form>
                 </div>
@@ -463,6 +556,7 @@
             start: [
                 {regex: /\%.*/, token: "comment"},
                 {regex: /\#.*/, token: "keyword", sol: true},
+                {regex: /Definition.|Theorem.|Sell.|Stack.|Remark.|JavaBlock.|Tikz.|Plot2d./, token: "keyword"},
             ],
             comment: [
 
@@ -542,5 +636,19 @@
                 tooltip.hide();
         }
     </script>
+
+    <?php
+        if(strlen($_SESSION['slw_error']) > 0) {
+            echo("
+                <script>
+                    var errorModal = new bootstrap.Modal(document.getElementById(\"modal-error\"), {});
+                    document.onreadystatechange = function () {
+                        errorModal.show();
+                    };
+                </script>            
+            ");
+            $_SESSION['slw_error'] = "";
+        }
+    ?>
 
 </html>

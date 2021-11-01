@@ -19,8 +19,8 @@
 export var language = "de";
 
 const lang_str = {
-    "def_en": "Definition",
-    "def_de": "Definition",
+    "definition_en": "Definition",
+    "definition_de": "Definition",
     "theorem_en": "Theorem",
     "theorem_de": "Satz",
     "remark_en": "Remark",
