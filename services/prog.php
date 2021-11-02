@@ -24,25 +24,7 @@ error_reporting(E_ALL);
 
 include('lib.php');
 
-// TODO: GET PATHS FROM CONFIG.TXT!!!
-
-// get path of nodejs: TODO: get from config file
-$nodejs_paths = array("/usr/bin/node", "/usr/local/bin/node", "/opt/homebrew/bin/node");
-$nodejs_path = "";
-foreach($nodejs_paths as $np) {
-    ob_start();
-    system("command -v " . $np);
-    $output = ob_get_contents();
-    ob_end_clean();
-    if(strlen($output) > 0) {
-        $nodejs_path = $np;
-        break;
-    }
-}
-if(strlen($nodejs_path)==0) {
-    echo "Error: Nodejs not found!";
-    exit();
-}
+$nodejs_path = get_dependency_path("node");
 
 // check, if input is given
 if(isset($_POST["input"]) == false) {

@@ -35,6 +35,8 @@ const inputDirectory = path.dirname(inputPath);
 
 const MAX_RUNTIME_SECONDS = 5;
 
+// TODO: get from config.txt!!!!!
+
 const JAVA_PATH = "/usr/bin/java";
 const JAVA_COMPILER_PATH = "/usr/bin/javac";
 const PYTHON_PATH = "/usr/bin/python3";
