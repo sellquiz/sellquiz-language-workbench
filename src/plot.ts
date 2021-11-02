@@ -106,7 +106,7 @@ _FUNCTIONS_
         tex = tex.replaceAll("_FUNCTIONS_", functions);
 
         // render via LaTeX + Gnuplot
-        let service_url = "../services/plot2d.php";
+        let service_url = "services/plot2d.php";
         $.ajax({
             type: "POST",
             url: service_url,

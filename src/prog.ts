@@ -65,7 +65,7 @@ export class PorgrammingQuiz {
             "asserts": this.asserts,
             "language": lang.language
         };
-        let service_url = "../services/prog.php";
+        let service_url = "services/prog.php";
         // TODO: should forbid running twice at the same time!!!!!
         let feedback_htmlElement = document.getElementById("programming-feedback-" + this.id);
         let wait_text = lang.text("please_wait");

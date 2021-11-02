@@ -65,7 +65,7 @@ export class StackQuiz {
 
     refresh() {
         // call maxima
-        let service_url = "../services/maxima.php";
+        let service_url = "services/maxima.php";
         let _this = this;
         $.ajax({
             type: "POST",
