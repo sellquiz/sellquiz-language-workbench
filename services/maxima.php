@@ -2,16 +2,7 @@
 
 include 'lib.php';
 
-//$maxima_path = "/usr/local/bin/maxima"; // TODO: depends on system
-
-$maxima_path = "";
-$config = file("../config.txt");
-foreach($config as $line) {
-    if(endsWith(trim($line), "/maxima")) {
-        $maxima_path = trim($line);
-        break;
-    }
-}
+$maxima_path = get_dependency_path("maxima");
 
 //echo "$maxima_path";
 //exit();

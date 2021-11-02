@@ -91,6 +91,12 @@
                 onclick="">
                 <i class="fas fa-chevron-down"></i>
             </button>
+            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                title="show 'export' buttons" 
+                onclick="">
+                <i class="fas fa-file-export"></i>
+            </button>
         </div>
     </div>
 </div>

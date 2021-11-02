@@ -18,21 +18,34 @@
 
 import * as lang from './lang.js';
 import * as quiz from './quiz.js';
+import * as prog from './prog.js';
+import * as plot from './plot.js';
 
-class CompilerOutput {
+export class CompilerOutput {
 
     title = "";
     html = "";
-    sellQuizzes = [];
-    stackQuizzes = [];
+
+    sellQuizzes : Array<quiz.SellQuiz> = [];
+    stackQuizzes : Array<quiz.StackQuiz> = [];
+    programmingQuizzes : Array<prog.PorgrammingQuiz>  = [];
+    plot2ds : Array<plot.Plot2d> = [];
 
     constructor() {
     }
 
-    refreshQuizzes() {
+    refresh() {
         for(let q of this.stackQuizzes) {
             q.updateHTML();
             q.refresh();
+        }
+        for(let p of this.programmingQuizzes) {
+            p.updateHTML();
+            p.refresh();
+        }
+        for(let p of this.plot2ds) {
+            p.updateHTML();
+            p.refresh();
         }
     }
 
@@ -73,7 +86,15 @@ export class Compiler {
         let definition = 1;
         let eqn = 1;
     
-        let block_types = ["definition", "theorem", "remark", "sell", "stack"];
+        let block_types = [
+            "definition", 
+            "theorem", 
+            "remark", 
+            "sell", 
+            "stack",
+            "javablock",
+            "plot2d"
+        ];
     
         let unordereditems = [];
         let ordereditems = [];
@@ -179,59 +200,79 @@ export class Compiler {
                         q.src = box;
                         co.sellQuizzes.push(q);
                         content += "<div id=\"sellquiz-" + q.id + "\"></div>\n";
+                    } else if(boxtype === "plot2d") {
+                        let p = new plot.Plot2d();
+                        p.id = co.plot2ds.length;
+                        p.title = "";
+                        p.src = "";
+                        let lines = box.split("\n");
+                        for(let i=0; i<lines.length; i++) {
+                            if(i==0)
+                                p.title = lines[i];
+                            else
+                                p.src += lines[i] + "\n";
+                        }
+                        co.plot2ds.push(p);
+                        content += "<div id=\"plot2d-" + p.id + "\"></div>\n";
+                    } else if(boxtype === "javablock") {
+                        let parts = this.compile_parts(box, [
+                            "@text", "@given", "@asserts", "@forbidden-keywords",
+                            "@required-keywords", "@solution"]);
+                        if(parts["error"].length > 0) {
+                            content += "error: " + parts["error"];
+                        } else {
+                            let p = new prog.PorgrammingQuiz();
+                            p.id = co.programmingQuizzes.length;
+                            p.title = parts["@title"];
+                            p.text = this.compile(parts["@text"], false).html;
+                            p.given = this.removeEmptyLines(parts["@given"]);
+                            p.asserts = this.removeEmptyLines(parts["@asserts"]).split("\n");
+                            p.forbiddenKeywords = this.removeEmptyLines(parts["@forbidden-keywords"]).split("\n");
+                            p.requiredKeywords = this.removeEmptyLines(parts["@required-keywords"]).split("\n");
+                            p.solution = parts["@solution"];
+                            co.programmingQuizzes.push(p);
+                            content += "<div id=\"programming-" + p.id + "\"></div>\n";
+                        }
                     } else if(boxtype === "stack") {
                         let q = new quiz.StackQuiz();
                         q.id = co.stackQuizzes.length;
                         co.stackQuizzes.push(q);
-                        let state = "";
-                        let lines = box.split("\n");
-                        for(let i=0; i<lines.length; i++) {
-                            let line = lines[i];
-                            if(i==0) {
-                                q.title = line;
-                            } else if(line.startsWith("@code")) {
-                                state = "code";
-                            } else if(line.startsWith("@text")) {
-                                state = "text";
-                            } else if(line.startsWith("@solution")) {
-                                state = "solution";
-                            } else if(line.startsWith("@")) {
-                                q.error = "error: unknown part '" + line + "'";
-                                break;
-                            } else if(state === "code") {
-                                q.code += line + "\n";
-                            } else if(state === "text") {
-                                q.text += line + "\n";
-                            } else if(state === "solution") {
-                                q.solutiontext += line + "\n";
-                            } else if(line.trim().length > 0) {
-                                q.error = "unexpected line '" + line + "'";
-                                break;
-                            }                        
-                        }
+                        let parts = this.compile_parts(box, ["@code", "@text", "@solution"]);
+                        q.error = parts["error"];
                         if(q.error.length == 0) {
-                            // parse text
-                            let y = this.compile(q.text, false);
-                            q.text = y.html;
-                            // parse solution text
-                            y = this.compile(q.solutiontext, false);
-                            q.solutiontext = y.html; 
+
+                            // TODO: move creating of maxima-code to quiz.ts
+
+                            q.title = parts["@title"];
+                            q.code = parts["@code"];
+                            q.text = this.compile(parts["@text"], false).html;
+                            q.solutiontext = this.compile(parts["@solution"], false).html;
                             // fix code. TODO: fix STACK random functions!!
                             let lines = q.code.split("\n");
                             q.code = "display2d:false;\n";
                             q.code += "stardisp:true;\n";
                             for(let i=0; i<lines.length; i++) {
+
+                                if(lines[i].startsWith(" ") || lines[i].startsWith("\t"))
+                                    continue;
+
                                 let line = lines[i].trim();
                                 if(line.length == 0)
                                     continue;
+                                
+                                /*// TODO:
+                                let tmp = line.split("---");
+                                if(tmp.length > 1)
+                                    line = tmp[0];*/
+
                                 if(line.endsWith(";") == false)
                                     line += ";";
                                 q.code += line + "\n";
                             }
                             q.code += "values;\n";
                             q.code += "ev(values);\n";
+                            q.code += "float(ev(values));\n";
                         }
-                        //console.log(q);
                         content += "<div id=\"stackquiz-" + q.id + "\"></div>\n";
                     } else {
                         content += "<div class=\"card border-dark\">";
@@ -280,6 +321,47 @@ export class Compiler {
         
         //console.log(output);
         return co;
+    }
+
+    compile_parts(input : string, ids : Array<string>) : {[name:string]:string} {
+        let parts : {[name:string]:string} = {};
+        parts["error"] = "";
+        for(let id of ids)
+            parts[id] = "";
+        let state = "";
+        let lines = input.split("\n");
+        for(let i=0; i<lines.length; i++) {
+            let line = lines[i];
+            if(i == 0)
+                parts["@title"] = line;
+            if(line.trim().length == 0)
+                continue;
+            if(line.startsWith("@"))
+                line = line.trim();
+            if(ids.includes(line)) {
+                state = line;
+                parts[state] = "";
+            } else if(line.startsWith("@")) {
+                parts["error"] = "error: unknown part '" + line + "'";
+            } else {
+                parts[state] += line + "\n";
+            }
+        }
+        return parts;
+    }
+
+    removeEmptyLines(input : string) : string {
+        let output = "";
+        const lines = input.split("\n");
+        const n = lines.length;
+        for(let i=0; i<n; i++) {
+            if(lines[i].trim().length > 0) {
+                if(output.length > 0)
+                    output += "\n";
+                output += lines[i];
+            }
+        }
+        return output;
     }
     
 }

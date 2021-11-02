@@ -47,6 +47,7 @@
 
         <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css"/>
         <script src="node_modules/codemirror/lib/codemirror.js"></script>
+        <script src="node_modules/codemirror/mode/clike/clike.js"></script>
         <script src="node_modules/codemirror/addon/mode/simple.js"></script>
         <script src="node_modules/codemirror/addon/selection/active-line.js"></script>
         <script src="node_modules/codemirror/addon/mode/overlay.js"></script>
@@ -120,7 +121,6 @@
         });
 
         function openTab(id) {
-
             document.getElementById("editor-content").style.display = 
                 id === "editor" ? "block" : "none";
             document.getElementById("box").style.display = 

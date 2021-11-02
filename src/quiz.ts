@@ -16,16 +16,25 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-//import "mathjax";
+import * as lang from './lang.js';
 
 export class SellQuiz {
+
     id = 0;
     src = "";
+
     constructor() {
     }
+
+}
+
+class StackQuizInput {
+    ident = "";
+    // TODO: kind of evaluation (e.g. algebraic, numeric, ...)
 }
 
 export class StackQuiz {
+
     id = 0;
     title = "";
     code = "";
@@ -33,8 +42,25 @@ export class StackQuiz {
     solutiontext = "";
     error = "";
     solution : {[name:string]:string} = {};
+    inputs : Array<StackQuizInput> = [];
     
     constructor() {
+    }
+
+    evaluate() {
+        for(let i=0; i<this.inputs.length; i++) {
+            let input = this.inputs[i];
+            let studentAnwser = (<HTMLInputElement>document.getElementById(
+                "stackquiz-" + this.id + "-input-" + input.ident)).value;
+            let feedbackElement = document.getElementById(
+                "stackquiz-" + this.id + "-feedback-" + input.ident);
+            // TODO: evaluation depends on whether we compare terms or floats or ...
+            if(Math.abs(parseFloat(this.solution[input.ident+"_float"]) - parseFloat(studentAnwser)) < 1e-5) {
+                feedbackElement.innerHTML = lang.checkmark;
+            } else {
+                feedbackElement.innerHTML = lang.crossmark;
+            }
+        }
     }
 
     refresh() {
@@ -53,12 +79,15 @@ export class StackQuiz {
                 let state = "";
                 let values = "";
                 let evalValues = "";
+                let evalValuesFloat = "";
                 for(let i=0; i<lines.length; i++) {
                     let line = lines[i].trim();
                     if(line.endsWith(") values")) {
                         state = "v";
                     } else if(line.endsWith(") ev(values)")) {
                         state = "ev";
+                    } else if(line.endsWith(") float(ev(values))")) {
+                        state = "ev_float";
                     } else if(state == "v") {
                         //console.log(line);
                         values = line;
@@ -67,7 +96,11 @@ export class StackQuiz {
                         //console.log(line);
                         evalValues = line;
                         state = "";
-                    }
+                    } else if(state == "ev_float") {
+                        //console.log(line);
+                        evalValuesFloat = line;
+                        state = "";
+                    } 
                 }
                 // parse values
                 let start = 0;
@@ -78,8 +111,8 @@ export class StackQuiz {
                     }
                 }
                 let valuesArr = values.substring(start, values.length-1).trim().split(",");
-                //console.log(valuesArr);
-                // parse evaluation result: TODO: this does not work for matrices, sets, text, ...
+//console.log(valuesArr);
+                // parse evaluation result: TODO: this may not work for matrices, sets, text, ...
                 start = 0;
                 for(let i=0; i<evalValues.length; i++) {
                     if(evalValues[i] == ")") {
@@ -89,15 +122,27 @@ export class StackQuiz {
                 }
                 let evalValuesArr 
                     = evalValues.substring(start, evalValues.length-1).trim().split(",");
-                //console.log(evalValuesArr);
+//console.log(evalValuesArr);
+                // parse float values
+                start = 0;
+                for(let i=0; i<evalValuesFloat.length; i++) {
+                    if(evalValuesFloat[i] == ")") {
+                        start = i + 3;
+                        break;
+                    }
+                }
+                let evalValuesArrFloat
+                    = evalValuesFloat.substring(start, evalValuesFloat.length-1).trim().split(",");
+//console.log(evalValuesArrFloat);
 
                 //alert(_this.solution)
 
                 // TODO: assert equal length of values and evalValues!
                 for(let i=0; i<valuesArr.length; i++) {
                     _this.solution[valuesArr[i]] = evalValuesArr[i];
+                    _this.solution[valuesArr[i]+"_float"] = evalValuesArrFloat[i];
                 }
-                //console.log(_this.solution);
+//console.log(_this.solution);
 
                 _this.updateHTML();
                 //setTimeout(function(){ mathjax.typeset(); }, 250); // TODO: do not call this for EVERY quiz separately, but only when LAST quiz is ready
@@ -137,8 +182,13 @@ export class StackQuiz {
                             if(hashtag) {
                                 // input field
                                 let inputwidth = 5; // TODO
-                                let inputfield = '` <input type="text" value="" id="" size="' + inputwidth + '" placeholder="">` ';
+                                let input = new StackQuizInput();
+                                input.ident = ident;
+                                this.inputs.push(input);
+                                let inputfield = '` <input type="text" value="" id="stackquiz-' + this.id + '-input-' + ident + '" size="' + inputwidth + '" placeholder=""> ';
                                 output += inputfield;
+                                let feedback = ' <span id="stackquiz-' + this.id + '-feedback-' + ident + '"></span>` ';
+                                output += feedback;
                             } else
                                 output += this.solution[ident];
                         }
@@ -170,24 +220,22 @@ export class StackQuiz {
         }
         
         let html = "";
+
         html += "<div class=\"card border-dark\">";
         html += "<div class=\"card-body\">\n";
+
         html += "<span class=\"h2 py-1 my-1\">" 
             + '<i class="fas fa-question-circle"></i> '
             + this.title + "</span><br/>\n";
-        
-        /*html += "<p class=\"my-1 p-1 small font-monospace text-light bg-dark\">" 
-            + var_text + "</span>";
-        html += '</p>';*/
-            
+                    
         html += this.placeVariables(this.text.replaceAll("$","`"));
 
-        html += '<span>';
-        let evalStr = "Auswerten"; // TODO: language!
-        //let showSolStr = "Lösung anzeigen"; // TODO: language!
-        html += '<button type="button" class="btn btn-primary" onclick="">' + evalStr + '</button>' + ' ';
-        //html += '<button type="button" class="btn btn-primary" onclick="">' + showSolStr + '</button>';
-        html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"><br/>';
+        // TODO: must trigger tooltip-update!
+        html += '<button type="button" class="btn btn-primary" onclick="slw.eval_stack(\'' + this.id + '\');">' 
+            + lang.text("evaluate") + '</button>' + ' ';
+        html += '<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="export to Moodle-XML"  onclick=""><i class="fas fa-file-export"></i></button>' + ' ';
+        
+        html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"></span><br/>';
 
         html += "</div>\n"; // end of card body
 

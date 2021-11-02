@@ -9,20 +9,23 @@ Stack. Grundintegrale (bestimmt)
 A : 2 + random(30)
 B : 2 + random(30)
 ls1 : integrate(x^5 + sqrt(x), x, 0, A)
-ls2 : integrate(e^x + B*sin(x), x, 3, 5)
+    numAbsolute < 0.05
+ls2 : integrate(%e^x + B*sin(x), x, 3, 5)
+    numAbsolute < 0.05
 
 @text
 Bestimmen Sie die folgenden bestimmten Integrale:
+(TODO: als studentische Antwort werden momentan nur Kostanten, aber keine Terme akzeptiert: Update wird folgen!)
 - $ int_0^A (x^5 + sqrt(x)) \ dx = #ls1 $
 - $ int_3^5 (e^x + B * sin(x)) \ dx = #ls2 $
 
 @solution
-- $ int_0^7 x^5 + sqrt(x) \ dx $
+- $ int_0^A x^5 + sqrt(x) \ dx $
     = $ [ 1/6 x^6 + 2/3 x^(3/2) ]_0^A $
     = $ 1/6 A^6 + 2/3 7^(3/2) $
 - $ int_3^5 (e^x + B * sin(x)) \ dx $
     = $ [ e^x - B cos(x) ]_3^5 $
-    = $ e^5 - B cos(x) - e^3 + 17 cos(3) $
+    = $ e^5 - B cos(5) - e^3 + B cos(3) $
 ---
 
 This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test.
@@ -71,7 +74,7 @@ int n = §23§;
 @asserts
 s == 276
 
-@forbiden-keywords
+@forbidden-keywords
 while
 
 @required-keywords
@@ -100,6 +103,15 @@ Some text here $a^2 + b^2 = c^2$.
 And more text here.
 
 ---
+Plot2d. My Plot
+xaxis 0, 4
+yaxis -1, 4
+plot f(x)=x
+plot g(x)=cos(x)
+plot h(x)=1.0/20.0*exp(x)
+---
+
+---
 Tikz.
 [domain=0:4]
 \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
@@ -111,15 +123,6 @@ Tikz.
     node[right] {$f(x) = \cos x$};
 \draw[color=orange] plot[id=exp] function{0.05*exp(x)} 
     node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
----
-
----
-Plot2d. My Plot
-xaxis=0,4
-yaxis=-1,1
-plot f(x)=x
-plot g(x)=cos(x)
-plot h(x)=1/20*exp(x)
 ---
 
 # Another Chapter

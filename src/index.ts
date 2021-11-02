@@ -25,6 +25,7 @@ import * as lang from './lang.js';
 import * as compile from './compile.js';
 
 export var editor : codemirror.EditorFromTextArea = null;
+export var compilerOutput : compile.CompilerOutput = null;
 
 export function init() {
     
@@ -36,6 +37,7 @@ export function init() {
 
     editor = codemirror.fromTextArea(document.getElementById("editor") as HTMLTextAreaElement, {
         //mode: "spell-checker",  // TODO: activate / deactivate option
+        mode: "sellquiz-edit",
         lineNumbers: true,
         lineWrapping: true,
         styleActiveLine: {
@@ -127,19 +129,19 @@ export function save() {
 
 export function update() {
     let compiler = new compile.Compiler();
-    let co = compiler.compile(editor.getValue());
-    document.getElementById("rendered-content").innerHTML = co.html;
+    compilerOutput = compiler.compile(editor.getValue());
+    document.getElementById("rendered-content").innerHTML = compilerOutput.html;
 
-    co.refreshQuizzes();
+    compilerOutput.refresh();
     
     // refresh SELL-quizzes -> TODO: move code
     sellquiz.reset();
     sellquiz.setLanguage(lang.language);
     //sellquiz.setServicePath(TODO);
-    const n = co.sellQuizzes.length;
+    const n = compilerOutput.sellQuizzes.length;
     for(let i=0; i<n; i++) {
         let domElement = document.getElementById("sellquiz-" + i);
-        let qIdx = sellquiz.createQuestion(co.sellQuizzes[i].src);
+        let qIdx = sellquiz.createQuestion(compilerOutput.sellQuizzes[i].src);
         sellquiz.setQuestionHtmlElement(qIdx, domElement);
         if(qIdx < 0) {
             let err = sellquiz.getErrorLog().replaceAll("\n","<br/>");
@@ -158,4 +160,16 @@ export function update() {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, "rendered-content"]);
     }, 5000);*/
     
+}
+
+export function eval_prog(idx : number) {
+    if(compilerOutput == null)
+        return;
+    compilerOutput.programmingQuizzes[idx].evaluate();
+}
+
+export function eval_stack(idx : number) {
+    if(compilerOutput == null)
+        return;
+    compilerOutput.stackQuizzes[idx].evaluate();
 }

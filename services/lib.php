@@ -20,6 +20,18 @@ function is_identifier($s) {
     return true;
 }
 
+function get_dependency_path($dep_name) {
+    $path = "";
+    $config = file("../config.txt");
+    foreach($config as $line) {
+        if(endsWith(trim($line), "/" . $dep_name)) {
+            $path = trim($line);
+            break;
+        }
+    }
+    return $path;
+}
+
 // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
 function startsWith( $haystack, $needle ) {
     $length = strlen( $needle );
