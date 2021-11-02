@@ -26,3 +26,4 @@ command -v pdf2svg >> config.txt
 echo "!!!!! check, if all paths in file 'config.txt' are set."
 echo "If not: install dependency and run './config.sh' again."
 echo "!!!!! also ensure, that the webserver can write to cache paths!"
+echo "!!!!! make sure you install 'sudo apt install texlive-latex-extra'"
