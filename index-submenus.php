@@ -21,12 +21,6 @@
 <div id="container" class="container-fluid p-0 m-0">
     <div class="row m-0 p-0">
         <div class="col text-center border-end border-bottom py-1" style="">
-            <button type="button" class="btn btn-success mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="update [F1]" 
-                onclick="hide_tooltips();slw.update();typeset();">
-                <i class="fas fa-running"></i>
-            </button>
             <span data-bs-toggle="modal" 
                 data-bs-target="#insertCodeModal">
                 <button id="insertCodeButton" 
@@ -54,47 +48,64 @@
                 onclick="hide_tooltips();slw.save();">
                 <i class="fas fa-hdd"></i>
             </button>
-            <div class="dropdown" style="display:inline-block">
+            <div class="dropdown" style="display:inline-block"
+                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="course">
                 <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                    hello.txt
+                    demo
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" 
-                        style="cursor:pointer;">hello.txt</a></li>
+                        style="cursor:pointer;">demo</a></li>
+                </ul>
+            </div>
+            <div class="dropdown" style="display:inline-block"
+                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="file">
+                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                    demo.txt
+                </button>
+                <ul class="dropdown-menu">
                     <li><a class="dropdown-item" 
-                        style="cursor:pointer;">another-file.txt</a></li>
+                        style="cursor:pointer;">demo.txt</a></li>
                 </ul>
             </div>
         </div>
         <div class="col text-center border-end border-bottom py-1" style="">
-            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button type="button" class="btn btn-success mx-0 btn-sm" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                title="update [F1]" 
+                onclick="hide_tooltips();slw.update();typeset();">
+                <i class="fas fa-running"></i>
+            </button>
+            <button id="preview-spell-check" type="button" class="btn btn-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="spell check" 
-                onclick="">
+                onclick="hide_tooltips();slw.toggle('preview-spell-check');">
                 <i class="fas fa-spell-check"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button id="preview-show-source-links" type="button" class="btn btn-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="source links" 
-                onclick="">
+                onclick="hide_tooltips();slw.toggle('preview-show-source-links');">
                 <i class="fas fa-link"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button id="preview-show-solutions" type="button" class="btn btn-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="show solutions" 
-                onclick="">
+                onclick="hide_tooltips();slw.toggle('preview-show-solutions');">
                 <i class="fas fa-poll"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button id="preview-show-variables" type="button" class="btn btn-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="show variables" 
-                onclick="">
+                onclick="hide_tooltips();slw.toggle('preview-show-variables');">
                 <i class="fas fa-chevron-down"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button id="preview-show-export" type="button" class="btn btn-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="show 'export' buttons" 
-                onclick="">
+                onclick="hide_tooltips();slw.toggle('preview-show-export');">
                 <i class="fas fa-file-export"></i>
             </button>
         </div>

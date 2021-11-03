@@ -1,0 +1,18 @@
+- save changes to file
+- list of tags in quizzes
+- term answers for stack-quizzes
+- cache plots, quizzes, ... in "FILENAME.cache.json"
+- MathJax timing
+- paragraph formatting: bold, italic, references, ...
+- tizk plots
+- programming language quiz: support for java-methods, python, C/C++, octave, ...
+- export to moodle xml
+- export to PDF
+- publish course (HTML)
+- course and file management: create, delete, rename, ...
+- ticket management
+- graphical editing of blocks
+- toggle buttons in preview
+- spell check in preview
+- user management
+- bug reporting management

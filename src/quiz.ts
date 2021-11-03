@@ -17,6 +17,7 @@
  ******************************************************************************/
 
 import * as lang from './lang.js';
+import * as QuizMXML from './quiz-mxml.js';
 
 export class SellQuiz {
 
@@ -233,7 +234,7 @@ export class StackQuiz {
         // TODO: must trigger tooltip-update!
         html += '<button type="button" class="btn btn-primary" onclick="slw.eval_stack(\'' + this.id + '\');">' 
             + lang.text("evaluate") + '</button>' + ' ';
-        html += '<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="export to Moodle-XML"  onclick=""><i class="fas fa-file-export"></i></button>' + ' ';
+        html += '<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="export to Moodle-XML" onclick="slw.export_stack(' + this.id + ')"><i class="fas fa-file-export"></i></button>' + ' ';
         
         html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"></span><br/>';
 
@@ -252,6 +253,25 @@ export class StackQuiz {
         html += "</div>\n"; // end of card
 
         document.getElementById("stackquiz-" + this.id).innerHTML = html;
+    }
+
+    exportMoodleXML() {
+        let mxml = QuizMXML.moodle_XML_stack_template;
+
+        mxml = mxml.replaceAll("@TITLE@", this.title);
+        // TODO: must replace random functions!!
+        mxml = mxml.replaceAll("@VARIABLES@", this.code);
+        mxml = mxml.replaceAll("@TEXT_CORRECT@", 
+            lang.text("moodle_correct"));
+        mxml = mxml.replaceAll("@TEXT_PARTIALLY_CORRECT@",
+            lang.text("moodle_partially_correct"));
+        mxml = mxml.replaceAll("@TEXT_NOT_CORRECT@",
+            lang.text("moodle_not_correct"));
+        mxml = mxml.replaceAll("@TAGS@", ""); // TODO (must refer to example file!!)
+        
+        // TODO: inputs, prts
+
+        alert(mxml);
     }
 
 }

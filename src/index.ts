@@ -27,6 +27,14 @@ import * as compile from './compile.js';
 export var editor : codemirror.EditorFromTextArea = null;
 export var compilerOutput : compile.CompilerOutput = null;
 
+export var toggle_states= {
+    "preview-spell-check": true,
+    "preview-show-source-links": true,
+    "preview-show-solutions": true,
+    "preview-show-variables": true,
+    "preview-show-export": true
+}
+
 export function init() {
     
     // init code editor
@@ -93,10 +101,14 @@ export function init() {
         type: "POST",
         url: "services/read.php",
         data: {
-            path: "data/files/hello.txt"  // TODO
+            course: "demo",  // TODO
+            file: "demo"    // TODO
         },
         success: function(data) {
-            editor.setValue(data);
+            data = JSON.parse(data);
+            if(data["status"] === "error")
+                alert(data["error_message"]); // TODO
+            editor.setValue(data["content"]);
             update();
         },
         error: function(xhr, status, error) {
@@ -172,4 +184,19 @@ export function eval_stack(idx : number) {
     if(compilerOutput == null)
         return;
     compilerOutput.stackQuizzes[idx].evaluate();
+}
+
+export function export_stack(idx : number) {
+    if(compilerOutput == null)
+        return;
+    compilerOutput.stackQuizzes[idx].exportMoodleXML();
+}
+
+export function toggle(buttonName : string) {
+    let element = document.getElementById(buttonName);
+    toggle_states[buttonName] = !toggle_states[buttonName];
+    if(toggle_states[buttonName])
+        element.className = "btn btn-dark mx-0 btn-sm";
+    else
+        element.className = "btn btn-outline-dark mx-0 btn-sm";
 }

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 3422  -->
+  <question type="stack">
+    <name>
+      <text>Grundintegrale (bestimmt)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p><span style="font-size: 0.9375rem;">Bestimmen Sie die folgenden bestimmten Integrale:</span><br></p>
+<p><span style="font-size: 0.9375rem;"><br></span></p>
+<p style="font-size: 16px;"><span style="font-size: 0.9375rem;"><strong>(a)&nbsp; &nbsp;&nbsp;</strong>\( \displaystyle\int_0^{@A@} (x^5+ \sqrt{x}) \ dx = \)&nbsp;</span><span style="font-size: 0.9375rem;">[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</span></p>
+<p><br></p>
+<p style="">
+</p>
+<p style=""><span style=""><span><strong>(b)</strong>&nbsp;&nbsp;&nbsp; \( \displaystyle\int_3^5(e^x+{@B@} \cdot \sin(x)) \ dx = \) </span>[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</span>
+</p>
+<p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p></p><h4><strong>Lösung</strong></h4><p>&nbsp;</p><p><strong>a)&nbsp;&nbsp;</strong>\( \displaystyle\int_0^{@A@} x^5+ \sqrt{x} \ dx \)<br></p><p>&nbsp; &nbsp; &nbsp;\(=\Biggl[\frac{1}{6}x^6+\dfrac{2}{3}x^{\frac{3}{2}}\Biggl]_0^{@A@}\)</p><p>&nbsp; &nbsp; &nbsp;\(=\frac{1}{6}{@A@}^6+\dfrac{2}{3} \cdot {@A@}^{\frac{3}{2}}\)</p><br><p></p><p><strong>b)&nbsp;</strong>\( \displaystyle\int_3^5 e^x+{@B@} \cdot sin(x) \ dx\)<br></p><p>&nbsp; &nbsp; \(=\Biggl[e^x-{@B@} \cdot cos(x)\Biggl]_3^5\)</p><p>&nbsp; &nbsp; \(=e^5-{@B@} \cdot cos(5)-e^3+{@B@} \cdot cos(3)\)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2020120600</text>
+    </stackversion>
+    <questionvariables>
+      <text>A:2+rand(10);
+B:2+rand(30);
+C:2+rand(30);
+D:2+rand(30);
+ls1:integrate(x^5+sqrt(x),x, 0,A);
+ls2:integrate(e^x+B*sin(x),x,3,5);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text><![CDATA[<h4><br></h4>]]></text>
+    </specificfeedback>
+    <questionnote>
+      <text>n</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text>Richtige Antwort, gut gemacht!</text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text>Ihre Antwort ist teilweise korrekt.</text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text>Falsche Antwort.</text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>(</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ls1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ls2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>ls1</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>ls2</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <tags>
+      <tag><text>getestet</text>
+</tag>
+    </tags>
+  </question>
+
+</quiz>
