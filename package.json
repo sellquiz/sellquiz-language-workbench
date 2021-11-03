@@ -5,6 +5,7 @@
     "description": "Authoring Tool and Language Workbench for Online Courses",
     "main": "src/index.js",
     "scripts": {
+        "start": "./start-php-testserver.sh",
         "build": "tsc && rollup -c"
     },
     "repository": {
