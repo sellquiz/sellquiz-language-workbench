@@ -50,24 +50,28 @@
             </button>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top" 
-                    title="course">
-                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                    demo
+                    title="select course">
+                <button class="btn btn-sm btn-primary dropdown-toggle" 
+                    type="button" id="courselist_button" data-bs-toggle="dropdown"
+                    onclick="hide_tooltips();">
+                    <!--demo-->
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" 
-                        style="cursor:pointer;">demo</a></li>
+                <ul id="courselist_dropdown_items"class="dropdown-menu">
+                    <!--<li><a class="dropdown-item" 
+                        style="cursor:pointer;">demo</a></li>-->
                 </ul>
             </div>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top" 
-                    title="file">
-                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                    demo.txt
+                    title="select file">
+                <button class="btn btn-sm btn-primary dropdown-toggle"
+                    type="button" id="filelist_button" data-bs-toggle="dropdown"
+                    onclick="hide_tooltips();">
+                    <!--demo.txt-->
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" 
-                        style="cursor:pointer;">demo.txt</a></li>
+                <ul id="filelist_dropdown_items" class="dropdown-menu">
+                    <!--<li><a class="dropdown-item" 
+                        style="cursor:pointer;">demo.txt</a></li>-->
                 </ul>
             </div>
         </div>

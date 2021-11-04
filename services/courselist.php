@@ -20,52 +20,43 @@
 
 include 'lib.php';
 
-$_SESSION['slw_error'] = "";
+$user = $_SESSION["slw_user"];
 
-$access = $_POST["register-access"]; // TODO: check access!!
-$user = $_POST["register-user"];
-$name = $_POST["register-name"];
-$mail = $_POST["register-mail"];
-$password1 = $_POST["register-password-1"];
-$password2 = $_POST["register-password-2"];
+$status = "ok";
+$error_message = "";
+$course_list = array();
 
-$userpath = "../data/users/" . $user . ".json";
+$courses_path = "../data/courses/";
 
-if(!is_identifier($user)) {
-    $_SESSION['slw_error'] = "Registration failed: username is not a valid identifier!";
-    header("Location: ../index.php");
+function leave() {
+    global $status, $error_message, $course_list;
+    $output = array(
+        "status" => $status,
+        "error_message" => $error_message,
+        "course_list" => $course_list
+    );
+    echo json_encode($output);
     exit();
 }
 
-if(file_exists($userpath)) {
-    $_SESSION['slw_error'] = "Registration failed: user '" . $user . "' already exists!";
-    header("Location: ../index.php");
-    exit();
+$directories = glob($courses_path . "*", GLOB_ONLYDIR | GLOB_MARK);
+foreach($directories as $course_path) {
+    if(startsWith(basename($course_path), "."))
+        continue;
+    $course_meta_path = $course_path . "___meta.json";
+    if(!file_exists($course_meta_path)) {
+        $status = "error";
+        $error_message = "course meta file does not exist";
+        leave();
+    }
+    // read meta data
+    $course_meta = json_decode(file_get_contents($course_meta_path));
+    // check, if user has access to course
+    if(is_admin() || in_array($user, $course_meta->access_read)) {
+        array_push($course_list, basename($course_path));
+    }
 }
 
-if(strcmp($password1, $password2) != 0) {
-    $_SESSION['slw_error'] = "Registration failed: passwords do not match!";
-    header("Location: ../index.php");
-    exit();
-}
-
-if(strlen($password1) < 8) {
-    $_SESSION['slw_error'] = "Registration failed: password is too short!";
-    header("Location: ../index.php");
-    exit();
-}
-
-$userdata = [
-    "id" => $user,
-    "name" => $name,
-    "mail" => $mail,
-    "password-hash" => password_hash($password1, PASSWORD_DEFAULT)
-];
-
-file_put_contents($userpath, json_encode($userdata));
-
-$_SESSION['slw_user'] = $user;
-
-header("Location: ../index.php");
+leave();
 
 ?>

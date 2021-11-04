@@ -1,6 +1,26 @@
 <?php
 
+/******************************************************************************
+ * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
+ *                                                                            *
+ * Copyright (c) 2019-2021 TH Köln                                            *
+ * Author: Andreas Schwenk, contact@compiler-construction.com                 *
+ *                                                                            *
+ * Partly funded by: Digitale Hochschule NRW                                  *
+ * https://www.dh.nrw/kooperationen/hm4mint.nrw-31                            *
+ *                                                                            *
+ * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
+ *                                                                            *
+ * This library is licensed as described in LICENSE, which you should have    *
+ * received as part of this distribution.                                     *
+ *                                                                            *
+ * This software is distributed on "AS IS" basis, WITHOUT WARRENTY OF ANY     *
+ * KIND, either impressed or implied.                                         *
+ ******************************************************************************/
+
 include 'lib.php';
+
+$user = $_SESSION["slw_user"];
 
 $status = "ok";
 $error_message = "";
@@ -45,7 +65,7 @@ $course_meta = json_decode(file_get_contents($course_meta_path));
 $file_meta = json_decode(file_get_contents($file_meta_path));
     
 // check, if user has access to course
-if(!in_array($_SESSION["slw_user"], $course_meta->access_read)) {
+if(!is_admin() && !in_array($user, $course_meta->access_read)) {
     $status = "error";
     $error_message = "read access to course denied";
     leave();

@@ -18,7 +18,7 @@
 
 import * as codemirror from 'codemirror';
 import 'codemirror/addon/selection/active-line';
-//import "mathjax";
+
 import * as sellquiz from 'sellquiz';
 
 import * as lang from './lang.js';
@@ -26,6 +26,9 @@ import * as compile from './compile.js';
 
 export var editor : codemirror.EditorFromTextArea = null;
 export var compilerOutput : compile.CompilerOutput = null;
+
+export var current_course = '';
+export var current_file = '';
 
 export var toggle_states= {
     "preview-spell-check": true,
@@ -35,7 +38,66 @@ export var toggle_states= {
     "preview-show-export": true
 }
 
+export function refresh_filelist() {
+    let filelist_button = document.getElementById("filelist_button");
+    let filelist_dropdown_items = document.getElementById("filelist_dropdown_items");
+    $.ajax({
+        type: "POST",
+        url: "services/filelist.php",
+        data: {
+            course: current_course
+        },
+        success: function(data) {
+            data = JSON.parse(data);
+            if(data["status"] === "error")
+                alert(data["error_message"]); // TODO
+            let html = '', i = 0;
+            for(let file of data["file_list"]) {
+                html += '<li><a class="dropdown-item" style="cursor:pointer;">' + file + '</a></li>';
+                if(i == 0)
+                    current_file = file;
+                i ++;
+            }
+            filelist_dropdown_items.innerHTML = html;
+            filelist_button.innerHTML = current_file;
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr); // TODO: error handling!
+        }
+    });
+}
+
+export function refresh_courselist() {
+    let courselist_button = document.getElementById("courselist_button");
+    let courselist_dropdown_items = document.getElementById("courselist_dropdown_items");
+    $.ajax({
+        type: "POST",
+        url: "services/courselist.php",
+        data: { },
+        success: function(data) {
+            data = JSON.parse(data);
+            if(data["status"] === "error")
+                alert(data["error_message"]); // TODO
+            let html = '', i = 0;
+            for(let course of data["course_list"]) {
+                html += '<li><a class="dropdown-item" style="cursor:pointer;">' + course + '</a></li>';
+                if(i == 0)
+                    current_course = course;
+                i ++;
+            }
+            courselist_dropdown_items.innerHTML = html;
+            courselist_button.innerHTML = current_course;
+            refresh_filelist();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr); // TODO: error handling!
+        }
+    });
+}
+
 export function init() {
+
+    refresh_courselist();
     
     // init code editor
 
@@ -90,13 +152,13 @@ export function init() {
         let id = code_templates[i*2+0];
         let code = code_templates[i*2+1].replaceAll("\n","\\n").replaceAll("\t","\\t");
         html += `<a class="list-group-item list-group-item-action"
-                    onclick="insertCode('` + code + `');"
+                    onclick="slw.insertCode('` + code + `');"
                     style="cursor:pointer;"
                     >` + id + `</a>`;   
     }
     document.getElementById("insertCodeList").innerHTML = html;
     
-    // read demo file    
+    // read demo file: TODO: move code!!!!!
     $.ajax({
         type: "POST",
         url: "services/read.php",
@@ -146,7 +208,7 @@ export function update() {
 
     compilerOutput.refresh();
     
-    // refresh SELL-quizzes -> TODO: move code
+    // refresh SELL-quizzes -> TODO: move code to quiz.ts
     sellquiz.reset();
     sellquiz.setLanguage(lang.language);
     //sellquiz.setServicePath(TODO);

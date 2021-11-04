@@ -3,7 +3,7 @@
 # Chapter
 
 ---
-Stack. Grundintegrale (bestimmt)
+Stack. Grundintegrale
 
 @code
 A : 2 + random(30)
@@ -15,7 +15,6 @@ ls2 : integrate(%e^x + B*sin(x), x, 3, 5)
 
 @text
 Bestimmen Sie die folgenden bestimmten Integrale:
-(TODO: als studentische Antwort werden momentan nur Kostanten, aber keine Terme akzeptiert: Update wird folgen!)
 - $ int_0^A (x^5 + sqrt(x)) \ dx = #ls1 $
 - $ int_3^5 (e^x + B * sin(x)) \ dx = #ls2 $
 
@@ -27,6 +26,8 @@ Bestimmen Sie die folgenden bestimmten Integrale:
     = $ [ e^x - B cos(x) ]_3^5 $
     = $ e^5 - B cos(5) - e^3 + B cos(3) $
 ---
+
+(TODO: als studentische Antwort werden momentan nur Kostanten, aber keine Terme akzeptiert: Update wird folgen!)
 
 This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test. This is a test.
 
@@ -60,7 +61,7 @@ Theorem. Sind alle Elemente ...
 ---
 
 ---
-JavaBlock. Java Programming
+JavaBlock. Programmierung in Java
 
 @text
 Schreiben Sie einen Codeausschnitt, in dem die Summe $s=sum_(i=0)^n i$ berechnet wird.
