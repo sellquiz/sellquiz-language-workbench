@@ -142,10 +142,10 @@ export function init() {
         "Section", "\n# My Section\n",
         "Subsection", "\n## My Subsection\n",
         "Subsubsection", "\n### My Subsubsection\n",
-        "Definition", "\n---\nDef.\n---\n\n",
+        "Definition", "\n---\nDefinition.\n---\n\n",
         "Theorem", "\n---\nTheorem.\n---\n\n",
         "SELL-Quiz", "\n---\nSell. My Quiz\n\tx, y in {1,2,3}\n\\tz := x + y\n$ x + y = #z $\n---\n\n",
-        "STACK-Quiz", "\n---\nStack. My Quiz\n\n@code\nx:rand(10)\ny:rand(10)\nz:x+y;\n\n@text\n$x+y=#z$\n\n@solution\nJust add both numbers!\n---\n\n",
+        "STACK-Quiz", "\n---\nStack. My Quiz\n\n@code\nx:random(10)\ny:random(10)\nz:x+y;\n\n@text\n$x+y=#z$\n\n@solution\nJust add both numbers!\n---\n\n",
     ];
     let html = '';
     for(let i=0; i<code_templates.length/2; i++) {

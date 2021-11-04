@@ -154,6 +154,27 @@ export class StackQuiz {
         });
     }
 
+    placeVariables_ident(ident : string, hashtag : boolean) : string {
+        let output = "";
+        if(ident in this.solution) {
+            if(hashtag) {
+                // input field
+                let inputwidth = 5; // TODO
+                let input = new StackQuizInput();
+                input.ident = ident;
+                this.inputs.push(input);
+                let inputfield = '` <input type="text" value="" id="stackquiz-' + this.id + '-input-' + ident + '" size="' + inputwidth + '" placeholder=""> ';
+                output += inputfield;
+                let feedback = ' <span id="stackquiz-' + this.id + '-feedback-' + ident + '"></span>` ';
+                output += feedback;
+            } else
+                output += this.solution[ident];
+        }
+        else
+            output += ident;
+        return output;
+    }
+
     placeVariables(input : string) : string { // TODO: rename: also placing input fields here!!
         let output = "";
         let state = "";
@@ -165,10 +186,11 @@ export class StackQuiz {
             if(ch == '`') {
                 state = state=='$' ? '' : '$';
                 if(ident.length > 0) {
-                    if(ident in this.solution)
+                    /*if(ident in this.solution)
                         output += this.solution[ident];
                     else
-                        output += ident;
+                        output += ident;*/
+                    output += this.placeVariables_ident(ident, hashtag);
                 }
                 output += ch;
             } else if(state == '$') {
@@ -178,23 +200,8 @@ export class StackQuiz {
                     ident += ch;
                 } else {
                     if(ident.length > 0) {
+                        output += this.placeVariables_ident(ident, hashtag);
                         //console.log("ident=" + ident)
-                        if(ident in this.solution) {
-                            if(hashtag) {
-                                // input field
-                                let inputwidth = 5; // TODO
-                                let input = new StackQuizInput();
-                                input.ident = ident;
-                                this.inputs.push(input);
-                                let inputfield = '` <input type="text" value="" id="stackquiz-' + this.id + '-input-' + ident + '" size="' + inputwidth + '" placeholder=""> ';
-                                output += inputfield;
-                                let feedback = ' <span id="stackquiz-' + this.id + '-feedback-' + ident + '"></span>` ';
-                                output += feedback;
-                            } else
-                                output += this.solution[ident];
-                        }
-                        else
-                            output += ident;
                         ident = "";
                     }
                     if(ch == '#')
