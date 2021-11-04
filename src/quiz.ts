@@ -186,11 +186,8 @@ export class StackQuiz {
             if(ch == '`') {
                 state = state=='$' ? '' : '$';
                 if(ident.length > 0) {
-                    /*if(ident in this.solution)
-                        output += this.solution[ident];
-                    else
-                        output += ident;*/
                     output += this.placeVariables_ident(ident, hashtag);
+                    ident = "";
                 }
                 output += ch;
             } else if(state == '$') {
@@ -201,7 +198,6 @@ export class StackQuiz {
                 } else {
                     if(ident.length > 0) {
                         output += this.placeVariables_ident(ident, hashtag);
-                        //console.log("ident=" + ident)
                         ident = "";
                     }
                     if(ch == '#')
