@@ -56,7 +56,7 @@
 
         <script src="node_modules/mathjs/lib/browser/math.js"></script>
 
-        <script src="node_modules/nspell/nspell.js"></script>
+        <script src="extern/nspell.min.js"></script>
         
         <script src="node_modules/sellquiz/build/js/sellquiz.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
         <script src="node_modules/sellquiz/build/js/sellquiz.ide.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
