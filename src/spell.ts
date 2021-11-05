@@ -54,7 +54,7 @@ export class Spell {
             dataType: "text",
             mimeType: 'text/plain; charset=x-user-defined',
             //url: "../cache/dict-" + lang + "-compr.aff",
-            url: "../node_modules/dictionary-" + lang + "/index.aff",
+            url: "node_modules/dictionary-" + lang + "/index.aff",
             data: { },
             success: function(data) {
                 this_.aff[lang] = data; // LZString.decompress(data);
@@ -64,7 +64,7 @@ export class Spell {
                     dataType: "text",
                     mimeType: 'text/plain; charset=x-user-defined',
                     //url: "../cache/dict-" + lang + "-compr.dic",
-                    url: "../node_modules/dictionary-" + lang + "/index.dic",
+                    url: "node_modules/dictionary-" + lang + "/index.dic",
                     data: { },
                     success: function(data) {
                         this_.dic[lang] = data; // LZString.decompress(data);
