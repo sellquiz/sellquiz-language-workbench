@@ -14,18 +14,22 @@ export default {
             'codemirror': 'CodeMirror',
             'mathjax': 'MathJax',
             'jquery': '$',
-            'sellquiz': 'sellquiz'
+            'sellquiz': 'sellquiz',
+            'nspell': 'nspell',
+            //'LZString': 'LZString'
         }
     },
     external: [
         'codemirror',
         'jquery',
         'mathjax',
-        'sellquiz'
+        'sellquiz',
+        'nspell',
+        //'LZString'
     ],
     plugins: [
         resolve(),
         babel({ babelHelpers: 'bundled' }),
-        terser()
+        //terser() // TODO
     ]
 };

@@ -1,10 +1,11 @@
+TODO:
+- language selection
+- highlight line that contains "---" 
 - save changes to file
 - lock files: https://brianscode.com/php-semaphore-example/
-- list of tags in quizzes
-- term answers for stack-quizzes
-- cache plots, quizzes, ... in "FILENAME.cache.json"
-- MathJax timing
-- paragraph formatting: bold, italic, references, ...
+- support terms as answers for stack-quizzes
+- cache quizzes
+- references, ...
 - tizk plots
 - programming language quiz: support for java-methods, python, C/C++, octave, ...
 - export to moodle xml
@@ -14,7 +15,16 @@
 - ticket management
 - graphical editing of blocks
 - toggle buttons in preview
-- spell check in preview
 - user management
 - bug reporting management
 - view+store diff / document history
+
+
+DONE:
+- insert math symbols: dropdown menu
+- cache plots
+- MathJax timing
+- paragraph formatting: bold, italic, inline code, ...
+- paragraph formatting: colored text
+- list of tags in quizzes
+- spell check in preview

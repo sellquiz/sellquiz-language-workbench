@@ -8,7 +8,7 @@
         "outDir": "tmp",
         "strict": false,
         "skipLibCheck": true,
-        
+        "allowSyntheticDefaultImports": true
     },
     "include": ["src/*.ts"],
     "lib": []

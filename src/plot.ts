@@ -18,6 +18,9 @@
 
 import * as lang from './lang.js';
 
+// TODO: must clear cache
+var cache : {[code:string]:string} = {};
+
 export class Plot2d {
 
     id = 0;
@@ -33,8 +36,18 @@ export class Plot2d {
         imgElement.innerHTML = "<p class=\"text-danger\">Error: " + message + "</p>";
     }
 
-    refresh() {
+    setImage(data : string) {
         let imgElement = document.getElementById("plot2d-img-" + this.id);
+        // TODO: image size
+        imgElement.innerHTML = "<img src=\"" + data 
+        + "\" class=\"img-fluid\" width=\"320px\"/>";
+    }
+
+    refresh() {
+        if(this.src in cache) {
+            this.setImage(cache[this.src]);
+            return;
+        }
         // TODO: asciimath to tex
         let tex = `\\documentclass[class=minimal,border=0pt]{standalone}
 \\usepackage[latin1]{inputenc}
@@ -107,6 +120,7 @@ _FUNCTIONS_
 
         // render via LaTeX + Gnuplot
         let service_url = "services/plot2d.php";
+        let this_ = this;
         $.ajax({
             type: "POST",
             url: service_url,
@@ -114,9 +128,8 @@ _FUNCTIONS_
                 input: tex
             },
             success: function(data) {
-                // TODO: image size
-                imgElement.innerHTML = "<img src=\"" + data 
-                    + "\" class=\"img-fluid\" width=\"320px\"/>";
+                cache[this_.src] = data;
+                this_.setImage(data);
             },
             error: function(xhr, status, error) {
                 console.error(xhr); // TODO: error handling!

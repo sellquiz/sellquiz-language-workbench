@@ -30,6 +30,19 @@
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </span>
+            <div class="dropdown" style="display:inline-block"
+                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    title="insert math symbol">
+                <button class="btn btn-sm btn-dark dropdown-toggle"
+                    type="button" id="" data-bs-toggle="dropdown"
+                    onclick="hide_tooltips();">
+                    &Sigma;
+                </button>
+                <div class="dropdown-menu">
+                    <div id="math-symbols" class="yamm-content">
+                    </div>
+                </div>
+            </div>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="undo [Ctrl+Z]" 
@@ -54,11 +67,8 @@
                 <button class="btn btn-sm btn-primary dropdown-toggle" 
                     type="button" id="courselist_button" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
-                    <!--demo-->
                 </button>
                 <ul id="courselist_dropdown_items"class="dropdown-menu">
-                    <!--<li><a class="dropdown-item" 
-                        style="cursor:pointer;">demo</a></li>-->
                 </ul>
             </div>
             <div class="dropdown" style="display:inline-block"
@@ -67,11 +77,8 @@
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="filelist_button" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
-                    <!--demo.txt-->
                 </button>
                 <ul id="filelist_dropdown_items" class="dropdown-menu">
-                    <!--<li><a class="dropdown-item" 
-                        style="cursor:pointer;">demo.txt</a></li>-->
                 </ul>
             </div>
         </div>
@@ -79,10 +86,10 @@
             <button type="button" class="btn btn-success mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="update [F1]" 
-                onclick="hide_tooltips();slw.update();typeset();">
+                onclick="hide_tooltips();slw.update();">
                 <i class="fas fa-running"></i>
             </button>
-            <button id="preview-spell-check" type="button" class="btn btn-dark mx-0 btn-sm" 
+            <button id="preview-spell-check" type="button" class="btn btn-outline-dark mx-0 btn-sm" 
                 data-bs-toggle="tooltip" data-bs-placement="bottom" 
                 title="spell check" 
                 onclick="hide_tooltips();slw.toggle('preview-spell-check');">

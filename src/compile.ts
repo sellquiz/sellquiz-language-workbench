@@ -20,6 +20,7 @@ import * as lang from './lang.js';
 import * as quiz from './quiz.js';
 import * as prog from './prog.js';
 import * as plot from './plot.js';
+import { spellInst } from './index.js';
 
 export class CompilerOutput {
 
@@ -71,6 +72,8 @@ const template = `
 `;
 
 export class Compiler {
+
+    spellCheck=false;
 
     compile(input_str : string, rootCall=true) : CompilerOutput {
         let co = new CompilerOutput();
@@ -132,7 +135,7 @@ export class Compiler {
             else if(unordereditems.length > 0 && !x.startsWith("* ")) {
                 content += "<ul>";
                 for(let item of unordereditems)
-                    content += "<li>" + item.replaceAll("$","`") + "</li>";
+                    content += "<li>" + this.compile_paragraph(item) + "</li>";
                 content += "</ul>";
                 unordereditems = [];
             }
@@ -142,7 +145,7 @@ export class Compiler {
             else if(ordereditems.length > 0 && !x.startsWith("- ")) {
                 content += "<ol>";
                 for(let item of ordereditems)
-                    content += "<li>" + item + "</li>";
+                    content += "<li>" + this.compile_paragraph(item) + "</li>";
                 content += "</ol>";
                 ordereditems = [];
             }
@@ -157,7 +160,7 @@ export class Compiler {
                 content += `
                 <div class="" style="position:relative">
                     <p class="text-center" style="position:absolute;width:100%;">
-                        ` + x.trim().replaceAll("$","`") + `
+                        ` + this.compile_paragraph(x.trim()) + `
                     </p>
                     <p class="text-end" style="position:absolute;width:100%;">
                         (\`` + eqn + `\`)
@@ -215,7 +218,7 @@ export class Compiler {
                         co.plot2ds.push(p);
                         content += "<div id=\"plot2d-" + p.id + "\"></div>\n";
                     } else if(boxtype === "javablock") {
-                        let parts = this.compile_parts(box, [
+                        let parts = this.compile_box_parts(box, [
                             "@text", "@given", "@asserts", "@forbidden-keywords",
                             "@required-keywords", "@solution"]);
                         if(parts["error"].length > 0) {
@@ -237,38 +240,15 @@ export class Compiler {
                         let q = new quiz.StackQuiz();
                         q.id = co.stackQuizzes.length;
                         co.stackQuizzes.push(q);
-                        let parts = this.compile_parts(box, ["@code", "@text", "@solution"]);
+                        let parts = this.compile_box_parts(box, ["@tags", "@code", "@text", "@solution"]);
                         q.error = parts["error"];
                         if(q.error.length == 0) {
-
-                            // TODO: move creating of maxima-code to quiz.ts
-
                             q.title = parts["@title"];
+                            q.taglist = this.compile_tags(parts["@tags"]);
                             q.code = parts["@code"];
                             q.text = this.compile(parts["@text"], false).html;
                             q.solutiontext = this.compile(parts["@solution"], false).html;
-                            // fix code. TODO: fix STACK random functions!!
-                            let lines = q.code.split("\n");
-                            q.code = "display2d:false;\n";
-                            q.code += "stardisp:true;\n";
-                            for(let i=0; i<lines.length; i++) {
-
-                                if(lines[i].startsWith(" ") || lines[i].startsWith("\t"))
-                                    continue;
-
-                                let line = lines[i].trim();
-                                if(line.length == 0)
-                                    continue;
-                                
-                                /*// TODO:
-                                let tmp = line.split("---");
-                                if(tmp.length > 1)
-                                    line = tmp[0];*/
-
-                                if(line.endsWith(";") == false)
-                                    line += ";";
-                                q.code += line + "\n";
-                            }
+                            q.code = q.compileCode(q.code);
                             q.code += "values;\n";
                             q.code += "ev(values);\n";
                             q.code += "float(ev(values));\n";
@@ -307,7 +287,7 @@ export class Compiler {
                 }
             }
             else {
-                content += "<p>" + x.replaceAll("$","`") + "</p>\n";
+                content += "<p>" + this.compile_paragraph(x) + "</p>\n";
             }
         }
     
@@ -323,7 +303,82 @@ export class Compiler {
         return co;
     }
 
-    compile_parts(input : string, ids : Array<string>) : {[name:string]:string} {
+    compile_tags(x : string) : Array<string> {
+        let output : Array<string> = [];
+        let y = x.replaceAll("\n", " ").split(" ");
+        for(let yi of y) {
+            if(yi.length > 0)
+                output.push(yi);
+        }
+        return output;
+    }
+
+    compile_paragraph(x : string) : string {
+        let y = "";
+        let is_tex = false;
+        let is_bold = false;
+        let is_italic = false;
+        let is_inlinecode = false;
+        let color = "";
+        let word = "";
+        const n = x.length;
+        for(let i=0; i<=n; i++) {
+            let ch = x[i];
+            if(word.length > 0 && (i==n || !((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z')))) {
+                if(this.spellCheck == false || spellInst.isCorrect(word))
+                    y += word;
+                else
+                    y += "<span class=\"border-bottom border-danger\">" + word + "</span>";
+                word = "";
+            }
+            if(i == n)
+                break;
+            if(ch === "$") {
+                is_tex = !is_tex;
+                y += "`";
+            } else if(ch === "`") {
+                is_inlinecode = !is_inlinecode;
+                y += is_inlinecode ? "<code>" : "</code>";
+            } else if(!is_inlinecode && !is_tex && ch === "*") {
+                is_bold = !is_bold;
+                y += is_bold ? "<b>" : "</b>";
+            } else if(!is_inlinecode && !is_tex && ch === "_") {
+                is_italic = !is_italic;
+                y += is_italic ? "<i>" : "</i>";
+            } else if(x.substr(i).startsWith("red(")) {
+                color = "red";
+                y += "<span class=\"text-danger\">";
+                i += "red".length;
+            } else if(x.substr(i).startsWith("green(")) {
+                color = "green";
+                y += "<span class=\"text-success\">";
+                i += "green".length;
+            } else if(x.substr(i).startsWith("blue(")) {
+                color = "blue";
+                y += "<span class=\"text-primary\">";
+                i += "blue".length;
+            } else if(color.length > 0 && ch === ")") {
+                color = "";
+                y += "</span>";
+            } else if(!is_tex && !is_inlinecode && ((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z'))) {
+                word += ch;
+            } else {
+                y += ch;
+            }
+        }
+        // clean up unclosed scopes
+        if(is_tex)
+            y += "`";
+        if(is_bold)
+            y += "</b>";
+        if(is_italic)
+            y += "</i>";
+        if(color.length > 0)
+            y += "</span>";
+        return y;
+    }
+
+    compile_box_parts(input : string, ids : Array<string>) : {[name:string]:string} {
         let parts : {[name:string]:string} = {};
         parts["error"] = "";
         for(let id of ids)

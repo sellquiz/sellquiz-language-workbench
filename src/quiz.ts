@@ -16,6 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import * as slw from './index.js';
 import * as lang from './lang.js';
 import * as QuizMXML from './quiz-mxml.js';
 
@@ -44,8 +45,30 @@ export class StackQuiz {
     error = "";
     solution : {[name:string]:string} = {};
     inputs : Array<StackQuizInput> = [];
+    taglist : Array<string> = [];
     
     constructor() {
+    }
+
+    compileCode(code : string) : string {
+        let output = "";
+        // fix code. TODO: fix STACK random functions!!
+        let lines = code.split("\n");
+        output = "display2d:false;\n";
+        output += "stardisp:true;\n";
+        output += "e:%e;\n";
+        output += "i:%i;\n";
+        for(let i=0; i<lines.length; i++) {
+            if(lines[i].startsWith(" ") || lines[i].startsWith("\t"))
+                continue;
+            let line = lines[i].trim();
+            if(line.length == 0)
+                continue;
+            if(line.endsWith(";") == false)
+                line += ";";
+            output += line + "\n";
+        }
+        return output;
     }
 
     evaluate() {
@@ -65,6 +88,8 @@ export class StackQuiz {
     }
 
     refresh() {
+        if(this.error.length > 0)
+            return;
         // call maxima
         let service_url = "services/maxima.php";
         let _this = this;
@@ -156,7 +181,7 @@ export class StackQuiz {
 
     placeVariables_ident(ident : string, hashtag : boolean) : string {
         let output = "";
-        if(ident in this.solution) {
+        if(["e", "i"].includes(ident)==false && ident in this.solution) {
             if(hashtag) {
                 // input field
                 let inputwidth = 5; // TODO
@@ -216,46 +241,62 @@ export class StackQuiz {
     }
 
     updateHTML() {
-        let var_text = "";
-        for(let sol in this.solution) {
-            if(var_text.length > 0)
-                var_text += ", ";
-            var_text += sol + "=" + this.solution[sol];
-        }
-        
         let html = "";
+        if(this.error.length > 0) {
+            html += "<div class=\"card border-dark\">";
+            html += "<div class=\"card-body\">\n";
+            html += "<span class=\"h2 py-1 my-1\">" 
+                + '<i class="fas fa-question-circle"></i> '
+                + "Stack-Quiz: ERROR" + "</span><br/>\n";
+            html += "<p class=\"text-danger\">" + this.error + "</p>";
+            html += "</div>\n"; // end of card body
+            html += "</div>\n"; // end of card
+        } else {
+            // get variaables
+            let var_text = "";
+            for(let sol in this.solution) {
+                if(["e", "i"].includes(sol))
+                    continue;
+                if(sol.endsWith("_float"))
+                    continue;
+                if(var_text.length > 0)
+                    var_text += ", ";
+                var_text += sol + "=" + this.solution[sol] 
+                    + " (" + this.solution[sol+"_float"] + ")";
+            }
+            // create HTML
+            html += "<div class=\"card border-dark\">";
+            html += "<div class=\"card-body\">\n";
+            // title
+            html += "<span class=\"h2 py-1 my-1\">" 
+                + '<i class="fas fa-question-circle"></i> '
+                + this.title + "</span><br/>\n";
+            // text (with replaced variables)
+            html += this.placeVariables(this.text);
+            // TODO: must trigger tooltip-update!
+            html += '<button type="button" class="btn btn-primary" onclick="slw.eval_stack(\'' + this.id + '\');">' 
+                + lang.text("evaluate") + '</button>' + ' ';
+            html += '<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="export to Moodle-XML" onclick="slw.export_stack(' + this.id + ')"><i class="fas fa-file-export"></i></button>' + ' ';
 
-        html += "<div class=\"card border-dark\">";
-        html += "<div class=\"card-body\">\n";
+            html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"></span><br/>';
 
-        html += "<span class=\"h2 py-1 my-1\">" 
-            + '<i class="fas fa-question-circle"></i> '
-            + this.title + "</span><br/>\n";
-                    
-        html += this.placeVariables(this.text.replaceAll("$","`"));
+            html += "</div>\n"; // end of card body
 
-        // TODO: must trigger tooltip-update!
-        html += '<button type="button" class="btn btn-primary" onclick="slw.eval_stack(\'' + this.id + '\');">' 
-            + lang.text("evaluate") + '</button>' + ' ';
-        html += '<button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="export to Moodle-XML" onclick="slw.export_stack(' + this.id + ')"><i class="fas fa-file-export"></i></button>' + ' ';
-        
-        html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="general_feedback"></span><br/>';
+            html += "<div class=\"card-footer text-muted\">";
+            html += "<b>Variablen:</b>"; // TODO: language
+            html += "<p class=\"font-monospace\">" + var_text + "</p>";
+            html += "</div>\n"; // end of card footer
 
-        html += "</div>\n"; // end of card body
+            html += "<div class=\"card-footer text-muted\">";
+            html += "<b>Lösung:</b> ";
+            html += this.placeVariables(this.solutiontext);
+            html += "</div>\n"; // end of card footer
 
-        html += "<div class=\"card-footer text-muted\">";
-        html += "<b>Variablen:</b>";
-        html += "<p class=\"font-monospace\">" + var_text + "</p>";
-        html += "</div>\n"; // end of card footer
-
-        html += "<div class=\"card-footer text-muted\">";
-        html += "<b>Lösung:</b> ";
-        html += this.placeVariables(this.solutiontext.replaceAll("$","`"));
-        html += "</div>\n"; // end of card footer
-
-        html += "</div>\n"; // end of card
-
+            html += "</div>\n"; // end of card
+        }
         document.getElementById("stackquiz-" + this.id).innerHTML = html;
+
+        eval("typeset();");
     }
 
     exportMoodleXML() {

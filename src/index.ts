@@ -22,7 +22,10 @@ import 'codemirror/addon/selection/active-line';
 import * as sellquiz from 'sellquiz';
 
 import * as lang from './lang.js';
+import * as spell from './spell.js';
 import * as compile from './compile.js';
+
+export var spellInst = null; // load on demand to reduce traffic to load dictionary
 
 export var editor : codemirror.EditorFromTextArea = null;
 export var compilerOutput : compile.CompilerOutput = null;
@@ -31,7 +34,7 @@ export var current_course = '';
 export var current_file = '';
 
 export var toggle_states= {
-    "preview-spell-check": true,
+    "preview-spell-check": false,
     "preview-show-source-links": true,
     "preview-show-solutions": true,
     "preview-show-variables": true,
@@ -136,6 +139,32 @@ export function init() {
     });
     editor.setSize(null,"100%");
 
+    // populate math symbols
+    let html = "<table class=\"p-1\">";
+    let symbols = ['sum','prod','xx','@','o+','ox','o.','^^','^^^','vv','vvv','nn','nnn','uu','uuu','a/b','a^b','sqrt(x)','root(x)(y)','int','oint','del','grad','+-','O/','oo','aleph','abs(x)','floor(x)','ceil(x)','norm(vecx)','/_','/_\\','diamond','square','CC','NN','QQ','RR','ZZ','"text"','!=','<','>','<=','>=','-<','-<=','>-','>-=','in','notin','sub','sup','sube','supe','-=','~=','~~','prop','neg','=>','<=>','AA','EE','_|_','TT','|--','|==','{','}','(:',':)','<<','>>','uarr','darr','->','>->','->>','>->>','|->','larr','harr','rArr','lArr','hArr','hat x','bar x','ul x','vec x','tilde x','dot x','ddot x','overset(x)(=)','underset(x)(=)','ubrace(x)','obrace(x)','color(red)(x)','cancel(x)',
+    'alpha','beta','gamma','delta','epsilon','varepsilon','zeta','eta','theta','vartheta','iota','kappa','lambda','mu','nu','xi','pi','rho','sigma','tau','upsilon','phi','varphi','chi','psi','omega',
+    'bb "Aa"', 'bbb "Aa"', 'cc "Aa"', 'tt "Aa"', 'fr "Aa"', 'sf "Aa"',
+    '[[a,b],[c,d]]','((a),(b))','[[a,b,|,c],[d,e,|,f]]',
+    'lim_(n->oo) sum_(i=0)^n', 'int_0^1 f(x) \ dx', 'f\'(x)=dy/dx'];
+    const cols = 16;
+    const rows = Math.ceil(symbols.length/cols);
+    for(let i=0; i<rows; i++) {
+        html += "<tr>";
+        for(let j=0; j<cols; j++) {
+            let idx = i*cols+j;
+            if(idx < symbols.length) {
+                let onclick = "slw.insertCode(' " + symbols[idx] + " ');slw.editor.focus();";
+                html += "<td class=\"border border-dark p-1 text-center\" style=\"cursor:pointer;\"><a onclick=\"" + onclick + "\"> ` " 
+                    + symbols[idx] + " ` </a></td>";
+            }
+            else
+                html += "<td></td>";
+        }
+        html += "</tr>";
+    }
+    html += "</table>";
+    document.getElementById("math-symbols").innerHTML = html;
+
     // populate code templates
     let code_templates = [
         "Document Title", "\n##### My Title\n",
@@ -147,7 +176,7 @@ export function init() {
         "SELL-Quiz", "\n---\nSell. My Quiz\n\tx, y in {1,2,3}\n\\tz := x + y\n$ x + y = #z $\n---\n\n",
         "STACK-Quiz", "\n---\nStack. My Quiz\n\n@code\nx:random(10)\ny:random(10)\nz:x+y;\n\n@text\n$x+y=#z$\n\n@solution\nJust add both numbers!\n---\n\n",
     ];
-    let html = '';
+    html = '';
     for(let i=0; i<code_templates.length/2; i++) {
         let id = code_templates[i*2+0];
         let code = code_templates[i*2+1].replaceAll("\n","\\n").replaceAll("\t","\\t");
@@ -203,6 +232,7 @@ export function save() {
 
 export function update() {
     let compiler = new compile.Compiler();
+    compiler.spellCheck = toggle_states["preview-spell-check"];
     compilerOutput = compiler.compile(editor.getValue());
     document.getElementById("rendered-content").innerHTML = compilerOutput.html;
 
@@ -230,10 +260,7 @@ export function update() {
         }
     }
 
-    /*setTimeout(function(){ 
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub, "rendered-content"]);
-    }, 5000);*/
-    
+    eval("typeset()");    
 }
 
 export function eval_prog(idx : number) {
@@ -261,4 +288,12 @@ export function toggle(buttonName : string) {
         element.className = "btn btn-dark mx-0 btn-sm";
     else
         element.className = "btn btn-outline-dark mx-0 btn-sm";
+
+    if(buttonName=="preview-spell-check") {
+        if(spellInst == null) {
+            spellInst = new spell.Spell();
+        } else
+            update();
+    }
+        
 }

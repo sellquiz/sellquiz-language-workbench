@@ -42,6 +42,8 @@
         <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
         <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <link rel="stylesheet" href="node_modules/@geedmo/yamm/dist/yamm.css"/>
 
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"/>
 
@@ -52,15 +54,12 @@
         <script src="node_modules/codemirror/addon/selection/active-line.js"></script>
         <script src="node_modules/codemirror/addon/mode/overlay.js"></script>
 
-        <link rel="stylesheet" href="node_modules/codemirror-spell-checker/dist/spell-checker.min.css">
-        <script src="node_modules/codemirror-spell-checker/dist/spell-checker.min.js"></script>
+        <script src="node_modules/mathjs/lib/browser/math.js"></script>
 
-        <script src="node_modules/mathjs/lib/browser/math.js" type="text/javascript"></script>
+        <script src="node_modules/nspell/nspell.js"></script>
         
         <script src="node_modules/sellquiz/build/js/sellquiz.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
         <script src="node_modules/sellquiz/build/js/sellquiz.ide.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
-
-        <script src="dist/sellquiz-language-workbench.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
 
         <script>MathJax = { 
             loader: {
@@ -78,6 +77,8 @@
         </script>
 
         <script type="text/javascript" id="MathJax-script" async src="node_modules/mathjax/es5/startup.js"></script>
+
+        <script src="dist/sellquiz-language-workbench.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
 
         <style>
             body, html {
@@ -109,7 +110,7 @@
             start: [
                 {regex: /\%.*/, token: "comment"},
                 {regex: /\#.*/, token: "keyword", sol: true},
-                {regex: /Definition.|Theorem.|Sell.|Stack.|Remark.|JavaBlock.|Tikz.|Plot2d./, token: "keyword"},
+                {regex: /---|Definition.|Theorem.|Sell.|Stack.|Remark.|JavaBlock.|Tikz.|Plot2d.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/, token: "keyword"},
             ],
             comment: [
 
@@ -152,16 +153,6 @@
     <script>
         slw.init();
 
-        setTimeout(function() {
-                MathJax.typesetPromise();
-        }, 3000);
-
-        function typeset() {
-            setTimeout(function() {
-                MathJax.typesetPromise();
-            }, 1000);
-        }
-
         function resize() {
             //let editorElement = document.getElementById("editor-div");
             //editorElement.style.height = "" + (window.innerHeight - 100) + "px";
@@ -174,6 +165,13 @@
         window.addEventListener('load', function () {
             resize();
         });
+
+        let typeset_promise = Promise.resolve();
+        function typeset() {
+            typeset_promise = typeset_promise.then(() => MathJax.typesetPromise())
+                .catch((err) => console.log('Typeset failed: ' + err.message));
+            return typeset_promise;
+        }
 
     </script>
 
