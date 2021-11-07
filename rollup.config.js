@@ -1,8 +1,7 @@
 import resolve  from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import { terser } from "rollup-plugin-terser";
-
-// TODO: must configure babel!! e.g. "replaceAll" is still in output!
 
 export default {
     input: 'tmp/index.js',
@@ -29,7 +28,8 @@ export default {
     ],
     plugins: [
         resolve(),
+        commonjs(),
         babel({ babelHelpers: 'bundled' }),
-        //terser() // TODO
+        terser()
     ]
 };

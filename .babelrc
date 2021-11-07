@@ -1,0 +1,12 @@
+{
+    "presets": [
+        ["@babel/preset-env", {
+            "useBuiltIns": "usage",
+            "forceAllTransforms": true,
+            "corejs": {
+                "version": "3.19",
+                "proposals": true
+            }
+        }]
+    ]
+}
