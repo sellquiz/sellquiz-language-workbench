@@ -1,12 +1,14 @@
 TODO:
+- tizk plots
+- references to other sections, figures, equations, ...
+- syntax highlighting for equations, references, ...
+
 - language selection
 - highlight line that contains "---" 
 - save changes to file
 - lock files: https://brianscode.com/php-semaphore-example/
 - support terms as answers for stack-quizzes
 - cache quizzes
-- references, ...
-- tizk plots
 - programming language quiz: support for java-methods, python, C/C++, octave, ...
 - export to moodle xml
 - export to PDF

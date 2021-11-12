@@ -1,8 +1,10 @@
 ##### Lecture Test
 
-# Chapter
+# Chapter !mylabel
 
 This is some text. A *bold* word, an _italic_ word. Some inline code: `int a=5;` and an inline equation $y = +- sqrt(x)$.
+
+Refer to section !mylabel.
 
 Some red(red), green(green) and blue(blue) text.
 
@@ -120,7 +122,7 @@ plot h(x)=1.0/20.0*exp(x)
 ---
 
 ---
-Tikz.
+Tikz. My Tikz Plot
 [domain=0:4]
 \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
 \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};

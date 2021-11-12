@@ -108,9 +108,11 @@
     <script>
         CodeMirror.defineSimpleMode("sellquiz-edit", {
             start: [
+                {regex: /\$(?:[^\\]|\\.)*?(?:\$|$)/, token: "string"},
+                {regex: /\`(?:[^\\]|\\.)*?(?:\`)/, token: "string"},
                 {regex: /\%.*/, token: "comment"},
                 {regex: /\#.*/, token: "keyword", sol: true},
-                {regex: /---|Definition.|Theorem.|Sell.|Stack.|Remark.|JavaBlock.|Tikz.|Plot2d.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/, token: "keyword"},
+                {regex: /---|Definition\.|Theorem\.|Sell\.|Stack\.|Remark\.|JavaBlock\.|Tikz\.|Plot2d\.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/, token: "keyword"},
             ],
             comment: [
 

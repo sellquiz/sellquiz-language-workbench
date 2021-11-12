@@ -22,6 +22,10 @@ import * as prog from './prog.js';
 import * as plot from './plot.js';
 import { spellInst } from './index.js';
 
+export class Reference {
+    name = "";
+}
+
 export class CompilerOutput {
 
     title = "";
@@ -30,7 +34,8 @@ export class CompilerOutput {
     sellQuizzes : Array<quiz.SellQuiz> = [];
     stackQuizzes : Array<quiz.StackQuiz> = [];
     programmingQuizzes : Array<prog.PorgrammingQuiz>  = [];
-    plot2ds : Array<plot.Plot2d> = [];
+    plots : Array<plot.Plot> = [];
+    references : Array<Reference> = [];
 
     constructor() {
     }
@@ -44,7 +49,7 @@ export class CompilerOutput {
             p.updateHTML();
             p.refresh();
         }
-        for(let p of this.plot2ds) {
+        for(let p of this.plots) {
             p.updateHTML();
             p.refresh();
         }
@@ -96,7 +101,8 @@ export class Compiler {
             "sell", 
             "stack",
             "javablock",
-            "plot2d"
+            "plot2d",
+            "tikz"
         ];
     
         let unordereditems = [];
@@ -186,9 +192,17 @@ export class Compiler {
                 subsubsec = 1;
             }
             else if(x.startsWith("#")) {
+                let tokens = x.substring(1).trim().split("!");
+                let name = tokens[0];
+                if(tokens.length > 1) {
+                    // TODO: must handle "!" as valid character of name!!
+                    let ref = new Reference();
+                    ref.name = tokens[1];
+                }
                 content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
-                content += "<h1>" + sec + ". " + x.substring(1).trim() + "</h1>";
+                content += "<h1>" + sec + ". " + name + "</h1>";
                 content += "</a>\n";
+
                 sec += 1;
                 subsec = 1;
                 subsubsec = 1;
@@ -203,9 +217,11 @@ export class Compiler {
                         q.src = box;
                         co.sellQuizzes.push(q);
                         content += "<div id=\"sellquiz-" + q.id + "\"></div>\n";
-                    } else if(boxtype === "plot2d") {
-                        let p = new plot.Plot2d();
-                        p.id = co.plot2ds.length;
+                    } else if(boxtype === "plot2d" || boxtype === "tikz") {
+                        let p = new plot.Plot();
+                        p.type = boxtype === "plot2d" ? 
+                            plot.PlotType.Plot2d : plot.PlotType.PlotTikz;
+                        p.id = co.plots.length;
                         p.title = "";
                         p.src = "";
                         let lines = box.split("\n");
@@ -215,8 +231,8 @@ export class Compiler {
                             else
                                 p.src += lines[i] + "\n";
                         }
-                        co.plot2ds.push(p);
-                        content += "<div id=\"plot2d-" + p.id + "\"></div>\n";
+                        co.plots.push(p);
+                        content += "<div id=\"plot-" + p.id + "\"></div>\n";
                     } else if(boxtype === "javablock") {
                         let parts = this.compile_box_parts(box, [
                             "@text", "@given", "@asserts", "@forbidden-keywords",
@@ -303,6 +319,34 @@ export class Compiler {
         return co;
     }
 
+    extract_name_and_label(x : string) : Array<string> {
+        xxx TODO
+        let n = x.length;
+        let name = "";
+        let label = "";
+        let isLabel = false;
+        for(let i=0; i<n; i++) {
+            let ch = x[i];
+            let chAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || ch=='_';
+            let chNum = ch>='0' && ch<='9';
+            let ch2 = (i+1) < n ? x[i+1] : "";
+            let ch2Alpha = (ch2>='A' && ch2<='Z') || (ch2>='a' && ch2<='z') || ch2=='_';
+            if(ch == '!' && ch2Alpha) {
+                isLabel = true;
+            } else if(isLabel) {
+                if(chAlpha || chNum)
+                    label += ch;
+                else {
+                    isLabel = false;
+                    i --;
+                }
+            } else {
+                name += ch;
+            }
+        }
+        return [name, label];
+    }
+
     compile_tags(x : string) : Array<string> {
         let output : Array<string> = [];
         let y = x.replaceAll("\n", " ").split(" ");
@@ -319,12 +363,15 @@ export class Compiler {
         let is_bold = false;
         let is_italic = false;
         let is_inlinecode = false;
+        let is_reference = false;
         let color = "";
         let word = "";
+        let reference = "";
         const n = x.length;
         for(let i=0; i<=n; i++) {
             let ch = x[i];
-            if(word.length > 0 && (i==n || !((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z')))) {
+            let isAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z');
+            if(word.length > 0 && (i==n || !isAlpha)) {
                 if(this.spellCheck == false || spellInst.isCorrect(word))
                     y += word;
                 else
@@ -333,7 +380,16 @@ export class Compiler {
             }
             if(i == n)
                 break;
-            if(ch === "$") {
+            if(is_reference) {
+                if(isAlpha || ch=='_') {
+                    reference += ch;
+                } else {
+                    y += '<a href="">TODO_REF:' + reference + '</a>';
+                    is_reference = false;
+                    i --;
+                }
+            }
+            else if(ch === "$") {
                 is_tex = !is_tex;
                 y += "`";
             } else if(ch === "`") {
@@ -345,6 +401,9 @@ export class Compiler {
             } else if(!is_inlinecode && !is_tex && ch === "_") {
                 is_italic = !is_italic;
                 y += is_italic ? "<i>" : "</i>";
+            } else if(!is_inlinecode && !is_tex && ch === "!") {
+                is_reference = true;
+                reference = "";
             } else if(x.substr(i).startsWith("red(")) {
                 color = "red";
                 y += "<span class=\"text-danger\">";
@@ -373,6 +432,7 @@ export class Compiler {
             y += "</b>";
         if(is_italic)
             y += "</i>";
+        // TODO: is_reference
         if(color.length > 0)
             y += "</span>";
         return y;

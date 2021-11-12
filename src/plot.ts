@@ -21,23 +21,31 @@ import * as lang from './lang.js';
 // TODO: must clear cache
 var cache : {[code:string]:string} = {};
 
-export class Plot2d {
+export enum PlotType {
+    Plot2d,
+    PlotTikz
+};
+
+export class Plot {
 
     id = 0;
 
+    type : PlotType = PlotType.PlotTikz;
+
     title = "";
     src = "";
+    tex = "";
 
     constructor() {
     }
 
     error(message : string) {
-        let imgElement = document.getElementById("plot2d-img-" + this.id);
+        let imgElement = document.getElementById("plot-img-" + this.id);
         imgElement.innerHTML = "<p class=\"text-danger\">Error: " + message + "</p>";
     }
 
     setImage(data : string) {
-        let imgElement = document.getElementById("plot2d-img-" + this.id);
+        let imgElement = document.getElementById("plot-img-" + this.id);
         // TODO: image size
         imgElement.innerHTML = "<img src=\"" + data 
         + "\" class=\"img-fluid\" width=\"320px\"/>";
@@ -48,6 +56,34 @@ export class Plot2d {
             this.setImage(cache[this.src]);
             return;
         }
+        if(this.type == PlotType.Plot2d)
+            this.refreshPlot2d();
+        else if(this.type == PlotType.PlotTikz)
+            this.refreshPlotTikz();
+        // render via LaTeX + Gnuplot
+        let service_url = "services/plot.php";
+        let this_ = this;
+        $.ajax({
+            type: "POST",
+            url: service_url,
+            data: {
+                input: this.tex
+            },
+            success: function(data) {
+                cache[this_.src] = data;
+                this_.setImage(data);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr); // TODO: error handling!
+            }
+        });
+    }
+
+    refreshPlotTikz() {
+        this.tex = this.src;
+    }
+
+    refreshPlot2d() {
         // TODO: asciimath to tex
         let tex = `\\documentclass[class=minimal,border=0pt]{standalone}
 \\usepackage[latin1]{inputenc}
@@ -117,24 +153,7 @@ _FUNCTIONS_
         tex = tex.replaceAll("_Y_AXIS_START_", "("+(0)+","+(y1-0.2)+")");
         tex = tex.replaceAll("_Y_AXIS_END_", "("+(0)+","+(y2+0.2)+")");
         tex = tex.replaceAll("_FUNCTIONS_", functions);
-
-        // render via LaTeX + Gnuplot
-        let service_url = "services/plot2d.php";
-        let this_ = this;
-        $.ajax({
-            type: "POST",
-            url: service_url,
-            data: {
-                input: tex
-            },
-            success: function(data) {
-                cache[this_.src] = data;
-                this_.setImage(data);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr); // TODO: error handling!
-            }
-        });
+        this.tex = tex;
     }
 
     updateHTML() {
@@ -146,12 +165,12 @@ _FUNCTIONS_
         html += "<span class=\"h2 py-1 my-1\">" 
             + this.title + "</span><br/>\n";
 
-        html += '<p id="plot2d-img-' + this.id + '"></p>';
+        html += '<p id="plot-img-' + this.id + '"></p>';
 
         html += "</div>\n"; // end of card footer
         html += "</div>\n"; // end of card
 
-        document.getElementById("plot2d-" + this.id).innerHTML = html;
+        document.getElementById("plot-" + this.id).innerHTML = html;
     }
 
 }
