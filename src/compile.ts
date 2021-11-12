@@ -23,7 +23,9 @@ import * as plot from './plot.js';
 import { spellInst } from './index.js';
 
 export class Reference {
+    shortname = "";
     name = "";
+    label = "";
 }
 
 export class CompilerOutput {
@@ -35,7 +37,7 @@ export class CompilerOutput {
     stackQuizzes : Array<quiz.StackQuiz> = [];
     programmingQuizzes : Array<prog.PorgrammingQuiz>  = [];
     plots : Array<plot.Plot> = [];
-    references : Array<Reference> = [];
+    references : {[name:string]:Reference} = {};
 
     constructor() {
     }
@@ -141,7 +143,7 @@ export class Compiler {
             else if(unordereditems.length > 0 && !x.startsWith("* ")) {
                 content += "<ul>";
                 for(let item of unordereditems)
-                    content += "<li>" + this.compile_paragraph(item) + "</li>";
+                    content += "<li>" + this.compile_paragraph(item, co) + "</li>";
                 content += "</ul>";
                 unordereditems = [];
             }
@@ -151,7 +153,7 @@ export class Compiler {
             else if(ordereditems.length > 0 && !x.startsWith("- ")) {
                 content += "<ol>";
                 for(let item of ordereditems)
-                    content += "<li>" + this.compile_paragraph(item) + "</li>";
+                    content += "<li>" + this.compile_paragraph(item, co) + "</li>";
                 content += "</ol>";
                 ordereditems = [];
             }
@@ -166,7 +168,7 @@ export class Compiler {
                 content += `
                 <div class="" style="position:relative">
                     <p class="text-center" style="position:absolute;width:100%;">
-                        ` + this.compile_paragraph(x.trim()) + `
+                        ` + this.compile_paragraph(x.trim(), co) + `
                     </p>
                     <p class="text-end" style="position:absolute;width:100%;">
                         (\`` + eqn + `\`)
@@ -179,12 +181,14 @@ export class Compiler {
                 co.title = x.substring(5).trim();
             }
             else if(x.startsWith("###")) {
+                // TODO: ref
                 content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
                 content += "<h3>" + sec + "." + subsec + "." + subsubsec + ". " + x.substring(3).trim() + "</h3>\n";
                 content += "</a>\n";
                 subsubsec += 1;
             }
             else if(x.startsWith("##")) {
+                // TODO: ref
                 content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
                 content += "<h2>" + sec + "." + subsec + ". " + x.substring(2).trim() + "</h2>\n";
                 content += "</a>\n";
@@ -192,17 +196,18 @@ export class Compiler {
                 subsubsec = 1;
             }
             else if(x.startsWith("#")) {
-                let tokens = x.substring(1).trim().split("!");
-                let name = tokens[0];
-                if(tokens.length > 1) {
-                    // TODO: must handle "!" as valid character of name!!
+                let name="", label="";
+                [name, label] = this.extract_name_and_label(x.substring(1).trim());
+                if(label.length > 0) {
                     let ref = new Reference();
-                    ref.name = tokens[1];
+                    ref.shortname = "" + sec;
+                    ref.name = name;
+                    ref.label = label;
+                    co.references[label] = ref;
                 }
                 content += "<a onclick=\"slw.jump(" + i + ");\" style=\"cursor:pointer;\">";
                 content += "<h1>" + sec + ". " + name + "</h1>";
                 content += "</a>\n";
-
                 sec += 1;
                 subsec = 1;
                 subsubsec = 1;
@@ -303,7 +308,7 @@ export class Compiler {
                 }
             }
             else {
-                content += "<p>" + this.compile_paragraph(x) + "</p>\n";
+                content += "<p>" + this.compile_paragraph(x, co) + "</p>\n";
             }
         }
     
@@ -320,7 +325,6 @@ export class Compiler {
     }
 
     extract_name_and_label(x : string) : Array<string> {
-        xxx TODO
         let n = x.length;
         let name = "";
         let label = "";
@@ -357,7 +361,7 @@ export class Compiler {
         return output;
     }
 
-    compile_paragraph(x : string) : string {
+    compile_paragraph(x : string, co : CompilerOutput) : string {
         let y = "";
         let is_tex = false;
         let is_bold = false;
@@ -384,7 +388,15 @@ export class Compiler {
                 if(isAlpha || ch=='_') {
                     reference += ch;
                 } else {
-                    y += '<a href="">TODO_REF:' + reference + '</a>';
+                    if(reference.length > 0) {
+                        let ref = co.references[reference];
+                        if(ref == undefined)
+                            y += '<a onclick="">UNKNOWN-REFERENCE</a>';
+                        else
+                            y += '<a href="javascript:slw.gotoRef(\'' + ref.label + '\');">' + ref.shortname + '</a>';
+                    }
+                    else
+                        y += '!';
                     is_reference = false;
                     i --;
                 }
