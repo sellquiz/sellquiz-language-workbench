@@ -18,7 +18,7 @@
 
 import nspell from 'nspell';
 
-import * as slw from './index.js';
+import * as slw from './index';
 
 // TODO: compression of dicts, i.e. enable lz-string!!!
 

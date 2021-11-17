@@ -16,8 +16,6 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-import * as lang from './lang.js';
-
 // TODO: must clear cache
 var cache : {[code:string]:string} = {};
 
@@ -63,6 +61,7 @@ export class Plot {
         // render via LaTeX + Gnuplot
         let service_url = "services/plot.php";
         let this_ = this;
+console.log(this.tex);
         $.ajax({
             type: "POST",
             url: service_url,
@@ -80,7 +79,15 @@ export class Plot {
     }
 
     refreshPlotTikz() {
-        this.tex = this.src;
+        this.tex = `\\documentclass[class=minimal,border=0pt]{standalone}
+\\usepackage[latin1]{inputenc}
+\\usepackage{tikz}
+\\begin{document}
+\\pagestyle{empty}
+\\begin{tikzpicture}`+ this.src + `
+\\end{tikzpicture}
+\\end{document}
+`;
     }
 
     refreshPlot2d() {

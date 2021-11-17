@@ -21,9 +21,9 @@ import 'codemirror/addon/selection/active-line';
 
 import * as sellquiz from 'sellquiz';
 
-import * as lang from './lang.js';
-import * as spell from './spell.js';
-import * as compile from './compile.js';
+import * as lang from './lang';
+import * as spell from './spell';
+import * as compile from './compile';
 
 export var spellInst = null; // load on demand to reduce traffic to load dictionary
 

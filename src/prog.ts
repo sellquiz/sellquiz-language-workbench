@@ -21,7 +21,8 @@ import 'codemirror/addon/selection/active-line';
 import * as lang from './lang';
  
 export enum ProgrammingQuizType {
-    JavaBlock 
+    JavaBlock = "JavaBlock",
+    Python = "Python"
 };
 
 export class PorgrammingQuiz {
@@ -60,7 +61,7 @@ export class PorgrammingQuiz {
         restored_src = restored_src.replaceAll("§","");
         // 
         let task = {
-            "type": "JavaBlock", // TODO!!!!!
+            "type": this.type,
             "source": restored_src,
             "asserts": this.asserts,
             "language": lang.language
@@ -114,9 +115,19 @@ export class PorgrammingQuiz {
 
         document.getElementById("programming-" + this.id).innerHTML = html;
 
+        let codeMirrorMode = "";
+        switch(this.type) {
+            case ProgrammingQuizType.JavaBlock:
+                "text/x-java";
+                break;
+            case ProgrammingQuizType.Python:
+                "python";
+                break;
+        }
+
         this.editor = codemirror.fromTextArea(
             document.getElementById("programming-editor-" + this.id) as HTMLTextAreaElement, {
-                mode: "text/x-java",
+                mode: codeMirrorMode,
                 lineNumbers: true,
                 lineWrapping: true/*
                 styleActiveLine: {

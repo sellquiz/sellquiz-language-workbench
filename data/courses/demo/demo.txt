@@ -98,6 +98,33 @@ for(i=0; i<=n; i++) {
 ---
 
 ---
+Python. Programmierung in Python
+
+@text
+Schreiben Sie einen Codeausschnitt, in dem die Summe $s=sum_(i=0)^n i$ berechnet wird.
+* Variable `n` ist bereits deklariert worden. Der konkrete Wert ist jedoch unbekannt.
+* Das ganzzahlige Ergebnis soll in Variable `s` stehen.
+* Nutzen Sie eine `for`-Schleife.
+
+@given
+int n = §23§;
+
+@asserts
+s == 276
+
+@forbidden-keywords
+while
+
+@required-keywords
+for
+
+@solution
+s = 0;
+for i in range(0, n+1):
+    s = s + i
+---
+
+---
 Sell. First Quiz
     x, y in {1, 2, 3}
     z := x + y

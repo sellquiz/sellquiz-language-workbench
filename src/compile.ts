@@ -16,11 +16,11 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-import * as lang from './lang.js';
-import * as quiz from './quiz.js';
-import * as prog from './prog.js';
-import * as plot from './plot.js';
-import { spellInst } from './index.js';
+import * as lang from './lang';
+import * as quiz from './quiz';
+import * as prog from './prog';
+import * as plot from './plot';
+import { spellInst } from './index';
 
 export class Reference {
     shortname = "";
@@ -103,6 +103,7 @@ export class Compiler {
             "sell", 
             "stack",
             "javablock",
+            "python",
             "plot2d",
             "tikz"
         ];
@@ -238,7 +239,7 @@ export class Compiler {
                         }
                         co.plots.push(p);
                         content += "<div id=\"plot-" + p.id + "\"></div>\n";
-                    } else if(boxtype === "javablock") {
+                    } else if(boxtype === "javablock" || boxtype === "python") {
                         let parts = this.compile_box_parts(box, [
                             "@text", "@given", "@asserts", "@forbidden-keywords",
                             "@required-keywords", "@solution"]);
@@ -246,6 +247,7 @@ export class Compiler {
                             content += "error: " + parts["error"];
                         } else {
                             let p = new prog.PorgrammingQuiz();
+                            p.type = boxtype === "javablock" ? prog.ProgrammingQuizType.JavaBlock : prog.ProgrammingQuizType.Python;
                             p.id = co.programmingQuizzes.length;
                             p.title = parts["@title"];
                             p.text = this.compile(parts["@text"], false).html;

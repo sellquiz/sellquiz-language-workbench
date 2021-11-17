@@ -16,9 +16,8 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-import * as slw from './index.js';
-import * as lang from './lang.js';
-import * as QuizMXML from './quiz-mxml.js';
+import * as lang from './lang';
+import * as QuizMXML from './quiz-mxml';
 
 export class SellQuiz {
 
