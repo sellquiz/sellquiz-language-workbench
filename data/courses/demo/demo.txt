@@ -9,7 +9,7 @@ Refer to section !mylabel.
 Some red(red), green(green) and blue(blue) text.
 
 ---
-Stack. Grundintegrale
+Question. Grundintegrale
 
 @tags
 Integralrechnung Bloom:anwenden
@@ -107,7 +107,7 @@ Schreiben Sie einen Codeausschnitt, in dem die Summe $s=sum_(i=0)^n i$ berechnet
 * Nutzen Sie eine `for`-Schleife.
 
 @given
-int n = §23§;
+n = §23§
 
 @asserts
 s == 276
@@ -122,13 +122,6 @@ for
 s = 0;
 for i in range(0, n+1):
     s = s + i
----
-
----
-Sell. First Quiz
-    x, y in {1, 2, 3}
-    z := x + y
-$x+y=#z$
 ---
 
 ## Section
@@ -154,18 +147,14 @@ Tikz. My Tikz Plot
 \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
 \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
 \draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
-\draw[color=red] plot[id=x] function{x} 
+\draw[color=red] plot[id=x] function{x}
     node[right] {$f(x) =x$};
-\draw[color=blue] plot[id=cos] function{cos(x)} 
+\draw[color=blue] plot[id=cos] function{cos(x)}
     node[right] {$f(x) = \cos x$};
-\draw[color=orange] plot[id=exp] function{0.05*exp(x)} 
+\draw[color=orange] plot[id=exp] function{0.05*exp(x)}
     node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
 ---
 
 # Another Chapter
 
----
-Sell. My quiz
-    x := 5
-The solution is 5: $ #x $
----
+blub

@@ -16,26 +16,15 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-export const language = "de";
+const esbuild = require('esbuild');
 
-export const checkmark = ' &#x2705; ';
-export const crossmark = ' &#x274C; ';
-
-const lang_str : {[key:string]:string} = {
-    "definition_en": "Definition",
-    "definition_de": "Definition",
-    "theorem_en": "Theorem",
-    "theorem_de": "Satz",
-    "remark_en": "Remark",
-    "remark_de": "Bemerkung",
-    "please_wait_en": "please wait...",
-    "please_wait_de": "bitte warten...",
-    "evaluate_en": "Evaluate",
-    "evaluate_de": "Auswerten"
-};
-
-export function text(id : string) {
-    if(!((id + "_" + language) in lang_str))
-        return "LANG.text('" + id + "'): unknown!";
-    return lang_str[id + "_" + language];
-}
+// --- node version ---
+esbuild.buildSync({
+    platform: 'browser',
+    globalName: 'slw',
+    minify: true,
+    target: 'es2020',
+    entryPoints: ['src/index.ts'],
+    bundle: true,
+    outfile: 'dist/sellquiz-language-workbench.min.js'
+});

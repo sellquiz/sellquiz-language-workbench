@@ -28,8 +28,8 @@ import * as slw from './index';
 
 export class Spell {
 
-    aff = {};
-    dic = {};
+    aff : {[key:string]:any} = {};
+    dic : {[key:string]:any} = {};
     spell : any = null; // TODO: multiple languages
 
     constructor() {
@@ -47,7 +47,7 @@ export class Spell {
     }
 
     load(lang="en") : boolean {
-        let this_ = this;
+        const this_ = this;
         // load 'aff'
         $.ajax({
             type: "POST",

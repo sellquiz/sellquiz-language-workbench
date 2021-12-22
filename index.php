@@ -39,39 +39,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-        <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        
         <link rel="stylesheet" href="node_modules/@geedmo/yamm/dist/yamm.css"/>
-
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"/>
-
         <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css"/>
-        <script src="node_modules/codemirror/lib/codemirror.js"></script>
-        <script src="node_modules/codemirror/mode/clike/clike.js"></script>
-        <script src="node_modules/codemirror/addon/mode/simple.js"></script>
-        <script src="node_modules/codemirror/addon/selection/active-line.js"></script>
-        <script src="node_modules/codemirror/addon/mode/overlay.js"></script>
 
+        <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="node_modules/mathjs/lib/browser/math.js"></script>
-
         <script src="extern/nspell.min.js"></script>
-        
-        <script src="node_modules/sellquiz/build/js/sellquiz.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
-        <script src="node_modules/sellquiz/build/js/sellquiz.ide.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
 
-        <script>MathJax = { 
+        <!--
+        <script src="node_modules/sellquiz/build/js/sellquiz.min.js?version=< ?php $date = date_create(); echo date_timestamp_get($date); ? >"></script>
+        <script src="node_modules/sellquiz/build/js/sellquiz.ide.min.js?version=< ?php $date = date_create(); echo date_timestamp_get($date); ? >"></script>
+        -->
+
+        <script>MathJax = {
             loader: {
-                load: ['input/asciimath', 'output/svg', 'ui/menu'] 
-            },
-            startup: {
-                pageReady() {
-                    return MathJax.startup.defaultPageReady().then(function () {
-                        //alert("blub");
-                        //MathJax.typesetPromise();
-                    });
-                }
+                load: ['input/asciimath', 'output/svg', 'ui/menu']
             }
         };
         </script>
@@ -106,48 +91,33 @@
     </body>
 
     <script>
-        CodeMirror.defineSimpleMode("sellquiz-edit", {
-            start: [
-                {regex: /\$(?:[^\\]|\\.)*?(?:\$|$)/, token: "string"},
-                {regex: /\`(?:[^\\]|\\.)*?(?:\`)/, token: "string"},
-                {regex: /\%.*/, token: "comment"},
-                {regex: /\#.*/, token: "keyword", sol: true},
-                {regex: /---|Definition\.|Theorem\.|Sell\.|Stack\.|Remark\.|JavaBlock\.|Tikz\.|Plot2d\.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/, token: "keyword"},
-            ],
-            comment: [
-
-            ],
-            meta: {
-                dontIndentStates: ["comment"],
-                lineComment: "%"
-            }
-        });
 
         function openTab(id) {
-            document.getElementById("editor-content").style.display = 
+            // TODO: move code to "src/"
+            document.getElementById("editor-content").style.display =
                 id === "editor" ? "block" : "none";
-            document.getElementById("box").style.display = 
+            document.getElementById("box").style.display =
                 id === "box" ? "block" : "none";
-            document.getElementById("ticket").style.display = 
+            document.getElementById("ticket").style.display =
                 id === "ticket" ? "block" : "none";
-            document.getElementById("document-tree").style.display = 
+            document.getElementById("document-tree").style.display =
                 id === "filetree" ? "block" : "none";
-            document.getElementById("user-management").style.display = 
+            document.getElementById("user-management").style.display =
                 id === "users" ? "block" : "none";
-            document.getElementById("bugs").style.display = 
+            document.getElementById("bugs").style.display =
                 id === "bugs" ? "block" : "none";
 
-            document.getElementById("tab-editor").className = 
+            document.getElementById("tab-editor").className =
                 id === "editor" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-box").className = 
+            document.getElementById("tab-box").className =
                 id === "box" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-ticket").className = 
+            document.getElementById("tab-ticket").className =
                 id === "ticket" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-filetree").className = 
+            document.getElementById("tab-filetree").className =
                 id === "filetree" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-users").className = 
+            document.getElementById("tab-users").className =
                 id === "users" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-bugs").className = 
+            document.getElementById("tab-bugs").className =
                 id === "bugs" ? "nav-link active" : "nav-link";
         }
     </script>
@@ -197,7 +167,7 @@
                     document.onreadystatechange = function () {
                         errorModal.show();
                     };
-                </script>            
+                </script>
             ");
             $_SESSION['slw_error'] = "";
         }

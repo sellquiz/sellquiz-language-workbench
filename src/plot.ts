@@ -17,12 +17,12 @@
  ******************************************************************************/
 
 // TODO: must clear cache
-var cache : {[code:string]:string} = {};
+const cache : {[code:string]:string} = {};
 
 export enum PlotType {
     Plot2d,
     PlotTikz
-};
+}
 
 export class Plot {
 
@@ -34,18 +34,15 @@ export class Plot {
     src = "";
     tex = "";
 
-    constructor() {
-    }
-
     error(message : string) {
-        let imgElement = document.getElementById("plot-img-" + this.id);
+        const imgElement = document.getElementById("plot-img-" + this.id);
         imgElement.innerHTML = "<p class=\"text-danger\">Error: " + message + "</p>";
     }
 
     setImage(data : string) {
-        let imgElement = document.getElementById("plot-img-" + this.id);
+        const imgElement = document.getElementById("plot-img-" + this.id);
         // TODO: image size
-        imgElement.innerHTML = "<img src=\"" + data 
+        imgElement.innerHTML = "<img src=\"" + data
         + "\" class=\"img-fluid\" width=\"320px\"/>";
     }
 
@@ -59,8 +56,8 @@ export class Plot {
         else if(this.type == PlotType.PlotTikz)
             this.refreshPlotTikz();
         // render via LaTeX + Gnuplot
-        let service_url = "services/plot.php";
-        let this_ = this;
+        const service_url = "services/plot.php";
+        const this_ = this;
 console.log(this.tex);
         $.ajax({
             type: "POST",
@@ -112,16 +109,16 @@ _FUNCTIONS_
         let y2 = 1;
         let functions = "";
         let function_idx = 0;
-        let lines = this.src.split("\n");
+        const lines = this.src.split("\n");
         for(let i=0; i<lines.length; i++) {
-            let line = lines[i];
+            const line = lines[i];
             if(line.trim().length == 0)
                 continue;
             if(line.startsWith("xaxis") || line.startsWith("yaxis")) {
-                let isXAxis = line.startsWith("xaxis");
-                let values = line.substr(5).trim().split(",");
-                if(values.length != 2 
-                        || isNaN(parseFloat(values[0])) 
+                const isXAxis = line.startsWith("xaxis");
+                const values = line.substr(5).trim().split(",");
+                if(values.length != 2
+                        || isNaN(parseFloat(values[0]))
                         || isNaN(parseFloat(values[1]))   ) {
                     this.error("Definition of 'xaxis' must have format 'xaxis START, END'");
                     return;
@@ -135,14 +132,14 @@ _FUNCTIONS_
                 }
             } else if(line.startsWith("plot")) {
                 // TODO: must check, if term is correct!
-                let tokens = line.substr(4).trim().split("=");
+                const tokens = line.substr(4).trim().split("=");
                 if(tokens.length != 2) {
                     this.error("Definition of 'plot' must have format 'plot ID = TERM'");
                     return;
                 }
-                let id = tokens[0].trim();
-                let fct = tokens[1].trim();
-                let colors = ["red", "blue", "orange"]; // TODO
+                const id = tokens[0].trim();
+                const fct = tokens[1].trim();
+                const colors = ["red", "blue", "orange"]; // TODO
                 functions += "\t\\draw[color=" + colors[function_idx % colors.length] + "] plot function{" + fct + "}\n";
                 functions += "\t\tnode[right] {$" + id + "$};\n";
                 function_idx ++;
@@ -151,15 +148,15 @@ _FUNCTIONS_
                 return;
             }
         }
-        tex = tex.replaceAll("_X_START_", ""+(x1));
-        tex = tex.replaceAll("_X_END_", ""+(x2));
-        tex = tex.replaceAll("_GRID_START_", "("+(x1-0.1)+","+(y1-0.1)+")");
-        tex = tex.replaceAll("_GRID_END_", "("+(x2+0.1)+","+(y2+0.1)+")");
-        tex = tex.replaceAll("_X_AXIS_START_", "("+(x1-0.2)+","+(0.0)+")");
-        tex = tex.replaceAll("_X_AXIS_END_", "("+(x2+0.2)+","+(0.0)+")");
-        tex = tex.replaceAll("_Y_AXIS_START_", "("+(0)+","+(y1-0.2)+")");
-        tex = tex.replaceAll("_Y_AXIS_END_", "("+(0)+","+(y2+0.2)+")");
-        tex = tex.replaceAll("_FUNCTIONS_", functions);
+        tex = tex.replace(/_X_START_/g, ""+(x1));
+        tex = tex.replace(/_X_END_/g, ""+(x2));
+        tex = tex.replace(/_GRID_START_/g, "("+(x1-0.1)+","+(y1-0.1)+")");
+        tex = tex.replace(/_GRID_END_/g, "("+(x2+0.1)+","+(y2+0.1)+")");
+        tex = tex.replace(/_X_AXIS_START_/g, "("+(x1-0.2)+","+(0.0)+")");
+        tex = tex.replace(/_X_AXIS_END_/g, "("+(x2+0.2)+","+(0.0)+")");
+        tex = tex.replace(/_Y_AXIS_START_/g, "("+(0)+","+(y1-0.2)+")");
+        tex = tex.replace(/_Y_AXIS_END_/g, "("+(0)+","+(y2+0.2)+")");
+        tex = tex.replace(/_FUNCTIONS_/g, functions);
         this.tex = tex;
     }
 
@@ -169,7 +166,7 @@ _FUNCTIONS_
         html += "<div class=\"card border-dark\">";
         html += "<div class=\"card-body\">\n";
 
-        html += "<span class=\"h2 py-1 my-1\">" 
+        html += "<span class=\"h2 py-1 my-1\">"
             + this.title + "</span><br/>\n";
 
         html += '<p id="plot-img-' + this.id + '"></p>';

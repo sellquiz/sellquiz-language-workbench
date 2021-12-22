@@ -19,13 +19,13 @@
 import * as codemirror from 'codemirror';
 import 'codemirror/addon/selection/active-line';
 import * as lang from './lang';
- 
+
 export enum ProgrammingQuizType {
     JavaBlock = "JavaBlock",
     Python = "Python"
-};
+}
 
-export class PorgrammingQuiz {
+export class ProgrammingQuiz {
 
     id = 0;
 
@@ -38,19 +38,16 @@ export class PorgrammingQuiz {
     requiredKeywords : Array<string> = [];
     solution = "";
 
-    editor = null;
-
-    constructor() {
-    }
+    editor : any = null;
 
     refresh() {
         // TODO
     }
 
     evaluate() {
-        let src = this.editor.getValue().split("\n");
+        const src = this.editor.getValue().split("\n");
         // restore given source code:
-        let givenSrc = this.given.split("\n");
+        const givenSrc = this.given.split("\n");
         let restored_src = '';
         for(let i=0; i<src.length; i++) {
             if(i < givenSrc.length)
@@ -58,18 +55,18 @@ export class PorgrammingQuiz {
             else
                 restored_src += src[i] + "\n";
         }
-        restored_src = restored_src.replaceAll("§","");
-        // 
-        let task = {
+        restored_src = restored_src.replace(/§/g, "");
+        //
+        const task = {
             "type": this.type,
             "source": restored_src,
             "asserts": this.asserts,
             "language": lang.language
         };
-        let service_url = "services/prog.php";
+        const service_url = "services/prog.php";
         // TODO: should forbid running twice at the same time!!!!!
-        let feedback_htmlElement = document.getElementById("programming-feedback-" + this.id);
-        let wait_text = lang.text("please_wait");
+        const feedback_htmlElement = document.getElementById("programming-feedback-" + this.id);
+        const wait_text = lang.text("please_wait");
         feedback_htmlElement.innerHTML = "<span class=\"text-danger\">" + wait_text + "</span>";
         $.ajax({
             type: "POST",
@@ -79,10 +76,10 @@ export class PorgrammingQuiz {
             },
             success: function(data) {
                 data = JSON.parse(data);
-                let status = data["status"];
-                let message = data["msg"];
-                feedback_htmlElement.innerHTML = ((status==="ok") ? lang.checkmark : lang.crossmark) 
-                    + " "; 
+                const status = data["status"];
+                const message = data["msg"];
+                feedback_htmlElement.innerHTML = ((status==="ok") ? lang.checkmark : lang.crossmark)
+                    + " ";
                 feedback_htmlElement.innerHTML += ' &nbsp; <code>' + message.replaceAll("\n", "<br/>").replaceAll(" ","&nbsp;") + '</code>';
             },
             error: function(xhr, status, error) {
@@ -96,18 +93,18 @@ export class PorgrammingQuiz {
         html += "<div class=\"card border-dark\">";
         html += "<div class=\"card-body\">\n";
 
-        html += "<span class=\"h2 py-1 my-1\">" 
+        html += "<span class=\"h2 py-1 my-1\">"
             + '<i class="fas fa-keyboard"></i> '
             + this.title + "</span><br/>\n";
 
         html += this.text;
 
         html += '<div class="border p-0 m-0"><textarea class="form-control p-0" style="min-width: 100%;" id="programming-editor-' + this.id + '" + rows="5"></textarea></div>';
-        
+
         html += '<p id="programming-feedback-' + this.id + '"></p>';
 
-        let evalStr = "Auswerten"; // TODO: language!
-        html += '<button type="button" class="btn btn-primary" onclick="slw.eval_prog(\'' 
+        const evalStr = "Auswerten"; // TODO: language!
+        html += '<button type="button" class="btn btn-primary" onclick="slw.eval_prog(\''
             + this.id + '\')">' + evalStr + '</button>' + ' ';
 
         html += "</div>\n"; // end of card body
@@ -118,16 +115,16 @@ export class PorgrammingQuiz {
         let codeMirrorMode = "";
         switch(this.type) {
             case ProgrammingQuizType.JavaBlock:
-                "text/x-java";
+                codeMirrorMode = "text/x-java";
                 break;
             case ProgrammingQuizType.Python:
-                "python";
+                codeMirrorMode = "python";
                 break;
         }
 
         this.editor = codemirror.fromTextArea(
             document.getElementById("programming-editor-" + this.id) as HTMLTextAreaElement, {
-                mode: codeMirrorMode,
+                mode: codeMirrorMode,   // TODO!!!!!!
                 lineNumbers: true,
                 lineWrapping: true/*
                 styleActiveLine: {
@@ -137,12 +134,12 @@ export class PorgrammingQuiz {
         );
 
         // hide everything between a pair of '§'
-        let givenSrc = this.given.replace(/§\d*§/g, "?") + "\n";
+        const givenSrc = this.given.replace(/§\d*§/g, "?") + "\n";
         this.editor.setValue(givenSrc);
 
         // forbid changing given code
-        let this_ = this;
-        this.editor.on('beforeChange',function(cm, change) {
+        const this_ = this;
+        this.editor.on('beforeChange',function(cm : any, change : any) {
             if(change.from.line < this_.given.split("\n").length-1) {
                 change.cancel();
             }

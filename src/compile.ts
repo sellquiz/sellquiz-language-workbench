@@ -35,23 +35,20 @@ export class CompilerOutput {
 
     sellQuizzes : Array<quiz.SellQuiz> = [];
     stackQuizzes : Array<quiz.StackQuiz> = [];
-    programmingQuizzes : Array<prog.PorgrammingQuiz>  = [];
+    programmingQuizzes : Array<prog.ProgrammingQuiz>  = [];
     plots : Array<plot.Plot> = [];
     references : {[name:string]:Reference} = {};
 
-    constructor() {
-    }
-
     refresh() {
-        for(let q of this.stackQuizzes) {
+        for(const q of this.stackQuizzes) {
             q.updateHTML();
             q.refresh();
         }
-        for(let p of this.programmingQuizzes) {
+        for(const p of this.programmingQuizzes) {
             p.updateHTML();
             p.refresh();
         }
-        for(let p of this.plots) {
+        for(const p of this.plots) {
             p.updateHTML();
             p.refresh();
         }
@@ -83,49 +80,48 @@ export class Compiler {
     spellCheck=false;
 
     compile(input_str : string, rootCall=true) : CompilerOutput {
-        let co = new CompilerOutput();
-    
-        let input = input_str.split("\n");
-        let leadtext = "";
+        const co = new CompilerOutput();
+
+        const input = input_str.split("\n");
+        const leadtext = "";
         let content = "";
-    
+
         // numbering
         let sec = 1;
         let subsec = 1;
         let subsubsec = 1;
         let definition = 1;
         let eqn = 1;
-    
-        let block_types = [
-            "definition", 
-            "theorem", 
-            "remark", 
-            "sell", 
-            "stack",
+
+        const block_types = [
+            "definition",
+            "theorem",
+            "remark",
+            "question",
             "javablock",
             "python",
             "plot2d",
             "tikz"
         ];
-    
-        let unordereditems = [];
-        let ordereditems = [];
+
+        let unorderedItems = [];
+        let orderedItems = [];
         let box = "";
-        let box_startline = 0;
-        let boxtype = "";
-        let parsing_box = false;
-        
+        let boxStartLine = 0;
+        let boxType = "";
+        let parsingBox = false;
+
         for(let i=0; i<input.length; i++) {
-            let x = input[i];
+            const x = input[i];
             if(x.startsWith("%")) {
                 // comment
             }
-            else if(parsing_box && !x.startsWith("---")) {
+            else if(parsingBox && !x.startsWith("---")) {
                 let known_type = false;
                 if(box.length == 0) {
-                    for(let type of block_types) {
+                    for(const type of block_types) {
                         if(x.toLowerCase().startsWith(type + ".")) {
-                            boxtype = type;
+                            boxType = type;
                             box += x.substring((type+".").length).trim() + "\n";
                             known_type = true;
                             break;
@@ -138,31 +134,31 @@ export class Compiler {
                     box += x + "\n";
                 }
             }
-            else if(unordereditems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
-                unordereditems[unordereditems.length-1] += x;
+            else if(unorderedItems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
+                unorderedItems[unorderedItems.length-1] += x;
             }
-            else if(unordereditems.length > 0 && !x.startsWith("* ")) {
+            else if(unorderedItems.length > 0 && !x.startsWith("* ")) {
                 content += "<ul>";
-                for(let item of unordereditems)
+                for(const item of unorderedItems)
                     content += "<li>" + this.compile_paragraph(item, co) + "</li>";
                 content += "</ul>";
-                unordereditems = [];
+                unorderedItems = [];
             }
-            else if(ordereditems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
-                ordereditems[ordereditems.length-1] += x;
+            else if(orderedItems.length > 0 && (x.startsWith(" ") || x.startsWith("\t"))) {
+                orderedItems[orderedItems.length-1] += x;
             }
-            else if(ordereditems.length > 0 && !x.startsWith("- ")) {
+            else if(orderedItems.length > 0 && !x.startsWith("- ")) {
                 content += "<ol>";
-                for(let item of ordereditems)
+                for(const item of orderedItems)
                     content += "<li>" + this.compile_paragraph(item, co) + "</li>";
                 content += "</ol>";
-                ordereditems = [];
+                orderedItems = [];
             }
             else if(x.startsWith("* ")) {
-                unordereditems.push(x.substring(2));
+                unorderedItems.push(x.substring(2));
             }
             else if(x.startsWith("- ")) {
-                ordereditems.push(x.substring(2));
+                orderedItems.push(x.substring(2));
             }
             // centered equation
             else if(x.trim().startsWith("$") && x.length>1 && (x[0]==" "||x[0]=="\t")) {
@@ -200,7 +196,7 @@ export class Compiler {
                 let name="", label="";
                 [name, label] = this.extract_name_and_label(x.substring(1).trim());
                 if(label.length > 0) {
-                    let ref = new Reference();
+                    const ref = new Reference();
                     ref.shortname = "" + sec;
                     ref.name = name;
                     ref.label = label;
@@ -215,22 +211,22 @@ export class Compiler {
                 definition = 1;
             }
             else if(x.startsWith("---")) {
-                parsing_box = !parsing_box;
-                if(parsing_box == false) {
-                    if(boxtype === "sell") {
-                        let q = new quiz.SellQuiz();
+                parsingBox = !parsingBox;
+                if(parsingBox == false) {
+                    if(boxType === "sell") {
+                        const q = new quiz.SellQuiz();
                         q.id = co.sellQuizzes.length;
                         q.src = box;
                         co.sellQuizzes.push(q);
                         content += "<div id=\"sellquiz-" + q.id + "\"></div>\n";
-                    } else if(boxtype === "plot2d" || boxtype === "tikz") {
-                        let p = new plot.Plot();
-                        p.type = boxtype === "plot2d" ? 
+                    } else if(boxType === "plot2d" || boxType === "tikz") {
+                        const p = new plot.Plot();
+                        p.type = boxType === "plot2d" ?
                             plot.PlotType.Plot2d : plot.PlotType.PlotTikz;
                         p.id = co.plots.length;
                         p.title = "";
                         p.src = "";
-                        let lines = box.split("\n");
+                        const lines = box.split("\n");
                         for(let i=0; i<lines.length; i++) {
                             if(i==0)
                                 p.title = lines[i];
@@ -239,15 +235,15 @@ export class Compiler {
                         }
                         co.plots.push(p);
                         content += "<div id=\"plot-" + p.id + "\"></div>\n";
-                    } else if(boxtype === "javablock" || boxtype === "python") {
-                        let parts = this.compile_box_parts(box, [
+                    } else if(boxType === "javablock" || boxType === "python") {
+                        const parts = this.compile_box_parts(box, [
                             "@text", "@given", "@asserts", "@forbidden-keywords",
                             "@required-keywords", "@solution"]);
                         if(parts["error"].length > 0) {
                             content += "error: " + parts["error"];
                         } else {
-                            let p = new prog.PorgrammingQuiz();
-                            p.type = boxtype === "javablock" ? prog.ProgrammingQuizType.JavaBlock : prog.ProgrammingQuizType.Python;
+                            const p = new prog.ProgrammingQuiz();
+                            p.type = boxType === "javablock" ? prog.ProgrammingQuizType.JavaBlock : prog.ProgrammingQuizType.Python;
                             p.id = co.programmingQuizzes.length;
                             p.title = parts["@title"];
                             p.text = this.compile(parts["@text"], false).html;
@@ -259,18 +255,18 @@ export class Compiler {
                             co.programmingQuizzes.push(p);
                             content += "<div id=\"programming-" + p.id + "\"></div>\n";
                         }
-                    } else if(boxtype === "stack") {
-                        let q = new quiz.StackQuiz();
+                    } else if(boxType === "question") {
+                        const q = new quiz.StackQuiz();
                         q.id = co.stackQuizzes.length;
                         co.stackQuizzes.push(q);
-                        let parts = this.compile_box_parts(box, ["@tags", "@code", "@text", "@solution"]);
+                        const parts = this.compile_box_parts(box, ["@tags", "@code", "@text", "@solution"]);
                         q.error = parts["error"];
                         if(q.error.length == 0) {
                             q.title = parts["@title"];
-                            q.taglist = this.compile_tags(parts["@tags"]);
+                            q.tagList = this.compile_tags(parts["@tags"]);
                             q.code = parts["@code"];
                             q.text = this.compile(parts["@text"], false).html;
-                            q.solutiontext = this.compile(parts["@solution"], false).html;
+                            q.solutionText = this.compile(parts["@solution"], false).html;
                             q.code = q.compileCode(q.code);
                             q.code += "values;\n";
                             q.code += "ev(values);\n";
@@ -280,63 +276,63 @@ export class Compiler {
                     } else {
                         content += "<div class=\"card border-dark\">";
                         content += "<div class=\"card-body\">\n";
-    
+
                         let box_title = "";
                         let no = "";
-                        if(["definition","theorem"].includes(boxtype)) {
+                        if(["definition","theorem"].includes(boxType)) {
                             no = " " + (sec-1) + "." + definition;
                             definition ++;
                         }
-                        if(boxtype.length > 0) {
-                            box_title = "<a onclick=\"slw.jump(" + box_startline + ");\" style=\"cursor:pointer;\">";
-                            box_title += "<b>" + lang.text(boxtype) + no + "</b> ";
+                        if(boxType.length > 0) {
+                            box_title = "<a onclick=\"slw.jump(" + boxStartLine + ");\" style=\"cursor:pointer;\">";
+                            box_title += "<b>" + lang.text(boxType) + no + "</b> ";
                             box_title += "</a>";
                         }
-                        let y = this.compile(box, false);
+                        const y = this.compile(box, false);
                         if(y.html.startsWith("<p>"))
                             y.html = "<p>" + box_title + y.html.substring(3);
                         else
                             y.html = box_title + y.html;
 
                         content += y.html;
-    
+
                         content += "</div>\n"; // end of card body
                         content += "</div>\n"; // end of card
                     }
                     box = "";
                 } else {
-                    box_startline = i;
-                    boxtype = "";
+                    boxStartLine = i;
+                    boxType = "";
                 }
             }
             else {
                 content += "<p>" + this.compile_paragraph(x, co) + "</p>\n";
             }
         }
-    
+
         if(rootCall) {
-            co.html = template.replaceAll("$TITLE$", co.title)
-            co.html = co.html.replaceAll("$LEADTEXT$", leadtext)
-            co.html = co.html.replaceAll("$CONTENT$", content)
+            co.html = template.replace(/\$TITLE\$/g, co.title)
+            co.html = co.html.replace(/\$LEADTEXT\$/g, leadtext)
+            co.html = co.html.replace(/\$CONTENT\$/g, content)
         } else {
             co.html = content;
         }
-        
+
         //console.log(output);
         return co;
     }
 
     extract_name_and_label(x : string) : Array<string> {
-        let n = x.length;
+        const n = x.length;
         let name = "";
         let label = "";
         let isLabel = false;
         for(let i=0; i<n; i++) {
-            let ch = x[i];
-            let chAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || ch=='_';
-            let chNum = ch>='0' && ch<='9';
-            let ch2 = (i+1) < n ? x[i+1] : "";
-            let ch2Alpha = (ch2>='A' && ch2<='Z') || (ch2>='a' && ch2<='z') || ch2=='_';
+            const ch = x[i];
+            const chAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || ch=='_';
+            const chNum = ch>='0' && ch<='9';
+            const ch2 = (i+1) < n ? x[i+1] : "";
+            const ch2Alpha = (ch2>='A' && ch2<='Z') || (ch2>='a' && ch2<='z') || ch2=='_';
             if(ch == '!' && ch2Alpha) {
                 isLabel = true;
             } else if(isLabel) {
@@ -354,9 +350,9 @@ export class Compiler {
     }
 
     compile_tags(x : string) : Array<string> {
-        let output : Array<string> = [];
-        let y = x.replaceAll("\n", " ").split(" ");
-        for(let yi of y) {
+        const output : Array<string> = [];
+        const y = x.replace(/\n/g, " ").split(" ");
+        for(const yi of y) {
             if(yi.length > 0)
                 output.push(yi);
         }
@@ -368,15 +364,15 @@ export class Compiler {
         let is_tex = false;
         let is_bold = false;
         let is_italic = false;
-        let is_inlinecode = false;
+        let is_inlineCode = false;
         let is_reference = false;
         let color = "";
         let word = "";
         let reference = "";
         const n = x.length;
         for(let i=0; i<=n; i++) {
-            let ch = x[i];
-            let isAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z');
+            const ch = x[i];
+            const isAlpha = (ch>='A' && ch<='Z') || (ch>='a' && ch<='z');
             if(word.length > 0 && (i==n || !isAlpha)) {
                 if(this.spellCheck == false || spellInst.isCorrect(word))
                     y += word;
@@ -391,7 +387,7 @@ export class Compiler {
                     reference += ch;
                 } else {
                     if(reference.length > 0) {
-                        let ref = co.references[reference];
+                        const ref = co.references[reference];
                         if(ref == undefined)
                             y += '<a onclick="">UNKNOWN-REFERENCE</a>';
                         else
@@ -407,15 +403,15 @@ export class Compiler {
                 is_tex = !is_tex;
                 y += "`";
             } else if(ch === "`") {
-                is_inlinecode = !is_inlinecode;
-                y += is_inlinecode ? "<code>" : "</code>";
-            } else if(!is_inlinecode && !is_tex && ch === "*") {
+                is_inlineCode = !is_inlineCode;
+                y += is_inlineCode ? "<code>" : "</code>";
+            } else if(!is_inlineCode && !is_tex && ch === "*") {
                 is_bold = !is_bold;
                 y += is_bold ? "<b>" : "</b>";
-            } else if(!is_inlinecode && !is_tex && ch === "_") {
+            } else if(!is_inlineCode && !is_tex && ch === "_") {
                 is_italic = !is_italic;
                 y += is_italic ? "<i>" : "</i>";
-            } else if(!is_inlinecode && !is_tex && ch === "!") {
+            } else if(!is_inlineCode && !is_tex && ch === "!") {
                 is_reference = true;
                 reference = "";
             } else if(x.substr(i).startsWith("red(")) {
@@ -433,7 +429,7 @@ export class Compiler {
             } else if(color.length > 0 && ch === ")") {
                 color = "";
                 y += "</span>";
-            } else if(!is_tex && !is_inlinecode && ((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z'))) {
+            } else if(!is_tex && !is_inlineCode && ((ch>='A'&&ch<='Z') || (ch>='a'&&ch<='z'))) {
                 word += ch;
             } else {
                 y += ch;
@@ -453,12 +449,12 @@ export class Compiler {
     }
 
     compile_box_parts(input : string, ids : Array<string>) : {[name:string]:string} {
-        let parts : {[name:string]:string} = {};
+        const parts : {[name:string]:string} = {};
         parts["error"] = "";
-        for(let id of ids)
+        for(const id of ids)
             parts[id] = "";
         let state = "";
-        let lines = input.split("\n");
+        const lines = input.split("\n");
         for(let i=0; i<lines.length; i++) {
             let line = lines[i];
             if(i == 0)
@@ -492,5 +488,5 @@ export class Compiler {
         }
         return output;
     }
-    
+
 }

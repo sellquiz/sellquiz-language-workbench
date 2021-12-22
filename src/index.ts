@@ -16,24 +16,28 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-import * as codemirror from 'codemirror';
+import 'codemirror/mode/clike/clike';
+import 'codemirror/addon/mode/simple';
 import 'codemirror/addon/selection/active-line';
+import 'codemirror/addon/mode/overlay';
+// esbuild requires 'codemirror' import AFTER modes and addons
+import * as CodeMirror from 'codemirror';
 
-import * as sellquiz from 'sellquiz';
+//import * as sellquiz from 'sellquiz';
 
 import * as lang from './lang';
 import * as spell from './spell';
 import * as compile from './compile';
 
-export var spellInst = null; // load on demand to reduce traffic to load dictionary
+export let spellInst : any = null; // load on demand to reduce traffic to load dictionary
 
-export var editor : codemirror.EditorFromTextArea = null;
-export var compilerOutput : compile.CompilerOutput = null;
+export let editor : CodeMirror.EditorFromTextArea = null;
+export let compilerOutput : compile.CompilerOutput = null;
 
-export var current_course = '';
-export var current_file = '';
+export let current_course = '';
+export let current_file = '';
 
-export var toggle_states= {
+export const toggle_states : {[key:string]:boolean} = {
     "preview-spell-check": false,
     "preview-show-source-links": true,
     "preview-show-solutions": true,
@@ -42,8 +46,8 @@ export var toggle_states= {
 }
 
 export function refresh_filelist() {
-    let filelist_button = document.getElementById("filelist_button");
-    let filelist_dropdown_items = document.getElementById("filelist_dropdown_items");
+    const filelist_button = document.getElementById("filelist_button");
+    const filelist_dropdown_items = document.getElementById("filelist_dropdown_items");
     $.ajax({
         type: "POST",
         url: "services/filelist.php",
@@ -55,7 +59,7 @@ export function refresh_filelist() {
             if(data["status"] === "error")
                 alert(data["error_message"]); // TODO
             let html = '', i = 0;
-            for(let file of data["file_list"]) {
+            for(const file of data["file_list"]) {
                 html += '<li><a class="dropdown-item" style="cursor:pointer;">' + file + '</a></li>';
                 if(i == 0)
                     current_file = file;
@@ -71,8 +75,8 @@ export function refresh_filelist() {
 }
 
 export function refresh_courselist() {
-    let courselist_button = document.getElementById("courselist_button");
-    let courselist_dropdown_items = document.getElementById("courselist_dropdown_items");
+    const courselist_button = document.getElementById("courselist_button");
+    const courselist_dropdown_items = document.getElementById("courselist_dropdown_items");
     $.ajax({
         type: "POST",
         url: "services/courselist.php",
@@ -82,7 +86,7 @@ export function refresh_courselist() {
             if(data["status"] === "error")
                 alert(data["error_message"]); // TODO
             let html = '', i = 0;
-            for(let course of data["course_list"]) {
+            for(const course of data["course_list"]) {
                 html += '<li><a class="dropdown-item" style="cursor:pointer;">' + course + '</a></li>';
                 if(i == 0)
                     current_course = course;
@@ -101,15 +105,27 @@ export function refresh_courselist() {
 export function init() {
 
     refresh_courselist();
-    
+
     // init code editor
+    CodeMirror.defineSimpleMode("sellquiz-edit", {
+        start: [
+            {regex: /\$(?:[^\\]|\\.)*?(?:\$|$)/, token: "string"},
+            {regex: /`(?:[^\\]|\\.)*?(?:`)/, token: "string"},
+            {regex: /%.*/, token: "comment"},
+            {regex: /#.*/, token: "keyword", sol: true},
+            {regex: /---|Definition\.|Theorem\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Plot2d\.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/, token: "keyword"},
+        ],
+        comment: [
 
-    /*CodeMirrorSpellChecker({ // TODO: activate / deactivate option
-        codeMirrorInstance: CodeMirror,
-    });*/
+        ],
+        meta: {
+            dontIndentStates: ["comment"],
+            lineComment: "%"
+        }
+    });
 
-    editor = codemirror.fromTextArea(document.getElementById("editor") as HTMLTextAreaElement, {
-        //mode: "spell-checker",  // TODO: activate / deactivate option
+    editor = CodeMirror.fromTextArea(
+            document.getElementById("editor") as HTMLTextAreaElement, {
         mode: "sellquiz-edit",
         lineNumbers: true,
         lineWrapping: true,
@@ -137,24 +153,24 @@ export function init() {
             }
         }
     });
-    editor.setSize(null,"100%");
+    editor.setSize(null, "100%");
 
     // populate math symbols
     let html = "<table class=\"p-1\">";
-    let symbols = ['sum','prod','xx','@','o+','ox','o.','^^','^^^','vv','vvv','nn','nnn','uu','uuu','a/b','a^b','sqrt(x)','root(x)(y)','int','oint','del','grad','+-','O/','oo','aleph','abs(x)','floor(x)','ceil(x)','norm(vecx)','/_','/_\\','diamond','square','CC','NN','QQ','RR','ZZ','"text"','!=','<','>','<=','>=','-<','-<=','>-','>-=','in','notin','sub','sup','sube','supe','-=','~=','~~','prop','neg','=>','<=>','AA','EE','_|_','TT','|--','|==','{','}','(:',':)','<<','>>','uarr','darr','->','>->','->>','>->>','|->','larr','harr','rArr','lArr','hArr','hat x','bar x','ul x','vec x','tilde x','dot x','ddot x','overset(x)(=)','underset(x)(=)','ubrace(x)','obrace(x)','color(red)(x)','cancel(x)',
+    const symbols = ['sum','prod','xx','@','o+','ox','o.','^^','^^^','vv','vvv','nn','nnn','uu','uuu','a/b','a^b','sqrt(x)','root(x)(y)','int','oint','del','grad','+-','O/','oo','aleph','abs(x)','floor(x)','ceil(x)','norm(vecx)','/_','/_\\','diamond','square','CC','NN','QQ','RR','ZZ','"text"','!=','<','>','<=','>=','-<','-<=','>-','>-=','in','notin','sub','sup','sube','supe','-=','~=','~~','prop','neg','=>','<=>','AA','EE','_|_','TT','|--','|==','{','}','(:',':)','<<','>>','uarr','darr','->','>->','->>','>->>','|->','larr','harr','rArr','lArr','hArr','hat x','bar x','ul x','vec x','tilde x','dot x','ddot x','overset(x)(=)','underset(x)(=)','ubrace(x)','obrace(x)','color(red)(x)','cancel(x)',
     'alpha','beta','gamma','delta','epsilon','varepsilon','zeta','eta','theta','vartheta','iota','kappa','lambda','mu','nu','xi','pi','rho','sigma','tau','upsilon','phi','varphi','chi','psi','omega',
     'bb "Aa"', 'bbb "Aa"', 'cc "Aa"', 'tt "Aa"', 'fr "Aa"', 'sf "Aa"',
     '[[a,b],[c,d]]','((a),(b))','[[a,b,|,c],[d,e,|,f]]',
-    'lim_(n->oo) sum_(i=0)^n', 'int_0^1 f(x) \ dx', 'f\'(x)=dy/dx'];
+    'lim_(n->oo) sum_(i=0)^n', 'int_0^1 f(x) \\ dx', 'f\'(x)=dy/dx'];
     const cols = 16;
     const rows = Math.ceil(symbols.length/cols);
     for(let i=0; i<rows; i++) {
         html += "<tr>";
         for(let j=0; j<cols; j++) {
-            let idx = i*cols+j;
+            const idx = i*cols+j;
             if(idx < symbols.length) {
-                let onclick = "slw.insertCode(' " + symbols[idx] + " ');slw.editor.focus();";
-                html += "<td class=\"border border-dark p-1 text-center\" style=\"cursor:pointer;\"><a onclick=\"" + onclick + "\"> ` " 
+                const onclick = "slw.insertCode(' " + symbols[idx] + " ');slw.editor.focus();";
+                html += "<td class=\"border border-dark p-1 text-center\" style=\"cursor:pointer;\"><a onclick=\"" + onclick + "\"> ` "
                     + symbols[idx] + " ` </a></td>";
             }
             else
@@ -166,7 +182,7 @@ export function init() {
     document.getElementById("math-symbols").innerHTML = html;
 
     // populate code templates
-    let code_templates = [
+    const code_templates = [
         "Document Title", "\n##### My Title\n",
         "Section", "\n# My Section\n",
         "Subsection", "\n## My Subsection\n",
@@ -178,15 +194,15 @@ export function init() {
     ];
     html = '';
     for(let i=0; i<code_templates.length/2; i++) {
-        let id = code_templates[i*2+0];
-        let code = code_templates[i*2+1].replaceAll("\n","\\n").replaceAll("\t","\\t");
+        const id = code_templates[i*2+0];
+        const code = code_templates[i*2+1].replace(/\n/g,"\\n").replace(/\t/g,"\\t");
         html += `<a class="list-group-item list-group-item-action"
                     onclick="slw.insertCode('` + code + `');"
                     style="cursor:pointer;"
-                    >` + id + `</a>`;   
+                    >` + id + `</a>`;
     }
     document.getElementById("insertCodeList").innerHTML = html;
-    
+
     // read demo file: TODO: move code!!!!!
     $.ajax({
         type: "POST",
@@ -209,12 +225,12 @@ export function init() {
 }
 
 export function jump(lineNo : number) {
-    editor.scrollTo(null, editor.charCoords({line: lineNo, ch: 0}, "local").top); 
+    editor.scrollTo(null, editor.charCoords({line: lineNo, ch: 0}, "local").top);
 }
 
 export function insertCode(text : string) {
-    var doc = editor.getDoc();
-    var cursor = doc.getCursor();
+    const doc = editor.getDoc();
+    const cursor = doc.getCursor();
     doc.replaceRange(text, cursor);
 }
 
@@ -231,36 +247,36 @@ export function save() {
 }
 
 export function update() {
-    let compiler = new compile.Compiler();
+    const compiler = new compile.Compiler();
     compiler.spellCheck = toggle_states["preview-spell-check"];
     compilerOutput = compiler.compile(editor.getValue());
     document.getElementById("rendered-content").innerHTML = compilerOutput.html;
 
     compilerOutput.refresh();
-    
-    // refresh SELL-quizzes -> TODO: move code to quiz.ts
+
+    /*// refresh SELL-quizzes -> TODO: move code to quiz.ts
     sellquiz.reset();
     sellquiz.setLanguage(lang.language);
     //sellquiz.setServicePath(TODO);
     const n = compilerOutput.sellQuizzes.length;
     for(let i=0; i<n; i++) {
-        let domElement = document.getElementById("sellquiz-" + i);
-        let qIdx = sellquiz.createQuestion(compilerOutput.sellQuizzes[i].src);
+        const domElement = document.getElementById("sellquiz-" + i);
+        const qIdx = sellquiz.createQuestion(compilerOutput.sellQuizzes[i].src);
         sellquiz.setQuestionHtmlElement(qIdx, domElement);
         if(qIdx < 0) {
-            let err = sellquiz.getErrorLog().replaceAll("\n","<br/>");
+            const err = sellquiz.getErrorLog().replace(/\n/g,"<br/>");
             let html = '<div class="card border-dark"><div class="card-body">';
             html += '<p class="text-danger"><b>' + err + '</b></p>';
             html += '</div></div>';
             domElement.innerHTML = html;
         } else {
-            let quizHtml = sellquiz.getQuestionHighLevelHTML(qIdx);
+            const quizHtml = sellquiz.getQuestionHighLevelHTML(qIdx);
             domElement.innerHTML = quizHtml;
             sellquiz.refreshQuestion(qIdx);
         }
-    }
+    }*/
 
-    eval("typeset()");    
+    eval("typeset()");
 }
 
 export function eval_prog(idx : number) {
@@ -282,7 +298,7 @@ export function export_stack(idx : number) {
 }
 
 export function toggle(buttonName : string) {
-    let element = document.getElementById(buttonName);
+    const element = document.getElementById(buttonName);
     toggle_states[buttonName] = !toggle_states[buttonName];
     if(toggle_states[buttonName])
         element.className = "btn btn-dark mx-0 btn-sm";
@@ -295,5 +311,5 @@ export function toggle(buttonName : string) {
         } else
             update();
     }
-        
+
 }
