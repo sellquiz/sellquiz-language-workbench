@@ -16,6 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import axios from 'axios';
 import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/mode/simple';
 import 'codemirror/addon/selection/active-line';
@@ -48,57 +49,49 @@ export const toggle_states : {[key:string]:boolean} = {
 export function refresh_filelist() {
     const filelist_button = document.getElementById("filelist_button");
     const filelist_dropdown_items = document.getElementById("filelist_dropdown_items");
-    $.ajax({
-        type: "POST",
-        url: "services/filelist.php",
-        data: {
-            course: current_course
-        },
-        success: function(data) {
-            data = JSON.parse(data);
-            if(data["status"] === "error")
-                alert(data["error_message"]); // TODO
-            let html = '', i = 0;
-            for(const file of data["file_list"]) {
-                html += '<li><a class="dropdown-item" style="cursor:pointer;">' + file + '</a></li>';
-                if(i == 0)
-                    current_file = file;
-                i ++;
-            }
-            filelist_dropdown_items.innerHTML = html;
-            filelist_button.innerHTML = current_file;
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr); // TODO: error handling!
+    axios.post('services/filelist.php', new URLSearchParams({
+        'course': current_course
+    }))
+    .then(function(response) {
+        const data = response.data;
+        if(data["status"] === "error")
+            alert(data["error_message"]); // TODO
+        let html = '', i = 0;
+        for(const file of data["file_list"]) {
+            html += '<li><a class="dropdown-item" style="cursor:pointer;">' + file + '</a></li>';
+            if(i == 0)
+                current_file = file;
+            i ++;
         }
+        filelist_dropdown_items.innerHTML = html;
+        filelist_button.innerHTML = current_file;
+    })
+    .catch(function(error) {
+        console.error(error); // TODO: error handling!
     });
 }
 
 export function refresh_courselist() {
     const courselist_button = document.getElementById("courselist_button");
     const courselist_dropdown_items = document.getElementById("courselist_dropdown_items");
-    $.ajax({
-        type: "POST",
-        url: "services/courselist.php",
-        data: { },
-        success: function(data) {
-            data = JSON.parse(data);
-            if(data["status"] === "error")
-                alert(data["error_message"]); // TODO
-            let html = '', i = 0;
-            for(const course of data["course_list"]) {
-                html += '<li><a class="dropdown-item" style="cursor:pointer;">' + course + '</a></li>';
-                if(i == 0)
-                    current_course = course;
-                i ++;
-            }
-            courselist_dropdown_items.innerHTML = html;
-            courselist_button.innerHTML = current_course;
-            refresh_filelist();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr); // TODO: error handling!
+    axios.post('services/courselist.php', new URLSearchParams())
+    .then(function(response) {
+        const data = response.data;
+        if(data["status"] === "error")
+            alert(data["error_message"]); // TODO
+        let html = '', i = 0;
+        for(const course of data["course_list"]) {
+            html += '<li><a class="dropdown-item" style="cursor:pointer;">' + course + '</a></li>';
+            if(i == 0)
+                current_course = course;
+            i ++;
         }
+        courselist_dropdown_items.innerHTML = html;
+        courselist_button.innerHTML = current_course;
+        refresh_filelist();
+    })
+    .catch(function(error) {
+        console.error(error); // TODO: error handling!
     });
 }
 
@@ -204,23 +197,19 @@ export function init() {
     document.getElementById("insertCodeList").innerHTML = html;
 
     // read demo file: TODO: move code!!!!!
-    $.ajax({
-        type: "POST",
-        url: "services/read.php",
-        data: {
-            course: "demo",  // TODO
-            file: "demo"    // TODO
-        },
-        success: function(data) {
-            data = JSON.parse(data);
-            if(data["status"] === "error")
-                alert(data["error_message"]); // TODO
-            editor.setValue(data["content"]);
-            update();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr); // TODO: error handling!
-        }
+    axios.post('services/read.php', new URLSearchParams({
+        course: "demo",  // TODO
+        file: "demo"    // TODO
+    }))
+    .then(function(response) {
+        const data = response.data;
+        if(data["status"] === "error")
+            alert(data["error_message"]); // TODO
+        editor.setValue(data["content"]);
+        update();
+    })
+    .catch(function(error) {
+        console.error(error); // TODO: error handling!
     });
 }
 

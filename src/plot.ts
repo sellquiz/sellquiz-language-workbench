@@ -16,6 +16,8 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import axios from 'axios';
+
 // TODO: must clear cache
 const cache : {[code:string]:string} = {};
 
@@ -59,19 +61,16 @@ export class Plot {
         const service_url = "services/plot.php";
         const this_ = this;
 console.log(this.tex);
-        $.ajax({
-            type: "POST",
-            url: service_url,
-            data: {
-                input: this.tex
-            },
-            success: function(data) {
-                cache[this_.src] = data;
-                this_.setImage(data);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr); // TODO: error handling!
-            }
+        axios.post(service_url, new URLSearchParams({
+            input: this.tex
+        }))
+        .then(function(response) {
+            const data = response.data;
+            cache[this_.src] = data;
+            this_.setImage(data);
+        })
+        .catch(function(error) {
+            console.error(error); // TODO: error handling!
         });
     }
 

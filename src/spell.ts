@@ -16,6 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import axios from 'axios';
 import nspell from 'nspell';
 
 import * as slw from './index';
@@ -49,36 +50,26 @@ export class Spell {
     load(lang="en") : boolean {
         const this_ = this;
         // load 'aff'
-        $.ajax({
-            type: "POST",
-            dataType: "text",
-            mimeType: 'text/plain; charset=x-user-defined',
-            //url: "../cache/dict-" + lang + "-compr.aff",
-            url: "node_modules/dictionary-" + lang + "/index.aff",
-            data: { },
-            success: function(data) {
-                this_.aff[lang] = data; // LZString.decompress(data);
-                // load 'dic
-                $.ajax({
-                    type: "POST",
-                    dataType: "text",
-                    mimeType: 'text/plain; charset=x-user-defined',
-                    //url: "../cache/dict-" + lang + "-compr.dic",
-                    url: "node_modules/dictionary-" + lang + "/index.dic",
-                    data: { },
-                    success: function(data) {
-                        this_.dic[lang] = data; // LZString.decompress(data);
-                        this_.spell = nspell(this_.aff["en"], this_.dic["en"]);
-                        slw.update();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr); // TODO: error handling!
-                    }
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr); // TODO: error handling!
-            }
+        axios.post('node_modules/dictionary-' + lang + '/index.aff', new URLSearchParams({
+        }))
+        .then(function(response) {
+            const data = response.data;
+            this_.aff[lang] = data; // LZString.decompress(data);
+            // load 'dic
+            axios.post("node_modules/dictionary-" + lang + "/index.dic", new URLSearchParams({
+            }))
+            .then(function(response) {
+                const data = response.data;
+                this_.dic[lang] = data; // LZString.decompress(data);
+                this_.spell = nspell(this_.aff["en"], this_.dic["en"]);
+                slw.update();
+            })
+            .catch(function(error) {
+                console.error(error); // TODO: error handling!
+            });
+        })
+        .catch(function(error) {
+            console.error(error); // TODO: error handling!
         });
         return true;
     }

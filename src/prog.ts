@@ -16,6 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import axios from 'axios';
 import * as codemirror from 'codemirror';
 import 'codemirror/addon/selection/active-line';
 import * as lang from './lang';
@@ -68,23 +69,19 @@ export class ProgrammingQuiz {
         const feedback_htmlElement = document.getElementById("programming-feedback-" + this.id);
         const wait_text = lang.text("please_wait");
         feedback_htmlElement.innerHTML = "<span class=\"text-danger\">" + wait_text + "</span>";
-        $.ajax({
-            type: "POST",
-            url: service_url,
-            data: {
-                input: JSON.stringify(task)
-            },
-            success: function(data) {
-                data = JSON.parse(data);
-                const status = data["status"];
-                const message = data["msg"];
-                feedback_htmlElement.innerHTML = ((status==="ok") ? lang.checkmark : lang.crossmark)
-                    + " ";
-                feedback_htmlElement.innerHTML += ' &nbsp; <code>' + message.replaceAll("\n", "<br/>").replaceAll(" ","&nbsp;") + '</code>';
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr); // TODO: error handling!
-            }
+        axios.post(service_url, new URLSearchParams({
+            input: JSON.stringify(task)
+        }))
+        .then(function(response) {
+            const data = response.data;
+            const status = data["status"];
+            const message = data["msg"];
+            feedback_htmlElement.innerHTML = ((status==="ok") ? lang.checkmark : lang.crossmark)
+                + " ";
+            feedback_htmlElement.innerHTML += ' &nbsp; <code>' + message.replaceAll("\n", "<br/>").replaceAll(" ","&nbsp;") + '</code>';
+        })
+        .catch(function(error) {
+            console.error(error); // TODO: error handling!
         });
     }
 

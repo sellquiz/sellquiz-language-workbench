@@ -44,7 +44,6 @@
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"/>
         <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css"/>
 
-        <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
         <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="node_modules/mathjs/lib/browser/math.js"></script>
         <script src="extern/nspell.min.js"></script>

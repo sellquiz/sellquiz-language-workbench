@@ -16,6 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
+import axios from 'axios';
 import * as lang from './lang';
 import * as QuizMXML from './quiz-mxml';
 
@@ -84,89 +85,85 @@ export class StackQuiz {
         // call maxima
         const service_url = "services/maxima.php";
         const this_ = this;
-        $.ajax({
-            type: "POST",
-            url: service_url,
-            data: {
-                input: this.code
-            },
-            success: function(data) {
-                //console.log(data);
-                const lines = data.split("\n");
-                let state = "";
-                let values = "";
-                let evalValues = "";
-                let evalValuesFloat = "";
-                for(let i=0; i<lines.length; i++) {
-                    const line = lines[i].trim();
-                    if(line.endsWith(") values")) {
-                        state = "v";
-                    } else if(line.endsWith(") ev(values)")) {
-                        state = "ev";
-                    } else if(line.endsWith(") float(ev(values))")) {
-                        state = "ev_float";
-                    } else if(state == "v") {
-                        //console.log(line);
-                        values = line;
-                        state = "";
-                    } else if(state == "ev") {
-                        //console.log(line);
-                        evalValues = line;
-                        state = "";
-                    } else if(state == "ev_float") {
-                        //console.log(line);
-                        evalValuesFloat = line;
-                        state = "";
-                    }
+        axios.post(service_url, new URLSearchParams({
+            input: this.code
+        }))
+        .then(function(response) {
+            const data = response.data;
+            const lines = data.split("\n");
+            let state = "";
+            let values = "";
+            let evalValues = "";
+            let evalValuesFloat = "";
+            for(let i=0; i<lines.length; i++) {
+                const line = lines[i].trim();
+                if(line.endsWith(") values")) {
+                    state = "v";
+                } else if(line.endsWith(") ev(values)")) {
+                    state = "ev";
+                } else if(line.endsWith(") float(ev(values))")) {
+                    state = "ev_float";
+                } else if(state == "v") {
+                    //console.log(line);
+                    values = line;
+                    state = "";
+                } else if(state == "ev") {
+                    //console.log(line);
+                    evalValues = line;
+                    state = "";
+                } else if(state == "ev_float") {
+                    //console.log(line);
+                    evalValuesFloat = line;
+                    state = "";
                 }
-                // parse values
-                let start = 0;
-                for(let i=0; i<values.length; i++) {
-                    if(values[i] == ")") {
-                        start = i + 3;
-                        break;
-                    }
+            }
+            // parse values
+            let start = 0;
+            for(let i=0; i<values.length; i++) {
+                if(values[i] == ")") {
+                    start = i + 3;
+                    break;
                 }
-                const valuesArr = values.substring(start, values.length-1).trim().split(",");
+            }
+            const valuesArr = values.substring(start, values.length-1).trim().split(",");
 //console.log(valuesArr);
-                // parse evaluation result: TODO: this may not work for matrices, sets, text, ...
-                start = 0;
-                for(let i=0; i<evalValues.length; i++) {
-                    if(evalValues[i] == ")") {
-                        start = i + 3;
-                        break;
-                    }
+            // parse evaluation result: TODO: this may not work for matrices, sets, text, ...
+            start = 0;
+            for(let i=0; i<evalValues.length; i++) {
+                if(evalValues[i] == ")") {
+                    start = i + 3;
+                    break;
                 }
-                const evalValuesArr
-                    = evalValues.substring(start, evalValues.length-1).trim().split(",");
+            }
+            const evalValuesArr
+                = evalValues.substring(start, evalValues.length-1).trim().split(",");
 //console.log(evalValuesArr);
-                // parse float values
-                start = 0;
-                for(let i=0; i<evalValuesFloat.length; i++) {
-                    if(evalValuesFloat[i] == ")") {
-                        start = i + 3;
-                        break;
-                    }
+            // parse float values
+            start = 0;
+            for(let i=0; i<evalValuesFloat.length; i++) {
+                if(evalValuesFloat[i] == ")") {
+                    start = i + 3;
+                    break;
                 }
-                const evalValuesArrFloat
-                    = evalValuesFloat.substring(start, evalValuesFloat.length-1).trim().split(",");
+            }
+            const evalValuesArrFloat
+                = evalValuesFloat.substring(start, evalValuesFloat.length-1).trim().split(",");
 //console.log(evalValuesArrFloat);
 
-                //alert(_this.solution)
+            //alert(_this.solution)
 
-                // TODO: assert equal length of values and evalValues!
-                for(let i=0; i<valuesArr.length; i++) {
-                    this_.solution[valuesArr[i]] = evalValuesArr[i];
-                    this_.solution[valuesArr[i]+"_float"] = evalValuesArrFloat[i];
-                }
+            // TODO: assert equal length of values and evalValues!
+            for(let i=0; i<valuesArr.length; i++) {
+                this_.solution[valuesArr[i]] = evalValuesArr[i];
+                this_.solution[valuesArr[i]+"_float"] = evalValuesArrFloat[i];
+            }
 //console.log(_this.solution);
 
-                this_.updateHTML();
-                //setTimeout(function(){ mathjax.typeset(); }, 250); // TODO: do not call this for EVERY quiz separately, but only when LAST quiz is ready
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr); // TODO: error handling!
-            }
+            this_.updateHTML();
+            //setTimeout(function(){ mathjax.typeset(); }, 250); // TODO: do not call this for EVERY quiz separately, but only when LAST quiz is ready
+        })
+        .catch(function(error) {
+            console.error(error); // TODO: error handling!
         });
     }
 
