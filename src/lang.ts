@@ -16,7 +16,7 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-export const language = "de";
+export const language = "en";
 
 export const checkmark = ' &#x2705; ';
 export const crossmark = ' &#x274C; ';
@@ -31,11 +31,21 @@ const lang_str : {[key:string]:string} = {
     "please_wait_en": "please wait...",
     "please_wait_de": "bitte warten...",
     "evaluate_en": "Evaluate",
-    "evaluate_de": "Auswerten"
+    "evaluate_de": "Auswerten",
+    "solution_en": "Solution",
+    "solution_de": "Lösung",
+    "variables_en": "Variables",
+    "variables_de": "Variablen",
+    "syntax_error_en": "Syntax error",
+    "syntax_error_de": "Syntaxfehler"
 };
 
-export function text(id : string) {
+export function text(id : string) : string {
     if(!((id + "_" + language) in lang_str))
         return "LANG.text('" + id + "'): unknown!";
     return lang_str[id + "_" + language];
+}
+
+export function red_text(id : string) : string {
+    return '<span class="text-danger">' + text(id) + '</span>';
 }

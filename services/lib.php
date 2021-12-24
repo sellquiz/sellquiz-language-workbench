@@ -42,11 +42,11 @@ function is_identifier($s) {
     return true;
 }
 
-function get_dependency_path($dep_name) {
+function get_dependency_path($dependency_name) {
     $path = "";
     $config = file("../config.txt");
     foreach($config as $line) {
-        if(endsWith(trim($line), "/" . $dep_name)) {
+        if(endsWith(trim($line), "/" . $dependency_name)) {
             $path = trim($line);
             break;
         }

@@ -41,9 +41,9 @@ export let current_file = '';
 export const toggle_states : {[key:string]:boolean} = {
     "preview-spell-check": false,
     "preview-show-source-links": true,
-    "preview-show-solutions": true,
-    "preview-show-variables": true,
-    "preview-show-export": true
+    "preview-show-solutions": false,
+    "preview-show-variables": false,
+    "preview-show-export": false
 }
 
 export function refresh_filelist() {
@@ -294,11 +294,17 @@ export function toggle(buttonName : string) {
     else
         element.className = "btn btn-outline-dark mx-0 btn-sm";
 
-    if(buttonName=="preview-spell-check") {
+    if(buttonName === "preview-spell-check") {
         if(spellInst == null) {
             spellInst = new spell.Spell();
         } else
             update();
+    } else if(buttonName === "preview-show-solutions") {
+        update();
+    } else if(buttonName === "preview-show-variables") {
+        update();
+    } else if(buttonName === "preview-show-export") {
+        update();
     }
 
 }

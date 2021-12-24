@@ -60,7 +60,7 @@ export class Plot {
         // render via LaTeX + Gnuplot
         const service_url = "services/plot.php";
         const this_ = this;
-console.log(this.tex);
+        //console.log(this.tex);
         axios.post(service_url, new URLSearchParams({
             input: this.tex
         }))

@@ -17,8 +17,10 @@
  ******************************************************************************/
 
 import axios from 'axios';
-import * as codemirror from 'codemirror';
 import 'codemirror/addon/selection/active-line';
+import * as codemirror from 'codemirror';
+
+import * as slw from './index';
 import * as lang from './lang';
 
 export enum ProgrammingQuizType {
@@ -93,18 +95,23 @@ export class ProgrammingQuiz {
         html += "<span class=\"h2 py-1 my-1\">"
             + '<i class="fas fa-keyboard"></i> '
             + this.title + "</span><br/>\n";
-
         html += this.text;
-
         html += '<div class="border p-0 m-0"><textarea class="form-control p-0" style="min-width: 100%;" id="programming-editor-' + this.id + '" + rows="5"></textarea></div>';
-
         html += '<p id="programming-feedback-' + this.id + '"></p>';
-
-        const evalStr = "Auswerten"; // TODO: language!
+        const evalStr = lang.text("evaluate");
         html += '<button type="button" class="btn btn-primary" onclick="slw.eval_prog(\''
             + this.id + '\')">' + evalStr + '</button>' + ' ';
-
         html += "</div>\n"; // end of card body
+
+        if(slw.toggle_states["preview-show-solutions"]) {
+            html += "<div class=\"card-footer text-muted\">";
+            html += "<b>" + lang.text("solution") + ":</b><br/>";
+            html += "<code class=\"text-secondary\"><pre>";
+            html += this.solution;
+            html += "</pre></code>";
+            html += "</div>\n"; // end of card footer
+        }
+
         html += "</div>\n"; // end of card
 
         document.getElementById("programming-" + this.id).innerHTML = html;
