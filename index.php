@@ -87,89 +87,90 @@
         <?php include('index-menu.php') ?>
         <?php include('index-submenus.php') ?>
         <?php include('index-main.php') ?>
+
+        <script>
+
+            function openTab(id) {
+                // TODO: move code to "src/"
+                document.getElementById("editor-content").style.display =
+                    id === "editor" ? "block" : "none";
+                document.getElementById("box").style.display =
+                    id === "box" ? "block" : "none";
+                document.getElementById("ticket").style.display =
+                    id === "ticket" ? "block" : "none";
+                document.getElementById("document-tree").style.display =
+                    id === "filetree" ? "block" : "none";
+                document.getElementById("user-management").style.display =
+                    id === "users" ? "block" : "none";
+                document.getElementById("bugs").style.display =
+                    id === "bugs" ? "block" : "none";
+
+                document.getElementById("tab-editor").className =
+                    id === "editor" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-box").className =
+                    id === "box" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-ticket").className =
+                    id === "ticket" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-filetree").className =
+                    id === "filetree" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-users").className =
+                    id === "users" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-bugs").className =
+                    id === "bugs" ? "nav-link active" : "nav-link";
+            }
+        </script>
+
+        <script>
+            slw.init();
+
+            function resize() {
+                //let editorElement = document.getElementById("editor-div");
+                //editorElement.style.height = "" + (window.innerHeight - 100) + "px";
+            }
+
+            window.addEventListener('resize', function(event) {
+                resize();
+            }, true);
+
+            window.addEventListener('load', function () {
+                resize();
+            });
+
+            let typeset_promise = Promise.resolve();
+            function typeset() {
+                typeset_promise = typeset_promise.then(() => MathJax.typesetPromise())
+                    .catch((err) => console.log('Typeset failed: ' + err.message));
+                return typeset_promise;
+            }
+
+        </script>
+
+        <script>
+            // tooltip handling
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+            function hide_tooltips() {
+                for(let tooltip of tooltipList)
+                    tooltip.hide();
+            }
+        </script>
+
+        <?php
+            if(strlen($_SESSION['slw_error']) > 0) {
+                echo("
+                    <script>
+                        var errorModal = new bootstrap.Modal(document.getElementById(\"modal-error\"), {});
+                        document.onreadystatechange = function () {
+                            errorModal.show();
+                        };
+                    </script>
+                ");
+                $_SESSION['slw_error'] = "";
+            }
+        ?>
+
     </body>
-
-    <script>
-
-        function openTab(id) {
-            // TODO: move code to "src/"
-            document.getElementById("editor-content").style.display =
-                id === "editor" ? "block" : "none";
-            document.getElementById("box").style.display =
-                id === "box" ? "block" : "none";
-            document.getElementById("ticket").style.display =
-                id === "ticket" ? "block" : "none";
-            document.getElementById("document-tree").style.display =
-                id === "filetree" ? "block" : "none";
-            document.getElementById("user-management").style.display =
-                id === "users" ? "block" : "none";
-            document.getElementById("bugs").style.display =
-                id === "bugs" ? "block" : "none";
-
-            document.getElementById("tab-editor").className =
-                id === "editor" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-box").className =
-                id === "box" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-ticket").className =
-                id === "ticket" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-filetree").className =
-                id === "filetree" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-users").className =
-                id === "users" ? "nav-link active" : "nav-link";
-            document.getElementById("tab-bugs").className =
-                id === "bugs" ? "nav-link active" : "nav-link";
-        }
-    </script>
-
-    <script>
-        slw.init();
-
-        function resize() {
-            //let editorElement = document.getElementById("editor-div");
-            //editorElement.style.height = "" + (window.innerHeight - 100) + "px";
-        }
-
-        window.addEventListener('resize', function(event) {
-            resize();
-        }, true);
-
-        window.addEventListener('load', function () {
-            resize();
-        });
-
-        let typeset_promise = Promise.resolve();
-        function typeset() {
-            typeset_promise = typeset_promise.then(() => MathJax.typesetPromise())
-                .catch((err) => console.log('Typeset failed: ' + err.message));
-            return typeset_promise;
-        }
-
-    </script>
-
-    <script>
-        // tooltip handling
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-        function hide_tooltips() {
-            for(let tooltip of tooltipList)
-                tooltip.hide();
-        }
-    </script>
-
-    <?php
-        if(strlen($_SESSION['slw_error']) > 0) {
-            echo("
-                <script>
-                    var errorModal = new bootstrap.Modal(document.getElementById(\"modal-error\"), {});
-                    document.onreadystatechange = function () {
-                        errorModal.show();
-                    };
-                </script>
-            ");
-            $_SESSION['slw_error'] = "";
-        }
-    ?>
 
 </html>
