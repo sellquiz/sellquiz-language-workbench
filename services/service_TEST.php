@@ -1,3 +1,5 @@
+<?php
+
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
@@ -16,15 +18,16 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-const esbuild = require('esbuild');
+include "service_core.php";
 
-// --- node version ---
-esbuild.buildSync({
-    platform: 'browser',
-    globalName: 'slw',
-    minify: true,
-    target: 'es2020',
-    entryPoints: ['src/index.ts'],
-    bundle: true,
-    outfile: 'dist/sellquiz-language-workbench.min.js'
-});
+$command = [
+    "type" => "get_courselist",
+    "query_values" => [
+        /*"name" => "aaa",
+        "desc" => "bbb"*/
+    ]
+];
+
+echo service($command);
+
+?>

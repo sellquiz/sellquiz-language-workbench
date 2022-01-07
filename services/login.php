@@ -3,7 +3,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *

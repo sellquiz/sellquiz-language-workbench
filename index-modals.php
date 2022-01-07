@@ -2,7 +2,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -48,24 +48,24 @@
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             @
                         </span>
-                        <input id="login-user" name="login-user" type="text" class="form-control" 
+                        <input id="login-user" name="login-user" type="text" class="form-control"
                             placeholder="Username">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-key"></i>
                         </span>
-                        <input id="login-password" name="login-password" type="password" class="form-control" 
+                        <input id="login-password" name="login-password" type="password" class="form-control"
                             placeholder="Password">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <span data-bs-toggle="modal" 
+                    <span data-bs-toggle="modal"
                         data-bs-target="#modal-register">
-                        <button id="register" 
+                        <button id="register"
                             type="button" class="btn btn-danger mx-0"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="No account? register here!">
                             Registration
                         </button>
@@ -95,7 +95,7 @@
                         <span>
                             <button
                                 type="button" class="btn btn-success mx-0 btn"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 title="validate access password">
                                 validate
                             </button>
@@ -105,35 +105,35 @@
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             @
                         </span>
-                        <input id="register-user" name="register-user" type="text" class="form-control" 
+                        <input id="register-user" name="register-user" type="text" class="form-control"
                             placeholder="Username" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-users"></i>
                         </span>
-                        <input id="register-name" name="register-name" type="text" class="form-control" 
+                        <input id="register-name" name="register-name" type="text" class="form-control"
                             placeholder="Full name" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-envelope"></i>
                         </span>
-                        <input id="register-mail" name="register-mail" type="text" class="form-control" 
+                        <input id="register-mail" name="register-mail" type="text" class="form-control"
                             placeholder="Mail address" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-key"></i>
                         </span>
-                        <input id="register-password-1" name="register-password-1" type="password" class="form-control" 
+                        <input id="register-password-1" name="register-password-1" type="password" class="form-control"
                             placeholder="User Password (at least 8 characters)" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1" style="width:50px;">
                             <i class="fas fa-key"></i>
                         </span>
-                        <input id="register-password-2" name="register-password-2" type="password" class="form-control" 
+                        <input id="register-password-2" name="register-password-2" type="password" class="form-control"
                             placeholder="Repeat User Password" disabled>
                     </div>
                 </div>

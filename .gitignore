@@ -1,3 +1,6 @@
+data/database.db
+data/database_dump.sql
+
 node_modules/
 cache/
 services/cache/

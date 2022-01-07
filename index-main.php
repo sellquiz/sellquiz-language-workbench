@@ -2,7 +2,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -48,7 +48,7 @@
                         <td>admin</td>
                         <td>admin</td>
                         <td>
-                            <button type="button" 
+                            <button type="button"
                                 class="btn btn-primary btn-sm">
                                 <i class="fas fa-trash"></i>
                             </button>
@@ -84,15 +84,15 @@
                         <th scope="row">hello.txt</th>
                         <td>10000</td>
                         <td>
-                            <button type="button" 
+                            <button type="button"
                                 class="btn btn-primary btn-sm">
                                 <i class="fas fa-trash"></i>
                             </button>
-                            <button type="button" 
+                            <button type="button"
                                 class="btn btn-primary btn-sm">
                                 <i class="fas fa-italic"></i>
                             </button>
-                            <button type="button" 
+                            <button type="button"
                                 class="btn btn-primary btn-sm">
                                 <i class="fas fa-anchor"></i>
                             </button>

@@ -3,7 +3,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -63,7 +63,7 @@ if(!file_exists($file_meta_path)) {
 // read meta data
 $course_meta = json_decode(file_get_contents($course_meta_path));
 $file_meta = json_decode(file_get_contents($file_meta_path));
-    
+
 // check, if user has access to course
 if(!is_admin() && !in_array($user, $course_meta->access_read)) {
     $status = "error";

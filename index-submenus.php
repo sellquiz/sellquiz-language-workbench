@@ -2,7 +2,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -21,17 +21,17 @@
 <div id="container" class="container-fluid p-0 m-0">
     <div class="row m-0 p-0">
         <div class="col text-center border-end border-bottom py-1" style="">
-            <span data-bs-toggle="modal" 
+            <span data-bs-toggle="modal"
                 data-bs-target="#insertCodeModal">
-                <button id="insertCodeButton" 
+                <button id="insertCodeButton"
                     type="button" class="btn btn-dark mx-0 btn-sm"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="insert template [F2]">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </span>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    data-bs-toggle="tooltip" data-bs-placement="top"
                     title="insert math symbol">
                 <button class="btn btn-sm btn-dark dropdown-toggle"
                     type="button" id="" data-bs-toggle="dropdown"
@@ -44,27 +44,27 @@
                 </div>
             </div>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="undo [Ctrl+Z]" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="undo [Ctrl+Z]"
                 onclick="hide_tooltips();slw.undo();">
                 <i class="fas fa-undo"></i>
             </button>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="redo [Ctrl+Y]" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="redo [Ctrl+Y]"
                 onclick="hide_tooltips();slw.redo();">
                 <i class="fas fa-redo"></i>
             </button>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="save [Ctrl+S]" 
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="save [Ctrl+S]"
                 onclick="hide_tooltips();slw.save();">
                 <i class="fas fa-hdd"></i>
             </button>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    data-bs-toggle="tooltip" data-bs-placement="top"
                     title="select course">
-                <button class="btn btn-sm btn-primary dropdown-toggle" 
+                <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="courselist_button" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
                 </button>
@@ -72,7 +72,7 @@
                 </ul>
             </div>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="top" 
+                    data-bs-toggle="tooltip" data-bs-placement="top"
                     title="select file">
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="filelist_button" data-bs-toggle="dropdown"
@@ -83,39 +83,39 @@
             </div>
         </div>
         <div class="col text-center border-end border-bottom py-1" style="">
-            <button type="button" class="btn btn-success mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="update [F1]" 
+            <button type="button" class="btn btn-success mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="update [F1]"
                 onclick="hide_tooltips();slw.update();">
                 <i class="fas fa-running"></i>
             </button>
-            <button id="preview-spell-check" type="button" class="btn btn-outline-dark mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="spell check" 
+            <button id="preview-spell-check" type="button" class="btn btn-outline-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="spell check"
                 onclick="hide_tooltips();slw.toggle('preview-spell-check');">
                 <i class="fas fa-spell-check"></i>
             </button>
-            <button id="preview-show-source-links" type="button" class="btn btn-dark mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="source links" 
+            <button id="preview-show-source-links" type="button" class="btn btn-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="source links"
                 onclick="hide_tooltips();slw.toggle('preview-show-source-links');">
                 <i class="fas fa-link"></i>
             </button>
-            <button id="preview-show-solutions" type="button" class="btn btn-dark mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="show solutions" 
+            <button id="preview-show-solutions" type="button" class="btn btn-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="show solutions"
                 onclick="hide_tooltips();slw.toggle('preview-show-solutions');">
                 <i class="fas fa-poll"></i>
             </button>
-            <button id="preview-show-variables" type="button" class="btn btn-dark mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="show variables" 
+            <button id="preview-show-variables" type="button" class="btn btn-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="show variables"
                 onclick="hide_tooltips();slw.toggle('preview-show-variables');">
                 <i class="fas fa-chevron-down"></i>
             </button>
-            <button id="preview-show-export" type="button" class="btn btn-dark mx-0 btn-sm" 
-                data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                title="show 'export' buttons" 
+            <button id="preview-show-export" type="button" class="btn btn-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="show 'export' buttons"
                 onclick="hide_tooltips();slw.toggle('preview-show-export');">
                 <i class="fas fa-file-export"></i>
             </button>

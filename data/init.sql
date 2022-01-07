@@ -1,7 +1,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -19,6 +19,17 @@
 -- all values are stored as INTEGER. Precision is given by suffix.
 -- E.g. "value100" means  value := value100 / 100.0
 
+CREATE TABLE Settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    settingsDatabaseVersion INTEGER,
+    settingsTitle TEXT
+);
+
+INSERT INTO Settings
+    (settingsDatabaseVersion, settingsTitle)
+    VALUES
+    (1, 'Demo');
+
 CREATE TABLE Course (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     courseName TEXT NOT NULL,
@@ -26,6 +37,11 @@ CREATE TABLE Course (
     courseDateCreated INTEGER NOT NULL,  -- UNIX time
     courseDateModified INTEGER NOT NULL  -- UNIX time
 );
+
+INSERT INTO Course
+    (courseName, courseDesc, courseDateCreated, courseDateModified)
+    VALUES
+    ('demo', 'demo course', 1640991600, 1640991600);
 
 CREATE TABLE Document (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,22 +52,43 @@ CREATE TABLE Document (
     courseDateModified INTEGER NOT NULL  -- UNIX time
 );
 
+INSERT INTO Document
+    (documentName, documentDesc, documentText,
+     courseDateCreated, courseDateModified)
+    VALUES
+    ('demo', 'demo document', '',
+     1640991600, 1640991600);
+
 CREATE TABLE DocumentBackup (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     documentId INTEGER NOT NULL,
     documentBackupText TEXT,
     documentBackupCreated INTEGER NOT NULL, -- UNIX time
     FOREIGN KEY(documentId) REFERENCES Document(id)
-)
+);
 
 CREATE TABLE UserRole (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    roleName TEXT NOT NULL
+    userroleName TEXT NOT NULL,
+    userroleAllowUserManagement INTEGER,
+    userroleAllowAccessToAllCourses INTEGER
 );
+
+INSERT INTO UserRole
+    (userroleName, userroleAllowUserManagement, userroleAllowAccessToAllCourses)
+    VALUES
+    ('admin', 1, 1);
+
+INSERT INTO UserRole
+    (userroleName, userroleAllowUserManagement, userroleAllowAccessToAllCourses)
+    VALUES
+    ('demo', 0, 0);
 
 CREATE TABLE User (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     userRoleId INTEGER NOT NULL,
+    userLogin TEXT NOT NULL,
+    userPasswordHash TEXT NOT NULL,
     userName TEXT NOT NULL,
     userMail TEXT NOT NULL,
     userInstitute TEXT,
@@ -59,6 +96,41 @@ CREATE TABLE User (
     userDateModified INTEGER NOT NULL,  -- UNIX time
     FOREIGN KEY(userRoleId) REFERENCES UserRole(id)
 );
+
+-- initial admin password is 'admin':
+--   $php -r 'echo password_hash("admin", PASSWORD_BCRYPT);'
+INSERT INTO User
+    (userRoleId, userLogin,
+     userPasswordHash,
+     userName, userMail, userInstitute, userDateCreated, userDateModified)
+    VALUES
+    ((SELECT id FROM UserRole WHERE userroleName='admin'), 'admin',
+     '$2y$10$tWDoRJQ8e8aSn5ObV0dNO.wjWwO3X/bhqDMpJiq.n7g/LMEdsj/5m',
+     'admin', 'admin@localhost', '', 1640991600, 1640991600);
+
+INSERT INTO User
+    (userRoleId, userLogin,
+     userPasswordHash,
+     userName, userMail, userInstitute, userDateCreated, userDateModified)
+    VALUES
+    ((SELECT id FROM UserRole WHERE userroleName='demo'), 'demo',
+     '',
+     'demo', 'demo@localhost', '', 1640991600, 1640991600);
+
+CREATE TABLE CourseAccess (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    courseId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
+    FOREIGN KEY(courseId) REFERENCES Course(id),
+    FOREIGN KEY(userId) REFERENCES User(id)
+);
+
+INSERT INTO CourseAccess
+    (courseId,
+     userId)
+    VALUES
+    ((SELECT id FROM Course WHERE courseName='demo'),
+     (SELECT id FROM User WHERE userLogin='demo'));
 
 CREATE TABLE Ticket (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

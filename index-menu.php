@@ -2,7 +2,7 @@
 /******************************************************************************
  * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
  *                                                                            *
- * Copyright (c) 2019-2021 TH Köln                                            *
+ * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
  *                                                                            *
  * Partly funded by: Digitale Hochschule NRW                                  *
@@ -25,18 +25,18 @@
     </div>
     <div class="row m-0 p-0 w-100">
         <div class="col m-0 p-0 w-100">
-            <ul class="nav nav-tabs m-0 p-0 w-100 bg-dark">                        
+            <ul class="nav nav-tabs m-0 p-0 w-100 bg-dark">
                 <li class="nav-item">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
                 <li class="nav-item">
-                    <span data-bs-toggle="modal" 
+                    <span data-bs-toggle="modal"
                         data-bs-target="#modal-login">
-                        <button id="login" 
+                        <button id="login"
                             type="button" class="btn btn-success mx-0 btn-sm"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="login">
-                            <?php 
+                            <?php
                                 $user = $_SESSION['slw_user'];
                                 if(strcmp($user, "demo") == 0)
                                     echo "<i class=\"fas fa-sign-in-alt\"></i>";
@@ -44,12 +44,12 @@
                                     echo $user;
                             ?>
                         </button>
-                    </span>                            
+                    </span>
                 </li>
                 <li class="nav-item">
-                    <button id="logout" 
+                    <button id="logout"
                         type="button" class="btn btn-danger mx-1 btn-sm"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" 
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="logout"
                         onclick="window.location.href='services/logout.php';">
                         <i class="fas fa-sign-out-alt"></i>
@@ -60,9 +60,9 @@
                 </li>
                 <li class="nav-item">
                     <a id="tab-editor" class="nav-link active"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="edit document" 
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="edit document"
                         style="cursor:pointer;"
                         onclick="openTab('editor');">
                         <i class="fas fa-file-alt"></i>
@@ -70,49 +70,49 @@
                 </li>
                 <li class="nav-item">
                     <a id="tab-box" class="nav-link"
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="edit box" 
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="edit box"
                         style="cursor:pointer;"
                         onclick="openTab('box');">
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="tab-ticket" class="nav-link" 
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="ticket" 
+                    <a id="tab-ticket" class="nav-link"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="ticket"
                         style="cursor:pointer;"
                         onclick="openTab('ticket');">
                         <i class="fas fa-ticket-alt"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="tab-filetree" class="nav-link" 
-                        data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="file tree" 
+                    <a id="tab-filetree" class="nav-link"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="file tree"
                         style="cursor:pointer;"
                         onclick="openTab('filetree');">
                         <i class="fas fa-sitemap"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="tab-users" class="nav-link" 
-                    data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="user management" 
+                    <a id="tab-users" class="nav-link"
+                    data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="user management"
                         style="cursor:pointer;"
                         onclick="openTab('users');">
                         <i class="fas fa-user"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="tab-bugs" class="nav-link" 
-                    data-bs-toggle="tooltip" 
-                        data-bs-placement="bottom" 
-                        title="report bugs" 
+                    <a id="tab-bugs" class="nav-link"
+                    data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="report bugs"
                         style="cursor:pointer;"
                         onclick="openTab('bugs');">
                         <i class="fas fa-bug"></i>
