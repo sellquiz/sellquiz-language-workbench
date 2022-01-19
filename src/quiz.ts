@@ -59,6 +59,7 @@ export class StackQuiz {
             if(lines[i].startsWith(" ") || lines[i].startsWith("\t"))
                 continue;
             let line = lines[i].trim();
+            line = line.replace(/=/g, ":"); // TODO: not stable!!
             if(line.length == 0)
                 continue;
             if(line.endsWith(";") == false)
