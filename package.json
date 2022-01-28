@@ -34,7 +34,8 @@
         "lz-string": "^1.4.4",
         "mathjax": "^3.2.0",
         "mathjs": "^9.4.2",
-        "nspell": "^2.1.5"
+        "nspell": "^2.1.5",
+        "ui-progress-circle": "^1.1.0"
     },
     "devDependencies": {
         "@types/codemirror": "^5.60.5",
