@@ -49,7 +49,7 @@
         <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="node_modules/mathjs/lib/browser/math.js"></script>
 
-        <script src="node_modules/ui-progress-circle/dist/ui-progress-circle/ui-progress-circle.js">
+        <!--<script src="node_modules/ui-progress-circle/dist/ui-progress-circle/ui-progress-circle.js">-->
 
         <script>MathJax = {
             loader: {
@@ -64,7 +64,10 @@
             html {
                font-size: 15px;
             }
-            body { padding-top: 64px; }
+            body {
+                padding-top: 64px;
+                /*background-color: #AAAAAA;*/
+            }
 
 
 
@@ -74,9 +77,10 @@
 
     <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-2 fixed-top">
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark px-2 fixed-top">
   <a class="navbar-brand" href="#">andi &bull; 2135 &bull; <span style="color:#d4aa00;"><i class="fas fa-trophy"></i></span> &bull; <i class="fas fa-award"></i></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" href="#"><img src="img/app-icon.png" alt="" height="28" class="d-inline-block align-text-top"></a>
+  <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -107,42 +111,45 @@
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-  </div>
+  </div>-->
 </nav>
 
-        <div class="container-fluid px-1">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Grundlagen</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Komplexe Zahlen</li>
-                </ol>
-            </nav>
-        </div>
-
-        <div class="container-fluid px-1">
-            <h1>Komplexe Zahlen</h1>
-            <h2>Einführung</h2>
-
-
-            <ui-progress-circle></ui-progress-circle>
-<ui-progress-circle value="67"></ui-progress-circle>
-<ui-progress-circle value="100" color="success"></ui-progress-circle>
-<ui-progress-circle value="33" stroke="100"></ui-progress-circle>
-<ui-progress-circle shape="round" color="#2266DD" radius="90"></ui-progress-circle>
-<ui-progress-circle value="42" class="no-animation"></ui-progress-circle>
-
-            <div class="row d-flex justify-content-center mt-100">
-                <div class="col-md-6">
-                    <div class="progress blue"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
-                        <div class="progress-value">90%</div>
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Grundlagen</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Komplexe Zahlen</li>
+                        </ol>
+                    </nav>
+                    <div id="text-progress" class="progress">
+                        <div class="progress-bar bg-dark" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Text</div>
                     </div>
-                    <div class="progress yellow"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
-                        <div class="progress-value">37.5%</div>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Aufgaben</div>
                     </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Spiele</div>
+                    </div>
+                    <div class="py-1">
+                    </div>
+                    <h1>Komplexe Zahlen</h1>
+                    <h2>Einführung</h2>
                 </div>
             </div>
-
         </div>
+
+        <!-- TODO:
+        <div class="container-fluid px-1 bg-white py-1">
+            <ui-progress-circle></ui-progress-circle>
+            <ui-progress-circle value="67"></ui-progress-circle>
+            <ui-progress-circle value="100" color="success"></ui-progress-circle>
+            <ui-progress-circle value="33" stroke="100"></ui-progress-circle>
+            <ui-progress-circle shape="round" color="#2266DD" radius="90"></ui-progress-circle>
+            <ui-progress-circle value="42" class="no-animation"></ui-progress-circle>
+        </div>
+        -->
 
         <!--
         <div class="container-fluid px-1">
@@ -158,151 +165,90 @@
         </div>
         -->
 
-        <div class="container-fluid px-1 py-2">
-            Über den reellen Zahlen können Gleichungen wie `x^2 = −1` nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.
-            Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form `x+y\sqrt{-1}=x+y i` mit `x,y \in \mathbb{R}` darstellen werden.
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col">
+                    <p>Über den reellen Zahlen können Gleichungen wie `x^2 = −1` nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.</p>
+                </div>
+                <div class="col-1 text-success">
+                    <i class="far fa-smile-beam"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p onclick="mark_read();">Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form `x+y\sqrt{-1}=x+y i` mit `x,y \in \mathbb{R}` darstellen werden.</p>
+                </div>
+                <div id="smiley" class="col-1 text-success">
+                    <!--<i class="far fa-smile-beam"></i>-->
+                </div>
+            </div>
         </div>
 
-
-        <div class="container-fluid px-1">
-            <div class="card border-dark px-0">
-                <!--<img src="..." class="card-img-top" alt="...">-->
-                <div class="card-body px-1 py-1">
-
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Definition</h5>
+        <div class="container-fluid bg-white" style="border-left-style:solid; border-right-style:solid; border-width:8px;">
+            <div class="row">
+                <div class="col py-1">
+                    <p class="text-start lead py-0 mx-0 my-1"><b>Definition</b></p>
+                    Auf dem `\mathbb{R}^2` definieren wir
+                    <ul class="px-4">
+                        <li>Die <b>Addition</b> durch `(x_1,y_1)+``(x_2,y_2)``=(x_1+x_2,y_1+y_2)`</li>
+                        <li>Die <b>Multiplikation</b> `(x_1,y_1)\cdot``(x_2,y_2)``=(x_1 x_2-y_1 y_2,x_1 y_2+x_2 y_1)`</li>
+                    </ul>
+                    <!--<div class="col text-start">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>
+                            < !--<button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>-- >
                         </div>
-                        <div class="col text-end">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>
-                                <!--<button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>-->
-                            </div>
-                        </div>
-                    </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
 
-                    <p class="card-text py-0 my-1">
-                        Auf dem `\mathbb{R}^2` definieren wir
-                        <ul class="px-4">
-                            <li>Die <b>Addition</b> durch `(x_1,y_1)+``(x_2,y_2)``=(x_1+x_2,y_1+y_2)`</li>
-                            <li>Die <b>Multiplikation</b> `(x_1,y_1)\cdot``(x_2,y_2)``=(x_1 x_2-y_1 y_2,x_1 y_2+x_2 y_1)`</li>
-                        </ul>
-                    </p>
-
+        <div class="container-fluid bg-white">
+            <div class="row">
+                <div class="col py-1">
+                    <p class="text-start lead py-0 mx-0 my-1"><b>Beispiel</b></p>
+                    Sei `z_1=2+3i,` `z_2=-3+2i`. Dann gilt:
+                    <ul class="px-4">
+                        <li>`z_1+z_2`<br/>`=(2-3)+``(3+2i)`<br/>`=-1+5i`</li>
+                        <li>`z_1-z_2`<br/>`=z_1+(-z_2)`<br/>`=2+3i+(3+(-2)i)`<br/>`=(2+3)+(3+(-2))i`<br/>`=5+i`</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
 
-        <!--<div class="container-fluid px-1 py-2">
-            <div class="px-2" style="border-top-style: solid; border-bottom-style: solid; border-color: #c30000; border-radius: 10px;">
-                <b>Definition</b> Auf dem `\mathbb{R}^2` definieren wir
-                <ul>
-                    <li>Die <b>Addition</b> durch `(x_1,y_1)+``(x_2,y_2)``=(x_1+x_2,y_1+y_2)`</li>
-                    <li>Die <b>Multiplikation</b> `(x_1,y_1)\cdot``(x_2,y_2)``=(x_1 x_2-y_1 y_2,x_1 y_2+x_2 y_1)`</li>
-                </ul>
-            </div>
-        </div>-->
-
-        <!--<div class="container-fluid text-end">
-            <i class="fas fa-bookmark"></i> < !-- TODO: popup "bookmark" -- >
-        </div>-->
-
-        <div class="container-fluid px-1 py-2">
-            <h4>Beispiel</h4>
-            Sei `z_1=2+3i,` `z_2=-3+2i`. Dann gilt:
-            <div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                `z_1+z_2`<br/>`=(2-3)+``(3+2i)`<br/>`=-1+5i`
-            </div>
-            <div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                `z_1-z_2`<br/>`=z_1+(-z_2)`<br/>`=2+3i+(3+(-2)i)`<br/>`=(2+3)+(3+(-2))i`<br/>`=5+i`
-            </div>
-
-        </div>
-
-
-        <div class="container-fluid px-1">
-            <div class="card border-dark px-0">
-                <!--<img src="..." class="card-img-top" alt="...">-->
-                <div class="card-body px-1 py-1">
-
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title"><i class="fas fa-question-circle"></i></h5>
-                        </div>
-                        <div class="col text-end">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-sync"></i></button>
-                                <!--<button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>-->
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="card-text py-0 my-1">
-                        Sei `z_1=2+3i,` `z_2=-3+2i`. Berechne<br/>
-                        <ul class="px-4">
-                            <li>
-                                `z_1+z_2=`
-                                <input id="input1" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `+`
-                                <input id="input2" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `i`
-                            </li>
-                            <li>
-                                `z_1-z_2=`
-                                <input id="input3" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `+`
-                                <input id="input4" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `i`
-                            </li>
-                        </ul>
-
-                        <!--<div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                            `z_1+z_2=`
-                                <input id="input1" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `+`
-                                <input id="input2" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `i`
-                        </div>
-                        <div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                            `z_1-z_2=`
-                                <input id="input3" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `+`
-                                <input id="input4" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
-                                `i`
-                        </div>-->
-                    </p>
-
-                </div>
-            </div>
-        </div>
-
-        <!--<div class="container-fluid px-2 py-2 bg-primary text-white">
-            <b style="font-size:18pt;"><i class="fas fa-question-circle"></i></b>
-            Sei `z_1=2+3i,` `z_2=-3+2i`. <br/>
-            <div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                `z_1+z_2=`
+        <div class="container-fluid px-1 py-2 bg-white" style="border-left-style:solid; border-right-style:solid; border-width:8px; border-color:#0000aa;">
+            <p class="text-start lead py-0 mx-0"><b><i class="fas fa-question-circle"></i></b></p>
+            Sei `z_1=2+3i,` `z_2=-3+2i`. Berechne<br/>
+            <ul class="px-4">
+                <li>
+                    `z_1+z_2=`
                     <input id="input1" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
                     `+`
                     <input id="input2" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
                     `i`
-            </div>
-            <div class="px-1 my-1" style="border-left-style: solid; border-width: 4px; border-color: #bababa;">
-                `z_1-z_2=`
+                </li>
+                <li>
+                    `z_1-z_2=`
                     <input id="input3" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
                     `+`
                     <input id="input4" type="text" class="mx-1" aria-describedby="emailHelp" placeholder="" size="5"/>
                     `i`
-            </div>
-            <div class="text-end">
-                <i class="fas fa-sync"></i>
-            </div>
-        </div>-->
-
-
-        <div class="container-fluid px-1 py-2">
-            <b>Praxis</b>
+                </li>
+            </ul>
+            <!--<div class="col text-start">
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>
+                    < !--<button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-bookmark"></i></button>-- >
+                </div>
+            </div>-->
         </div>
+
+        <div class="container-fluid px-1 py-2 bg-white">
+            <p class="text-start lead py-0 mx-0"><b>Praxis</b></p>
+        </div>
+
+        TODO: game (e.g. speed select correct answers (similar to memrize app))
 
 
         <script>
@@ -319,6 +265,13 @@
                     input.style.borderWidth = "medium";
                 }
             })
+
+            function mark_read() {
+                document.getElementById("smiley").innerHTML = '<i class="far fa-smile-beam"></i>';
+                document.getElementById("text-progress").innerHTML =
+                    '<div class="progress-bar bg-dark" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Text</div>';
+            }
+
         </script>
 
         <script>
