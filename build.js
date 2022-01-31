@@ -26,5 +26,15 @@ esbuild.buildSync({
     target: 'es2020',
     entryPoints: ['src/index.ts'],
     bundle: true,
-    outfile: 'dist/sellquiz-language-workbench.min.js'
+    outfile: 'dist/sellquiz-language-workbench.min.js',
+});
+
+esbuild.buildSync({
+    platform: 'browser',
+    globalName: 'slwEMU',
+    minify: false, // TODO
+    target: 'es2020',
+    entryPoints: ['src/emulator.ts'],
+    bundle: true,
+    outfile: 'dist/slw-emulator.min.js',
 });

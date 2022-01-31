@@ -32,6 +32,7 @@
         "larr",
         "LEADTEXT",
         "Lösung",
+        "mathbb",
         "mathjax",
         "mathrm",
         "monospace",
@@ -43,9 +44,11 @@
         "outfile",
         "pagestyle",
         "prts",
+        "randint",
         "Satz",
         "Schwenk",
         "SELLQUIZ",
+        "Speedreview",
         "stackquiz",
         "stardisp",
         "sube",
@@ -70,5 +73,6 @@
         "yaxis"
     ],
     "ignoreWords": [],
-    "import": []
+    "import": [],
+    "language": "en,de"
 }

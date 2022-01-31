@@ -1,0 +1,79 @@
+##### Komplexe Zahlen
+
+!latex
+
+# Einführung
+
+Über den reellen Zahlen können Gleichungen wie $x^2 = −1$ nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.
+
+Deshalb erweitert man den Zahlbereich auf die sogenannten **komplexen Zahlen**, die wir später als Ausdrücke der Form $x+y\sqrt{-1}=x+y i$ mit $x,y \in \mathbb{R}$ darstellen werden.
+
+---
+Definition.
+Auf dem $\mathbb{R}^2$ definieren wir
+- Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$
+- Die **Multiplikation** $(x_1,y_1) \cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)$
+Die Menge $\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\mathbb{C}$ der komplexen Zahlen oder als **Gaußsche Zahlenebene** bezeichnet. XXX
+---
+
+---
+Example.
+Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
+- z_1+z_2
+  =(2-3)+(3+2i)
+  =-1+5i
+- z_1-z_2
+  =z_1+(-z_2)
+  =2+3i+(3+(-2)i)
+  =(2+3)+(3+(-2))i
+  =5+i
+---
+
+---
+Question.
+
+@options
+live check
+repeat on error
+
+@python
+import random
+a = random.randint(1,5)
+b = random.randint(1,5)
+c = random.randint(1,5)
+d = random.randint(1,5)
+z1 = a + b*1j
+z2 = c + d*1j
+sum = z1 + z2
+diff = z1 - z2
+
+@text
+Sei $z_1 = z1$, $z_2 = z2$. Berechne
+- $ z_1 + z_2 = #sum $
+- $ z_1 - z_2 = #diff $
+---
+
+---
+Speedreview.
+
+@options
+time per answer = 4
+
+@questions
+$i^2=$
+    $-1$, $1$, $0$, $i$
+$z=x+yi$ heißt...
+    Normalform, Koordinaten, Polarform, Imaginärteil
+$|-2i|=$
+    $2$, $2i$, $1$, $0$
+$1+2i-2i=$
+    $1$, $0$, $1+4i$, $-1$
+---
+
+---
+Links.
+- Komplexe Folgen und Grenzwerte
+- Komplexe Reihen
+- Komplexe Funktionen und Potenzreihen
+- Komplexe Potenzen und Wurzeln
+---
