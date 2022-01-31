@@ -362,12 +362,12 @@
             <div class="container-fluid bg-white">
                 <div class="row">
                     <div class="col">
-                        <nav aria-label="breadcrumb">
+                        <!--<nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Grundlagen</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Komplexe Zahlen</li>
                             </ol>
-                        </nav>
+                        </nav>-->
                         <div id="progress-bars">
                         </div>
                         <div class="py-1">
