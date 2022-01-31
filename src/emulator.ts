@@ -22,10 +22,13 @@ abstract class Part {
     coursePage: CoursePage;
     index = 0;
     readFlag = false;
+    pageIdx = 0;
+    htmlElement: HTMLElement = null; // root
     static indexCounter = 0;
     constructor(coursePage: CoursePage) {
         this.coursePage = coursePage;
         this.index = Part.indexCounter++;
+        this.pageIdx = coursePage.getNumPages() - 1;
     }
     abstract import(data: any): void;
     abstract generate(rootElement: HTMLElement): void;
@@ -41,12 +44,23 @@ abstract class Part {
             this_.coursePage.refreshProgressBars();
         });
     }
+    updateVisibility(): void {
+        if (this.htmlElement == null) return;
+        if (this.coursePage.getVisiblePageIdx() == this.pageIdx) {
+            this.htmlElement.style.display = 'block';
+            //console.log('block');
+        } else {
+            this.htmlElement.style.display = 'none';
+            //console.log('none');
+        }
+    }
 }
 
 class PartHeadline extends Part {
     text = '';
     generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -68,6 +82,7 @@ class PartParagraph extends Part {
     text = '';
     generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -86,11 +101,21 @@ class PartParagraph extends Part {
     }
 }
 
+class PartNewPage extends Part {
+    generate(): void {
+        // empty
+    }
+    import(data: any): void {
+        this.coursePage.incrementNumPages();
+    }
+}
+
 class PartDefinition extends Part {
     text = '';
     generate(rootElement: HTMLElement): void {
         // TODO: remove duplicate code in "generate" from all parts...
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -118,10 +143,25 @@ class PartDefinition extends Part {
     }
 }
 
+class PartImage extends Part {
+    data = '';
+    generate(rootElement: HTMLElement): void {
+        const imgElement = document.createElement('img');
+        this.htmlElement = imgElement;
+        imgElement.src = this.data;
+        imgElement.classList.add('img-fluid');
+        rootElement.appendChild(imgElement);
+    }
+    import(data: any): void {
+        this.data = data['data'];
+    }
+}
+
 class PartExample extends Part {
     text = '';
     generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -187,7 +227,7 @@ class QuestionInputField {
     type: QuestionInputFieldType;
     answerVariable: QuestionVariable = null;
     htmlElement: HTMLElement = null; // root
-    htmlInputElements: HTMLInputElement[] = [];
+    htmlInputElements: HTMLInputElement[] = []; // input elements
     htmlFeedbackElement: HTMLElement = null;
     constructor(question: PartQuestion) {
         this.question = question;
@@ -315,6 +355,7 @@ class PartQuestion extends Part {
         }
 
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid', 'my-1');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -401,10 +442,11 @@ class SpeedReviewQuestion {
 }
 
 class PartSpeedReview extends Part {
-    htmlElement: HTMLElement = null;
+    htmlContentElement: HTMLElement = null;
     questions: SpeedReviewQuestion[] = [];
     generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid', 'my-1');
         divContainer.style.backgroundColor = '#ffffff';
         //divContainer.style.cursor = 'pointer';
@@ -423,14 +465,14 @@ class PartSpeedReview extends Part {
         headline.classList.add('text-start', 'lead', 'py-0', 'my-0', 'my-1');
         headline.innerHTML = '<b>Speed Review</b>';
         divCol.appendChild(headline);
-        this.htmlElement = document.createElement('p');
-        this.htmlElement.classList.add('text-center');
-        this.htmlElement.innerHTML =
+        this.htmlContentElement = document.createElement('p');
+        this.htmlContentElement.classList.add('text-center');
+        this.htmlContentElement.innerHTML =
             '<span style="font-size: 48pt"><i class="fas fa-play-circle"></i></span>';
-        divCol.appendChild(this.htmlElement);
+        divCol.appendChild(this.htmlContentElement);
         divCol.addEventListener('click', () => {
             const q = this.questions[1]; // TODO
-            this.htmlElement.innerHTML =
+            this.htmlContentElement.innerHTML =
                 `
                 <div class="row py-0">
                     <div class="col text-center py-0">
@@ -487,6 +529,7 @@ class PartLinks extends Part {
     links: LinkEntry[] = [];
     generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
         divContainer.style.backgroundColor = '#ffffff';
         divContainer.style.cursor = 'pointer';
@@ -520,6 +563,27 @@ class CoursePage {
     private parts: Part[] = [];
     private textProgress = 0;
 
+    private numPages = 1;
+    private visiblePageIdx = 0;
+
+    getNumPages(): number {
+        return this.numPages;
+    }
+
+    getVisiblePageIdx(): number {
+        return this.visiblePageIdx;
+    }
+
+    incrementNumPages(): void {
+        this.numPages++;
+    }
+
+    updateVisibility(): void {
+        for (const part of this.parts) {
+            part.updateVisibility();
+        }
+    }
+
     set(): void {
         const content = document.getElementById('content');
         // title
@@ -539,8 +603,45 @@ class CoursePage {
         for (const part of this.parts) {
             part.generate(content);
         }
+        // update visibility
+        this.updateVisibility();
         // progress bars
         this.refreshProgressBars();
+        // navigation
+
+        const nav = document.createElement('div');
+        content.appendChild(nav);
+        nav.classList.add('text-center');
+        nav.appendChild(document.createElement('br'));
+
+        const btnGroup = document.createElement('div');
+        nav.appendChild(btnGroup);
+        btnGroup.classList.add('btn-group');
+        const backwardBtn = document.createElement('button');
+        backwardBtn.type = 'button';
+        backwardBtn.classList.add('btn', 'btn-outline-primary');
+        backwardBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        backwardBtn.addEventListener('click', () => {
+            if (this.visiblePageIdx > 0) {
+                this.visiblePageIdx--;
+                this.updateVisibility();
+            }
+        });
+        btnGroup.appendChild(backwardBtn);
+        const forwardBtn = document.createElement('button');
+        forwardBtn.type = 'button';
+        forwardBtn.classList.add('btn', 'btn-outline-primary');
+        forwardBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        forwardBtn.addEventListener('click', () => {
+            if (this.visiblePageIdx < this.numPages - 1) {
+                this.visiblePageIdx++;
+                this.updateVisibility();
+            }
+        });
+        btnGroup.appendChild(forwardBtn);
+
+        nav.appendChild(document.createElement('br'));
+        nav.appendChild(document.createElement('br'));
     }
 
     import(json: any): void {
@@ -556,8 +657,16 @@ class CoursePage {
                     partInstance = new PartParagraph(this);
                     partInstance.import(part);
                     break;
+                case 'new-page':
+                    partInstance = new PartNewPage(this);
+                    partInstance.import(part);
+                    break;
                 case 'definition':
                     partInstance = new PartDefinition(this);
+                    partInstance.import(part);
+                    break;
+                case 'image':
+                    partInstance = new PartImage(this);
                     partInstance.import(part);
                     break;
                 case 'example':
@@ -607,17 +716,17 @@ class CoursePage {
         div.innerHTML =
             `
         <div id="text-progress" class="progress">
-            <div class="progress-bar bg-dark" role="progressbar" style="width: ` +
+            <div class="progress-bar" role="progressbar" style="width: ` +
             this.textProgress +
-            `%" aria-valuenow="` +
+            `%; background-color:#cd121b;" aria-valuenow="` +
             this.textProgress +
             `" aria-valuemin="0" aria-valuemax="100">Text</div>
         </div>
         <div class="progress">
-            <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Aufgaben</div>
+            <div class="progress-bar" role="progressbar" style="width: 75%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Aufgaben</div>
         </div>
         <div class="progress">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Spiele</div>
+            <div class="progress-bar" role="progressbar" style="width: 100%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Spiele</div>
         </div>
         `;
     }

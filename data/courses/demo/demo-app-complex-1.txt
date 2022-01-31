@@ -9,6 +9,13 @@
 Deshalb erweitert man den Zahlbereich auf die sogenannten **komplexen Zahlen**, die wir später als Ausdrücke der Form $x+y\sqrt{-1}=x+y i$ mit $x,y \in \mathbb{R}$ darstellen werden.
 
 ---
+Plot.
+TODO: image taken from wikipedia...
+---
+
+========
+
+---
 Definition.
 Auf dem $\mathbb{R}^2$ definieren wir
 - Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$
@@ -28,6 +35,8 @@ Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
   =(2+3)+(3+(-2))i
   =5+i
 ---
+
+========
 
 ---
 Question.
@@ -53,6 +62,8 @@ Sei $z_1 = z1$, $z_2 = z2$. Berechne
 - $ z_1 - z_2 = #diff $
 ---
 
+========
+
 ---
 Speedreview.
 
@@ -69,6 +80,8 @@ $|-2i|=$
 $1+2i-2i=$
     $1$, $0$, $1+4i$, $-1$
 ---
+
+========
 
 ---
 Links.

@@ -89,39 +89,39 @@
                 </div>
 
                 <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark" onclick="openCoursePage();">
-                        <span class="lead">Grundlagen</span>
+                    <button type="button" class="btn btn-outline-dark text-start" onclick="openCoursePage();">
+                        <span class="lead">1. Grundlagen</span>
 
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Text</div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Übungen</div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Spiele</div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
 
                     </button>
                 </div>
                 <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark">
-                        <span class="lead"><i class="fas fa-lock"></i> &nbsp; Komplexe Folgen und Grenzwerte</span>
+                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
+                        <span class="lead">2. Komplexe Folgen u. Grenzwerte</span> &nbsp; <i class="fas fa-lock"></i>
                     </button>
                 </div>
                 <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark">
-                        <span class="lead"><i class="fas fa-lock"></i> &nbsp; Komplexe Reihen</span>
+                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
+                        <span class="lead">3. Komplexe Reihen</span> &nbsp; <i class="fas fa-lock"></i>
                     </button>
                 </div>
                 <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark">
-                        <span class="lead"><i class="fas fa-lock"></i> &nbsp; Komplexe Funktionen und Potenzreihen</span>
+                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
+                        <span class="lead">4. Komplexe Funktionen u. Potenzreihen</span> &nbsp; <i class="fas fa-lock"></i>
                     </button>
                 </div>
                 <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark">
-                        <span class="lead"><i class="fas fa-lock"></i> &nbsp; Komplexe Potenzen und Wurzeln</span>
+                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
+                        <span class="lead">5. Komplexe Potenzen u. Wurzeln</span> &nbsp; <i class="fas fa-lock"></i>
                     </button>
                 </div>
             </div>
@@ -233,14 +233,14 @@
                                 54 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     <div class="col bg-white rounded mx-1 my-1 py-1">
@@ -252,14 +252,14 @@
                                 15 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 33%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 10%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 2%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -274,14 +274,14 @@
                                 54 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     <div class="col bg-white rounded mx-1 my-0 py-1">
@@ -293,14 +293,14 @@
                                 15 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 33%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 10%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 2%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
@@ -315,14 +315,14 @@
                                 54 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 33%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     <div class="col bg-white rounded mx-1 my-1 py-1">
@@ -334,14 +334,14 @@
                                 15 &#37;
                             </div>
                         </div>
-                        <div id="text-progress" class="progress">
-                            <div class="progress-bar bg-dark" role="progressbar" style="width: 33%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 10%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 2%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress bg-white" style="height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
