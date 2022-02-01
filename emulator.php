@@ -57,16 +57,22 @@
             }
         </style>
 
-        <script src="dist/slw-emulator.min.js"></script>
+        <script src="dist/slw-emulator.min.js?version=<?php echo time();?>" ></script>
 
     </head>
 
     <body>
 
         <nav class="navbar navbar-expand-lg  navbar-dark bg-dark px-2 fixed-top">
-            <a class="navbar-brand" href="emulator.php">
-                &nbsp;<i class="fas fa-users"></i>
-            </a>
+            <span>
+                <a class="navbar-brand" href="emulator.php">
+                    &nbsp;<i class="fas fa-users"></i>
+                </a>
+                <a class="navbar-brand" href="emulator.php">
+                    &nbsp;
+                    <i class="fas fa-bullseye"></i>
+                </a>
+            </span>
             <a class="navbar-brand">
                 &nbsp; andi &bull; 2135 &bull;
                 <span style="color:#d4aa00;">
@@ -92,7 +98,7 @@
                     <button type="button" class="btn btn-outline-dark text-start" onclick="openCoursePage();">
                         <span class="lead">1. Grundlagen</span>
 
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
+                        <div class="progress bg-white" style="height: 8px;">
                             <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="progress bg-white" style="height: 8px;">
@@ -158,7 +164,7 @@
 
 
 
-        <div id="overview">
+        <div class="container" id="overview">
 
             <div class="container-fluid bg-white">
                 <div class="row">
@@ -168,16 +174,69 @@
                 </div>
             </div>
 
-            <div class="container-fluid bg-dark">
+            <div class="container-fluid bg-dark" style="border-style: solid; border-radius: 14px;">
 
-                <div class="py-1">
-                </div>
+                <!--<div class="row text-light py-1">
+                    &nbsp;&nbsp;Awards
+                </div>-->
 
                 <div class="row text-light py-1">
-                    <h2>Awards</h2>
                 </div>
+
+                <div class="row text-center px-5">
+                    <table class="table table-sm text-light">
+                        <tr class="text-end" style="vertical-align:bottom;">
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:20px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:45px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:33px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:48px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:1px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:10px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div style="border-left: 8px solid green;height:32px;vertical-align:bottom;">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td>D</td>
+                            <td>M</td>
+                            <td>D</td>
+                            <td>F</td>
+                            <td>S</td>
+                            <td>S</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p class="text-light fw-light text-center py-0">
+                    <i class="fas fa-heartbeat"></i> 77 &#x25;
+                    &nbsp;&nbsp;
+                    <i class="far fa-check-circle"></i> 50 &#x25;
+                    &nbsp;&nbsp;
+                    <i class="far fa-hourglass"></i> 60 &#x25;
+                </p>
+
                 <div class="row py-0">
-                    <div class="col text-center text-white py-0" style="font-size: 32pt">
+                    <div class="col text-center text-white py-0" style="font-size: 24pt">
                         <i class="fas fa-running"></i>
                         &nbsp;
                         <i class="fas fa-hourglass"></i>
@@ -187,168 +246,161 @@
                         <i class="fas fa-medal"></i>
                     </div>
                 </div>
+
             </div>
 
-            <div class="py-2">
+            <div class="row py-1">
             </div>
 
-            <div class="container-fluid bg-white">
+            <div class="container-fluid bg-dark" style="border-style: solid; border-radius: 14px;">
                 <div class="row">
-                    <div class="col">
-                        <h2>Empfehlungen</h2>
+                    <div class="col text-center text-white fw-light py-1">
+                        Empfehlungen
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-dark">Komplexe Reihen</button>
-                        <button type="button" class="btn btn-dark">Partielle Integration</button>
+                    <div class="col text-center">
+                        <button type="button" class="btn" style="background-color:#cd121b;color:#ffffff;font-size:20px;">
+                            <i class="far fa-file-alt"></i>
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn" style="background-color:#e85b22;color:#ffffff;font-size:20px;">
+                            <i class="fas fa-tasks"></i>
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn" style="background-color:#b42b83;color:#ffffff;font-size:20px;">
+                            <i class="fas fa-gamepad"></i>
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn" style="background-color:#ffffff;color:#080808;font-size:20px;">
+                            <i class="fas fa-random"></i>
+                        </button>
                     </div>
+                </div>
+                <div class="row py-1">
                 </div>
             </div>
 
-
-            <div class="py-2">
+            <div class="row py-1">
             </div>
 
-            <div class="container-fluid bg-dark mx-0 px-0" style="cursor:pointer;">
-
-                <div class="row mx-0">
-
-                    <div class="py-1">
+            <!--<div class="container-fluid bg-white">
+                <div class="row">
+                    <div class="col text-center">
+                        <b>Kurs: Höhere Mathematik</b>
                     </div>
+                </div>
+            </div>-->
 
-                    <div class="row text-light py-1">
-                        <h2>Themen</h2>
-                    </div>
+            <div class="container-fluid bg-dark mx-0 px-0 py-0 my-0" style="cursor:pointer;border-style: solid; border-radius: 14px;">
 
-                    <div class="col bg-white rounded mx-1 my-1 py-1" onclick="openTopic();">
+                <div class="row mx-0 my-0 text-center">
+
+                    <!--<div class="row text-light py-1">
+                        &nbsp;&nbsp;Themen
+                    </div>-->
+
+                    <span class="text-light">Kurs: Höhere Mathematik</span>
+
+                    <!--<div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px; border-color: #ffffff; border-width:1px;">-->
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-bottom-style: solid; border-right-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Komplexe<br/> Zahlen</span>
+                                <span class="text-light fw-light">Grundlagen</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 54 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 100%; max-width: 100%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 75%; max-width: 75%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 30%; max-width: 80%; background-color:#b42b83;"></div></div>
                         </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+
                     </div>
-                    <div class="col bg-white rounded mx-1 my-1 py-1">
+                    <div class="col bg-white mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Integral-<br/> Rechnung</span>
+                                <span class="text-dark">Komplexe Zahlen</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 15 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 70%; max-width: 70%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 50%; max-width: 50%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 85%; max-width: 85%; background-color:#b42b83;"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mx-0">
-                    <div class="col bg-white rounded mx-1 my-0 py-1" onclick="openTopic();">
+                <div class="row mx-0 my-0 text-center">
+                    <div class="col bg-white mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Komplexe<br/> Zahlen</span>
+                                <span class="text-dark">Differentialrechnung</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 54 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 20%; max-width: 20%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 10%; max-width: 10%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 3%; max-width: 3%; background-color:#b42b83;"></div></div>
                         </div>
                     </div>
-                    <div class="col bg-white rounded mx-1 my-0 py-1">
+                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Integral-<br/> Rechnung</span>
+                                <span class="text-dark">Integralrechnung</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 15 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mx-0">
-                    <div class="col bg-white rounded mx-1 my-1 py-1" onclick="openTopic();">
+                <div class="row mx-0 my-0 text-center">
+                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Komplexe<br/> Zahlen</span>
+                                <span class="text-dark">Lineare Algebra</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 54 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
                         </div>
                     </div>
-                    <div class="col bg-white rounded mx-1 my-1 py-1">
+                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Integral-<br/> Rechnung</span>
+                                <span class="text-dark">DGLs</span>
                             </div>
-                            <div class="col text-end fw-lighter" style="font-size: 18pt;">
+                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
                                 15 &#37;
-                            </div>
+                            </div>-->
                         </div>
-                        <div id="text-progress" class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 10%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 2%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row mx-0">
-                    <div class="col bg-dark rounded mx-1 my-0 py-1" onclick="openTopic();">
-                    </div>
-                </div>
-
-                <div class="py-1">
                 </div>
 
             </div>
