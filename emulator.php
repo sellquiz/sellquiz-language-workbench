@@ -73,7 +73,7 @@
                     <i class="fas fa-trophy"></i>
                 </span>
             </a>
-            <a class="navbar-brand" onclick="startChat();">
+            <a class="navbar-brand" onclick="startChat();" style="cursor: pointer;">
                 &nbsp;<i class="far fa-comments"></i>
             </a>
         </nav>
@@ -428,7 +428,7 @@
                 chatHistoryElement.innerHTML = html;
             }
 
-            function sentChatMessage(event) {
+            function sendChatMessage(event) {
                 slwEMU.chat(chatInputField.value);
                 putChatHistory();
                 chatInputField.value = '';
@@ -437,19 +437,19 @@
             }
 
             function startChat() {
-                putChatHistory();
                 overview.style.display = 'none';
                 page.style.display = 'none';
                 chat.style.display = 'block';
                 topic.style.display = 'none';
+                putChatHistory();
                 chatInputField.addEventListener('keydown', (event) => {
                     if(event.key === 'Enter' && chatInputField.value.trim().length > 0) {
-                        sentChatMessage();
+                        sendChatMessage();
                     }
                 });
                 chatInputButton.addEventListener('click', () => {
                     if(chatInputField.value.trim().length > 0) {
-                        sentChatMessage();
+                        sendChatMessage();
                     }
                 });
                 chatInputField.focus();
