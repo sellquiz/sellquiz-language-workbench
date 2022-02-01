@@ -94,42 +94,83 @@
                     </div>
                 </div>
 
-                <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-dark text-start" onclick="openCoursePage();">
+                <div class="row mx-0 my-2 text-center">
+                    <button type="button" class="btn btn-dark" onclick="openCoursePage();">
                         <span class="lead">1. Grundlagen</span>
+                        <div class="row text-center px-0">
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 25%; max-width: 25%; background-color:#cd121b;"></div></div>
+                            <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 15%; max-width: 15%; background-color:#e85b22;"></div></div>
+                            <div class="d-flex justify-content-center"><div style="height: 6px; width: 100%; max-width: 100%; background-color:#b42b83;"></div></div>
+                        </div>
+                        <div class="row py-1">
+                        </div>
+                    </button>
+                </div>
 
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 80%; background-color:#cd121b;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 50%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="progress bg-white" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="height: 6px; width: 33%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                <div class="row text-center">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
 
+                <div class="row mx-0 my-2 text-center">
+                    <button type="button" class="btn btn-dark" onclick="">
+                        <span class="lead">2. Komplexe Folgen u. Grenzwerte</span> &nbsp;
+                        <br/>
+                        <span style="font-size:16pt">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <div class="row py-1">
+                        </div>
                     </button>
                 </div>
-                <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
-                        <span class="lead">2. Komplexe Folgen u. Grenzwerte</span> &nbsp; <i class="fas fa-lock"></i>
+
+                <div class="row text-center">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+                <div class="row mx-0 my-2 text-center">
+                    <button type="button" class="btn btn-dark" onclick="">
+                        <span class="lead">3. Komplexe Reihen</span> &nbsp;
+                        <br/>
+                        <span style="font-size:16pt">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <div class="row py-1">
+                        </div>
                     </button>
                 </div>
-                <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
-                        <span class="lead">3. Komplexe Reihen</span> &nbsp; <i class="fas fa-lock"></i>
+
+                <div class="row text-center">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+                <div class="row mx-0 my-2 text-center">
+                    <button type="button" class="btn btn-dark" onclick="">
+                        <span class="lead">4. Komplexe Funktionen und Potenzreihen</span> &nbsp;
+                        <br/>
+                        <span style="font-size:16pt">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <div class="row py-1">
+                        </div>
                     </button>
                 </div>
-                <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
-                        <span class="lead">4. Komplexe Funktionen u. Potenzreihen</span> &nbsp; <i class="fas fa-lock"></i>
+
+                <div class="row text-center">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+                <div class="row mx-0 my-2 text-center">
+                    <button type="button" class="btn btn-dark" onclick="">
+                        <span class="lead">5. Komplexe Potenzen u. Wurzeln</span> &nbsp;
+                        <br/>
+                        <span style="font-size:16pt">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <div class="row py-1">
+                        </div>
                     </button>
                 </div>
-                <div class="row mx-2 my-2">
-                    <button type="button" class="btn btn-outline-secondary text-secondary text-start">
-                        <span class="lead">5. Komplexe Potenzen u. Wurzeln</span> &nbsp; <i class="fas fa-lock"></i>
-                    </button>
-                </div>
+
             </div>
 
         </div>
@@ -153,8 +194,8 @@
                     </div>
                     <div class="col text-end">
                         <div class="input-group mb-3">
-                            <input id="chatInputField" type="text" class="form-control py-1 my-0 mx-0" placeholder="Nachricht eingeben" size="25"/>
-                            <button id="chatInputButton" type="text" class="btn btn-primary py-1 my-0 mx-0"><i class="fas fa-reply"></i></button>
+                            <input id="chatInputField" type="text" class="form-control py-1 my-0 mx-0 border-dark" placeholder="Nachricht eingeben" size="25"/>
+                            <button id="chatInputButton" type="text" class="btn btn-dark py-1 my-0 mx-0"><i class="fas fa-reply"></i></button>
                         </div>
                     </div>
                 </div>
@@ -186,52 +227,55 @@
                 <div class="row text-center px-5">
                     <table class="table table-sm text-light">
                         <tr class="text-end" style="vertical-align:bottom;">
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:20px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:20px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:45px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:45px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:33px;vertical-align:bottom;">
+                            <td class="text-center">
+                            <div style="background-color: green; height:33px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:48px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:48px;vertical-align:bottom; min-width:24px;">
+                                    <span style="color:#006500;">
+                                        <i class="far fa-smile-beam"></i>
+                                    </span>
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:1px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:1px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:10px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:10px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div style="border-left: 8px solid green;height:32px;vertical-align:bottom;">
+                            <td class="text-center">
+                                <div style="background-color: green; height:32px;vertical-align:bottom; min-width:24px;">
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>M</td>
-                            <td>D</td>
-                            <td>M</td>
-                            <td>D</td>
-                            <td>F</td>
-                            <td>S</td>
-                            <td>S</td>
+                            <td>Mo</td>
+                            <td>Di</td>
+                            <td>Mi</td>
+                            <td>Do</td>
+                            <td>Fr</td>
+                            <td>Sa</td>
+                            <td>So</td>
                         </tr>
                     </table>
                 </div>
 
                 <p class="text-light fw-light text-center py-0">
                     <i class="fas fa-heartbeat"></i> 77 &#x25;
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="far fa-check-circle"></i> 50 &#x25;
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <i class="far fa-hourglass"></i> 60 &#x25;
                 </p>
 
@@ -292,113 +336,101 @@
                 </div>
             </div>-->
 
-            <div class="container-fluid bg-dark mx-0 px-0 py-0 my-0" style="cursor:pointer;border-style: solid; border-radius: 14px;">
+            <div class="container-fluid bg-dark mx-0 px-0 px-1 py-0 my-0" style="cursor:pointer;border-style: solid; border-radius: 14px;">
+
+                <div class="row text-center">
+                    <span class="text-light py-1 text-center">Kurs: Höhere Mathematik</span>
+                </div>
 
                 <div class="row mx-0 my-0 text-center">
-
-                    <!--<div class="row text-light py-1">
-                        &nbsp;&nbsp;Themen
-                    </div>-->
-
-                    <span class="text-light">Kurs: Höhere Mathematik</span>
-
-                    <!--<div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px; border-color: #ffffff; border-width:1px;">-->
                     <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-bottom-style: solid; border-right-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
                                 <span class="text-light fw-light">Grundlagen</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                54 &#37;
-                            </div>-->
                         </div>
-
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 100%; max-width: 100%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 75%; max-width: 75%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 30%; max-width: 80%; background-color:#b42b83;"></div></div>
                         </div>
-
+                        <div class="row py-1">
+                        </div>
                     </div>
-                    <div class="col bg-white mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px;">
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-bottom-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Komplexe Zahlen</span>
+                                <span class="text-light fw-light">Komplexe Zahlen</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                15 &#37;
-                            </div>-->
                         </div>
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 70%; max-width: 70%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 50%; max-width: 50%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 85%; max-width: 85%; background-color:#b42b83;"></div></div>
                         </div>
+                        <div class="row py-1">
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mx-0 my-0 text-center">
-                    <div class="col bg-white mx-0 my-0 py-1" onclick="openTopic();" style="border-style: solid; border-radius: 14px;">
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-bottom-style: solid; border-right-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Differentialrechnung</span>
+                                <span class="text-light fw-light">Differentialrechnung</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                54 &#37;
-                            </div>-->
                         </div>
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 20%; max-width: 20%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 10%; max-width: 10%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 3%; max-width: 3%; background-color:#b42b83;"></div></div>
                         </div>
+                        <div class="row py-1">
+                        </div>
                     </div>
-                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-bottom-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Integralrechnung</span>
+                                <span class="text-light fw-light">Integralrechnung</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                15 &#37;
-                            </div>-->
                         </div>
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
+                        </div>
+                        <div class="row py-1">
                         </div>
                     </div>
                 </div>
 
                 <div class="row mx-0 my-0 text-center">
-                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-right-style: solid; border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">Lineare Algebra</span>
+                                <span class="text-light fw-light">Lineare Algebra</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                54 &#37;
-                            </div>-->
                         </div>
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
+                        </div>
+                        <div class="row py-1">
                         </div>
                     </div>
-                    <div class="col bg-white mx-0 my-0 py-1" style="border-style: solid; border-radius: 14px;">
+                    <div class="col bg-dark mx-0 my-0 py-1" onclick="openTopic();" style="border-color: #ffffff; border-width:1px;">
                         <div class="row my-1">
                             <div class="col">
-                                <span class="text-dark">DGLs</span>
+                                <span class="text-light fw-light">DGLs</span>
                             </div>
-                            <!--<div class="col text-end fw-lighter" style="font-size: 13pt;">
-                                15 &#37;
-                            </div>-->
                         </div>
                         <div class="row text-center px-0">
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#cd121b;"></div></div>
                             <div class="d-flex justify-content-center mb-1"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#e85b22;"></div></div>
                             <div class="d-flex justify-content-center"><div style="height: 6px; width: 2%; max-width: 2%; background-color:#b42b83;"></div></div>
+                        </div>
+                        <div class="row py-1">
                         </div>
                     </div>
                 </div>
