@@ -138,21 +138,18 @@
                 </div>
             </div>
 
-            <div class="container-fluid bg-white my-2">
-                <div class="row">
-                    <div class="col text-start">
-                        <button type="button" class="btn btn-outline-dark">
-                            <i class="far fa-comments"></i>
-                            Wie kann ich Dir helfen?
-                        </button>
-                    </div>
-                </div>
+            <div id="chat-history" class="container-fluid bg-white my-2">
             </div>
 
-            <div class="container-fluid bg-white my-2">
+            <div class="container-fluid bg-white my-3">
                 <div class="row">
+                    <div class="col-2">
+                    </div>
                     <div class="col text-end">
-                        <input id="chatInputField" type="text" class="mx-1" placeholder="Nachricht eingeben" size="25"/>
+                        <div class="input-group mb-3">
+                            <input id="chatInputField" type="text" class="form-control py-1 my-0 mx-0" placeholder="Nachricht eingeben" size="25"/>
+                            <button id="chatInputButton" type="text" class="btn btn-primary py-1 my-0 mx-0"><i class="fas fa-reply"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -382,6 +379,9 @@
 
         <script>
 
+            let chatInputField = document.getElementById('chatInputField');
+            let chatInputButton = document.getElementById('chatInputButton');
+
             let overview = document.getElementById('overview');
 
             let page = document.getElementById('coursePage');
@@ -407,18 +407,52 @@
                 topic.style.display = 'block';
             }
 
+            function putChatHistory() {
+                let chatHistory = slwEMU.getChatHistory();
+                let chatHistoryElement = document.getElementById('chat-history');
+                let html = '';
+                for(let i=0; i<chatHistory.length; i++) {
+                    let message = chatHistory[i];
+                    let align = i%2==0 ? 'start' : 'end';
+                    let icon = i%2==0 ? '<i class="far fa-comments"></i>&nbsp;' : '';
+                    html += `
+                    <div class="row py-1">
+                        <div class="col text-` + align +`">
+                            <button type="button" class="btn btn-outline-dark">
+                                ` + icon + message + `
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                }
+                chatHistoryElement.innerHTML = html;
+            }
+
+            function sentChatMessage(event) {
+                slwEMU.chat(chatInputField.value);
+                putChatHistory();
+                chatInputField.value = '';
+                window.scrollTo(0, document.body.scrollHeight);
+                chatInputField.focus();
+            }
+
             function startChat() {
+                putChatHistory();
                 overview.style.display = 'none';
                 page.style.display = 'none';
                 chat.style.display = 'block';
                 topic.style.display = 'none';
-                let chatInputField = document.getElementById('chatInputField');
-                chatInputField.focus();
-                chatInputField.addEventListener('keydown', (event)=>{
-                    if(event.key === 'Enter') {
-                        console.log('blub')
+                chatInputField.addEventListener('keydown', (event) => {
+                    if(event.key === 'Enter' && chatInputField.value.trim().length > 0) {
+                        sentChatMessage();
                     }
-                })
+                });
+                chatInputButton.addEventListener('click', () => {
+                    if(chatInputField.value.trim().length > 0) {
+                        sentChatMessage();
+                    }
+                });
+                chatInputField.focus();
             }
 
             slwEMU.init();

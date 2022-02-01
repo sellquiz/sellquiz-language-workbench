@@ -8,7 +8,7 @@ Deshalb erweitert man den Zahlbereich auf die sogenannten **komplexen Zahlen**, 
 
 ---
 Tikz.
-TODO: image taken from wikipedia...
+TODO: image taken from Wikipedia...
 ---
 
 ========

@@ -17,6 +17,50 @@
  ******************************************************************************/
 
 import axios from 'axios';
+import * as mathjs from 'mathjs';
+
+const chatHistory: string[] = ['Wie kann ich Dir helfen?'];
+const chatMathScope = {};
+
+export function getChatHistory(): string[] {
+    return chatHistory;
+}
+
+export function chat(msg: string): void {
+    msg = msg.trim();
+    chatHistory.push(msg);
+    msg = msg.toLowerCase();
+
+    let answer = '';
+
+    try {
+        answer = mathjs.evaluate(msg, chatMathScope);
+        const tmp = msg.replace('/ /g', ''); // remove spaces
+        if (tmp.length > 2 && tmp[1] == '=') answer = 'Merke ich mir!';
+    } catch (error) {
+        const errStr = error.toString();
+        if (errStr.startsWith('Error: Undefined symbol')) {
+            const sym = errStr
+                .substring('Error: Undefined symbol'.length)
+                .trim();
+            if (sym.length == 1)
+                // otherwise: non-math symbol
+                answer = 'Tut mir leid, ' + sym + ' ist mir nicht bekannt!';
+        } else {
+            console.log(errStr);
+        }
+    }
+    if (answer.length == 0) {
+        if (msg.includes('geht') && msg.endsWith('?'))
+            answer = 'Mir geht es gut!';
+        else if (msg.includes('normalform'))
+            answer =
+                'Sei z ∈ C. Dann ist z = x + yi die Normalform von z und x, y ∈ R sind die kartesischen Koordinaten von z.';
+        else answer = 'Leider verstehe ich Deine Eingabe nicht.';
+    }
+
+    chatHistory.push(answer);
+}
 
 abstract class Part {
     coursePage: CoursePage;
