@@ -58,6 +58,10 @@ diff = z1 - z2
 Sei $z_1 = z1$, $z_2 = z2$. Berechne
 - $ z_1 + z_2 = #sum $
 - $ z_1 - z_2 = #diff $
+
+@solution
+- $ z_1 + z_2 = (a+c) + (b+d)i $
+- $ z_1 - z_2 = (a-c) + (b-d)i $
 ---
 
 ========

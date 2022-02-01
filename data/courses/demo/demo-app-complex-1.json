@@ -5,7 +5,7 @@
     "parts": [
         {
             "type": "headline-1",
-            "text": "Einführung"
+            "text": "1. Grundlagen"
         },
         {
             "type": "paragraph",
@@ -48,12 +48,13 @@
                 "complex"
             ],
             "variable-values": [
-                ["3", "4", "1", "2", "3+4i", "1+2i", "4+6i", "-1+2i"],
+                ["3", "4", "1", "2", "3+4i", "1+2i", "4+6i", "2+2i"],
                 ["1", "4", "1", "2", "1+4i", "1+2i", "2+6i", "2i"]
             ],
             "input-field-types": ["complex-normalform", "complex-normalform"],
             "input-field-answers": ["sum", "diff"],
-            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne<ul class=\"px-4\"><li> \\( z_1 + z_2 = \\) $0$ </li><li> \\(z_1 - z_2 = \\) $1$ </ul>"
+            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\).<br/>Berechne:<ul class=\"px-4 py-0 my-0\"><li class=\"py-1\"> \\( z_1 + z_2 = \\) $0$ </li><li class=\"py-1\"> \\(z_1 - z_2 = \\) $1$ </ul>",
+            "solution": "<ul class=\"px-4 py-0 my-0\"><li class=\"py-1\"> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\) </li><li class=\"py-1\"> \\(z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\) </ul>"
         },
         {
             "type": "new-page"

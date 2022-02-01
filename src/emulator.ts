@@ -52,7 +52,7 @@ export function chat(msg: string): void {
     }
     if (answer.length == 0) {
         if (msg.includes('geht') && msg.endsWith('?'))
-            answer = 'Mir geht es gut!';
+            answer = 'Danke, mir geht es gut!';
         else if (msg.includes('normalform'))
             answer =
                 'Sei z ∈ C. Dann ist z = x + yi die Normalform von z und x, y ∈ R sind die kartesischen Koordinaten von z.';
@@ -77,15 +77,21 @@ abstract class Part {
     abstract generate(rootElement: HTMLElement): void;
     addReadEventListener(element: HTMLElement): void {
         const this_ = this;
-        element.addEventListener('click', (event) => {
-            this_.readFlag = !this_.readFlag;
-            if (this_.readFlag) {
-                element.style.backgroundColor = '#d0ffd0';
-            } else {
-                element.style.backgroundColor = '#ffffff';
-            }
-            this_.coursePage.refreshProgressBars();
-        });
+        if (
+            this instanceof PartParagraph ||
+            this instanceof PartDefinition ||
+            this instanceof PartExample
+        ) {
+            element.addEventListener('click', (event) => {
+                this_.readFlag = !this_.readFlag;
+                if (this_.readFlag) {
+                    element.style.backgroundColor = '#d0ffd0';
+                } else {
+                    element.style.backgroundColor = '#ffffff';
+                }
+                this_.coursePage.refreshProgressBars();
+            });
+        }
     }
     updateVisibility(): void {
         if (this.htmlElement == null) return;
@@ -158,26 +164,34 @@ class PartDefinition extends Part {
     generate(rootElement: HTMLElement): void {
         // TODO: remove duplicate code in "generate" from all parts...
         const divContainer = document.createElement('div');
+        divContainer.style.cursor = 'pointer';
         this.htmlElement = divContainer;
         divContainer.classList.add('container-fluid');
-        divContainer.style.backgroundColor = '#ffffff';
-        divContainer.style.cursor = 'pointer';
-        divContainer.style.borderLeftStyle = 'solid';
-        divContainer.style.borderRightStyle = 'solid';
-        divContainer.style.borderWidth = '8px';
         rootElement.appendChild(divContainer);
         const divRow = document.createElement('div');
         divRow.classList.add('row');
         divContainer.appendChild(divRow);
         const divCol = document.createElement('div');
-        divCol.classList.add('col', 'py-1');
+        divCol.classList.add('col', 'py-0');
         divRow.appendChild(divCol);
         const headline = document.createElement('p');
-        headline.classList.add('text-start', 'lead', 'py-0', 'my-0', 'my-1');
-        headline.innerHTML = '<b>Definition</b>';
+        headline.classList.add(
+            'text-start',
+            'lead',
+            'py-0',
+            'my-0',
+            'my-1',
+            'bg-dark',
+            'text-light',
+            'rounded',
+        );
+        headline.innerHTML = '&nbsp;<b>Definition</b>';
         divCol.appendChild(headline);
         const text = document.createElement('p');
+        text.classList.add('px-1', 'py-0', 'my-0');
         text.innerHTML = this.text;
+        text.style.borderBottomStyle = 'solid';
+        text.style.borderWidth = '2px';
         divCol.appendChild(text);
         this.addReadEventListener(divContainer);
     }
@@ -189,11 +203,20 @@ class PartDefinition extends Part {
 class PartImage extends Part {
     data = '';
     generate(rootElement: HTMLElement): void {
+        const divContainer = document.createElement('div');
+        this.htmlElement = divContainer;
+        divContainer.classList.add('container-fluid');
+        rootElement.appendChild(divContainer);
+        const divRow = document.createElement('div');
+        divRow.classList.add('row');
+        divContainer.appendChild(divRow);
+        const divCol = document.createElement('div');
+        divCol.classList.add('col', 'py-1', 'text-center');
+        divRow.appendChild(divCol);
         const imgElement = document.createElement('img');
-        this.htmlElement = imgElement;
+        divCol.appendChild(imgElement);
         imgElement.src = this.data;
-        imgElement.classList.add('img-fluid');
-        rootElement.appendChild(imgElement);
+        imgElement.classList.add('mx-auto', 'd-block');
     }
     import(data: any): void {
         this.data = data['data'];
@@ -258,6 +281,20 @@ class QuestionVariable {
         }
         return s;
     }
+    toMathJs(idx: number): mathjs.MathType {
+        const value = this.values[idx];
+        switch (this.type) {
+            case QuestionVariableType.Complex:
+                return mathjs.complex(value);
+            default:
+                console.assert(
+                    false,
+                    'unimplemented QuestionVariable.toMathJs(..) for type ' +
+                        this.type,
+                );
+                return 0;
+        }
+    }
 }
 
 enum QuestionInputFieldType {
@@ -278,10 +315,44 @@ class QuestionInputField {
     evaluate(): void {
         const sampleSolution =
             this.answerVariable.values[this.question.variantIdx];
-        console.log('sample solution: ' + sampleSolution);
-        console.log('user solution: ');
-        for (const element of this.htmlInputElements) {
-            console.log(element.value);
+        //console.log('sample solution: ' + sampleSolution);
+        const inputStrings: string[] = [];
+        for (const element of this.htmlInputElements)
+            inputStrings.push(element.value);
+        //console.log('user solution: ' + inputStrings);
+        switch (this.answerVariable.type) {
+            case QuestionVariableType.Complex:
+                if (
+                    Math.abs(
+                        mathjs.complex(sampleSolution).re -
+                            parseFloat(inputStrings[0]),
+                    ) < 1e-6
+                ) {
+                    this.htmlInputElements[0].style.backgroundColor = 'green';
+                    this.htmlInputElements[0].style.color = 'white';
+                } else {
+                    this.htmlInputElements[0].style.backgroundColor = 'red';
+                    this.htmlInputElements[0].style.color = 'white';
+                }
+                if (
+                    Math.abs(
+                        mathjs.complex(sampleSolution).im -
+                            parseFloat(inputStrings[1]),
+                    ) < 1e-6
+                ) {
+                    this.htmlInputElements[1].style.backgroundColor = 'green';
+                    this.htmlInputElements[1].style.color = 'white';
+                } else {
+                    this.htmlInputElements[1].style.backgroundColor = 'red';
+                    this.htmlInputElements[1].style.color = 'white';
+                }
+                break;
+            default:
+                console.assert(
+                    false,
+                    'unimplemented QuestionInputField: evaluate() for type ' +
+                        this.answerVariable.type,
+                );
         }
     }
     createHtmlElement(): void {
@@ -299,8 +370,8 @@ class QuestionInputField {
                 inputElement.size = 5;
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
-                this.htmlFeedbackElement.innerHTML =
-                    '&nbsp;&nbsp;<i class="fas fa-question"></i>';
+                this.htmlFeedbackElement.innerHTML = ''; // TODO
+                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
                 this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
@@ -337,8 +408,8 @@ class QuestionInputField {
                 this.htmlElement.appendChild(tmpElement);
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
-                this.htmlFeedbackElement.innerHTML =
-                    '&nbsp;&nbsp;<i class="fas fa-question"></i>';
+                this.htmlFeedbackElement.innerHTML = ''; // TODO
+                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
                 this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
@@ -353,7 +424,8 @@ class QuestionInputField {
 }
 
 class PartQuestion extends Part {
-    text = '';
+    questionText = '';
+    solutionText = '';
     options: string[] = [];
     variables: QuestionVariable[] = [];
     inputFields: QuestionInputField[] = [];
@@ -378,8 +450,7 @@ class PartQuestion extends Part {
             inputFieldSpan.appendChild(<HTMLElement>inputField.htmlElement);
         }
     }
-    generate(rootElement: HTMLElement): void {
-        let text = this.text;
+    private generateText(text: string, placeInputs = false): string {
         for (const v of this.variables) {
             let oldText = '';
             do {
@@ -390,42 +461,90 @@ class PartQuestion extends Part {
                 );
             } while (oldText !== text);
         }
-        for (let i = 0; i < this.inputFields.length; i++) {
-            text = text.replace(
-                '$' + i + '$',
-                '<span id="' + this.getHtmlElementIdx(i) + '"></span>',
-            );
+        if (placeInputs) {
+            for (let i = 0; i < this.inputFields.length; i++) {
+                text = text.replace(
+                    '$' + i + '$',
+                    '<span id="' + this.getHtmlElementIdx(i) + '"></span>',
+                );
+            }
         }
-
+        return text;
+    }
+    generate(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
         this.htmlElement = divContainer;
-        divContainer.classList.add('container-fluid', 'my-1');
-        divContainer.style.backgroundColor = '#ffffff';
-        divContainer.style.cursor = 'pointer';
-        divContainer.style.borderLeftStyle = 'solid';
-        divContainer.style.borderRightStyle = 'solid';
-        divContainer.style.borderWidth = '8px';
-        divContainer.style.borderColor = '#0000aa';
+        divContainer.classList.add('container-fluid');
         rootElement.appendChild(divContainer);
+        // question text
+        const questionText = this.generateText(this.questionText, true);
         const divRow = document.createElement('div');
         divRow.classList.add('row');
         divContainer.appendChild(divRow);
         const divCol = document.createElement('div');
-        divCol.classList.add('col', 'py-1');
+        divCol.classList.add('col', 'py-0');
         divRow.appendChild(divCol);
-        const headline = document.createElement('p');
-        headline.classList.add('text-start', 'lead', 'py-0', 'my-0', 'my-1');
-        headline.innerHTML = '<b>Aufgabe</b>';
+        let headline = document.createElement('p');
+        headline.classList.add(
+            'text-start',
+            'lead',
+            'py-0',
+            'my-0',
+            'my-1',
+            'bg-dark',
+            'text-light',
+            'rounded',
+        );
+        headline.innerHTML = '&nbsp;<b>Aufgabe</b>';
         divCol.appendChild(headline);
-        const textElement = document.createElement('p');
-        textElement.innerHTML = text;
+        let textElement = document.createElement('p');
+        textElement.classList.add('px-1', 'py-0', 'my-0');
+        textElement.style.borderBottomStyle = 'solid';
+        textElement.style.borderWidth = '2px';
+        textElement.innerHTML = questionText;
         divCol.appendChild(textElement);
-
+        this.addReadEventListener(divContainer);
         this.generateInputElements();
+        // answer text
+        const solutionText = this.generateText(this.solutionText);
+        /*divRow = document.createElement('div');
+        divRow.classList.add('row');
+        divContainer.appendChild(divRow);
+        divCol = document.createElement('div');
+        divCol.classList.add('col', 'py-0');
+        divRow.appendChild(divCol);*/
+
+        headline = document.createElement('p');
+        headline.classList.add(
+            'text-start',
+            'lead',
+            'py-0',
+            'my-0',
+            'my-1',
+            'bg-success',
+            'text-white',
+        );
+        headline.innerHTML = '&nbsp;<b>Lösung</b>';
+        divCol.appendChild(headline);
+        textElement = document.createElement('p');
+        textElement.classList.add(
+            'px-1',
+            'py-0',
+            'my-0',
+            'bg-success',
+            'text-white',
+        );
+        //textElement.style.borderBottomStyle = 'solid';
+        //textElement.style.borderWidth = '2px';
+        textElement.innerHTML = solutionText;
+        divCol.appendChild(textElement);
     }
 
     import(data: any): void {
-        this.text = data['text'];
+        this.questionText = data['text'];
+        if ('solution' in data) {
+            this.solutionText = data['solution'];
+        }
         if ('options' in data) {
             for (const option of data['options']) {
                 this.options.push(option);
@@ -662,7 +781,7 @@ class CoursePage {
         btnGroup.classList.add('btn-group');
         const backwardBtn = document.createElement('button');
         backwardBtn.type = 'button';
-        backwardBtn.classList.add('btn', 'btn-outline-primary');
+        backwardBtn.classList.add('btn', 'btn-dark');
         backwardBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
         backwardBtn.addEventListener('click', () => {
             if (this.visiblePageIdx > 0) {
@@ -673,7 +792,7 @@ class CoursePage {
         btnGroup.appendChild(backwardBtn);
         const forwardBtn = document.createElement('button');
         forwardBtn.type = 'button';
-        forwardBtn.classList.add('btn', 'btn-outline-primary');
+        forwardBtn.classList.add('btn', 'btn-dark');
         forwardBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
         forwardBtn.addEventListener('click', () => {
             if (this.visiblePageIdx < this.numPages - 1) {
@@ -755,20 +874,22 @@ class CoursePage {
         this.textProgress = Math.round(
             (100 * numTextPartsRead) / numTextPartsTotal,
         );
+        let renderedTextProgress = this.textProgress;
+        if (renderedTextProgress == 0) renderedTextProgress = 10;
         const div = document.getElementById('progress-bars');
         div.innerHTML =
             `
-        <div id="text-progress" class="progress">
+        <div id="text-progress" class="progress bg-white">
             <div class="progress-bar" role="progressbar" style="width: ` +
-            this.textProgress +
+            renderedTextProgress +
             `%; background-color:#cd121b;" aria-valuenow="` +
-            this.textProgress +
+            renderedTextProgress +
             `" aria-valuemin="0" aria-valuemax="100">Text</div>
         </div>
-        <div class="progress">
+        <div class="progress bg-white">
             <div class="progress-bar" role="progressbar" style="width: 75%; background-color:#e85b22;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">Aufgaben</div>
         </div>
-        <div class="progress">
+        <div class="progress bg-white">
             <div class="progress-bar" role="progressbar" style="width: 100%; background-color:#b42b83;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Spiele</div>
         </div>
         `;
