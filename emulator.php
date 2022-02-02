@@ -1,20 +1,9 @@
 <?php
 /******************************************************************************
- * SELLQUIZ-LANGUAGE-WORKBENCH                                                *
- *                                                                            *
+ * MATHE BUDDY APP                                                            *
  * Copyright (c) 2019-2022 TH Köln                                            *
  * Author: Andreas Schwenk, contact@compiler-construction.com                 *
- *                                                                            *
- * Partly funded by: Digitale Hochschule NRW                                  *
- * https://www.dh.nrw/kooperationen/hm4mint.nrw-31                            *
- *                                                                            *
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
- *                                                                            *
- * This library is licensed as described in LICENSE, which you should have    *
- * received as part of this distribution.                                     *
- *                                                                            *
- * This software is distributed on "AS IS" basis, WITHOUT WARRENTY OF ANY     *
- * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 ?>
 
@@ -241,9 +230,9 @@
                             </td>
                             <td class="text-center">
                                 <div style="background-color: green; height:48px;vertical-align:bottom; min-width:24px;">
-                                    <span style="color:#006500;">
+                                    <!--<span style="color:#006500;">
                                         <i class="far fa-smile-beam"></i>
-                                    </span>
+                                    </span>-->
                                 </div>
                             </td>
                             <td class="text-center">
@@ -497,12 +486,14 @@
                 let html = '';
                 for(let i=0; i<chatHistory.length; i++) {
                     let message = chatHistory[i];
-                    let align = i%2==0 ? 'start' : 'end';
-                    let icon = i%2==0 ? '<i class="far fa-comments"></i>&nbsp;' : '';
+                    let isBuddy = message.startsWith('B');
+                    message = message.substring(2); // remove prefix
+                    let align = isBuddy ? 'start' : 'end';
+                    let icon = isBuddy ? '<i class="far fa-comments"></i>&nbsp;' : '';
                     html += `
                     <div class="row py-1">
                         <div class="col text-` + align +`">
-                            <button type="button" class="btn btn-outline-dark">
+                            <button type="button" class="btn btn-outline-dark" style="max-width:90%";>
                                 ` + icon + message + `
                             </button>
                         </div>
@@ -513,10 +504,10 @@
             }
 
             function sendChatMessage(event) {
-                slwEMU.chat(chatInputField.value);
+                slwEMU.sendChatMessage(chatInputField.value);
                 putChatHistory();
                 chatInputField.value = '';
-                window.scrollTo(0, document.body.scrollHeight);
+                //window.scrollTo(0, document.body.scrollHeight);
                 chatInputField.focus();
             }
 

@@ -64,25 +64,29 @@
             "time-per-answer": 4,
             "questions": [
                 {
-                    "text": "\\(i^2\\)",
-                    "answers": ["\\(-1\\)", "\\(1\\)", "\\(0\\)", "(\\i\\)"]
-                },
-                {
-                    "text": "\\(z=x+yi\\) heißt ...",
+                    "text": "z=x+yi heißt ...",
                     "answers": [
                         "Normalform",
                         "Koordinaten",
                         "Polarform",
                         "Imaginärteil"
-                    ]
+                    ],
+                    "correct-index": 0
                 },
                 {
-                    "text": "\\(|-2i|\\)",
-                    "answers": ["\\(2\\)", "\\(2i\\)", "\\(1\\)", "\\(0\\)"]
+                    "text": "i²",
+                    "answers": ["-1", "1", "0", "i"],
+                    "correct-index": 0
                 },
                 {
-                    "text": "\\(1+2i-2i\\)",
-                    "answers": ["\\(1\\)", "\\(0\\)", "\\(1+4i\\)", "\\(-1\\)"]
+                    "text": "|-2i|",
+                    "answers": ["2", "2i", "1", "0"],
+                    "correct-index": 0
+                },
+                {
+                    "text": "1+2i-2i",
+                    "answers": ["1", "0", "1+4i", "-1"],
+                    "correct-index": 0
                 }
             ]
         },

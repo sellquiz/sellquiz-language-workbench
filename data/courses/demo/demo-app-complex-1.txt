@@ -1,5 +1,7 @@
 ##### Komplexe Zahlen
 
+!id = complex-numbers-intro
+
 # Einführung
 
 Über den reellen Zahlen können Gleichungen wie $x^2 = −1$ nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.
@@ -63,6 +65,30 @@ Sei $z_1 = z1$, $z_2 = z2$. Berechne
 - $ z_1 + z_2 = (a+c) + (b+d)i $
 - $ z_1 - z_2 = (a-c) + (b-d)i $
 ---
+
+---
+ChatQuestion.
+
+@python
+import random
+a = random.randint(1,5)
+b = random.randint(1,5)
+c = random.randint(1,5)
+d = random.randint(1,5)
+z1 = a + b*1j
+z2 = c + d*1j
+sum = z1 + z2
+
+@text
+Addiere $z1$ und $z2$.
+
+@answer
+sum
+
+@solution
+Die Lösung ergibt sich durch $ (a+c) + (b+d)i $.
+---
+
 
 ========
 

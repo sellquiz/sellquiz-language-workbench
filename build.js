@@ -34,7 +34,7 @@ esbuild.buildSync({
     globalName: 'slwEMU',
     minify: false, // TODO
     target: 'es2020',
-    entryPoints: ['src/emulator.ts'],
+    entryPoints: ['src/emulator/index.ts'],
     bundle: true,
     outfile: 'dist/slw-emulator.min.js',
 });
