@@ -228,7 +228,7 @@ export class PartQuestion extends Part {
         if (placeInputs) {
             for (let i = 0; i < this.inputFields.length; i++) {
                 text = text.replace(
-                    '$' + i + '$',
+                    '?' + i + '?',
                     '<span id="' + this.getHtmlElementIdx(i) + '"></span>',
                 );
             }

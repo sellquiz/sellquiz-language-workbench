@@ -1,6 +1,6 @@
 ##### Komplexe Zahlen
 
-!id = complex-numbers-intro
+!tex
 
 # Einführung
 
@@ -8,15 +8,16 @@
 
 Deshalb erweitert man den Zahlbereich auf die sogenannten **komplexen Zahlen**, die wir später als Ausdrücke der Form $x+y\sqrt{-1}=x+y i$ mit $x,y \in \mathbb{R}$ darstellen werden.
 
----
-Tikz.
-TODO: image taken from Wikipedia...
----
+%TODO:
+%---
+%Tikz.
+%TODO: image taken from Wikipedia...
+%---
 
 ========
 
 ---
-Definition.
+Definition
 Auf dem $\mathbb{R}^2$ definieren wir
 - Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$
 - Die **Multiplikation** $(x_1,y_1) \cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)$
@@ -24,7 +25,7 @@ Die Menge $\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\mathbb{C
 ---
 
 ---
-Example.
+Example
 Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
 - z_1+z_2
   =(2-3)+(3+2i)
@@ -39,14 +40,13 @@ Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
 ========
 
 ---
-Question.
+Question
 
 @options
 live check
 repeat on error
 
 @python
-import random
 a = random.randint(1,5)
 b = random.randint(1,5)
 c = random.randint(1,5)
@@ -58,16 +58,43 @@ diff = z1 - z2
 
 @text
 Sei $z_1 = z1$, $z_2 = z2$. Berechne
-- $ z_1 + z_2 = #sum $
-- $ z_1 - z_2 = #diff $
+- $ z_1 + z_2 = $ #sum
+- $ z_1 - z_2 = $ #diff
 
 @solution
 - $ z_1 + z_2 = (a+c) + (b+d)i $
 - $ z_1 - z_2 = (a-c) + (b-d)i $
 ---
 
+%---
+%Question
+%
+%@options
+%live check
+%repeat on error
+%
+%@octave
+%a = randi(5)
+%b = randi(5)
+%c = randi(5)
+%d = randi(5)
+%z1 = a + b*1i
+%z2 = c + d*1i
+%sum = z1 + z2
+%diff = z1 - z2
+%
+%@text
+%Sei $z_1 = z1$, $z_2 = z2$. Berechne
+%- $ z_1 + z_2 = $ #sum
+%- $ z_1 - z_2 = $ #diff
+%
+%@solution
+%- $ z_1 + z_2 = (a+c) + (b+d)i $
+%- $ z_1 - z_2 = (a-c) + (b-d)i $
+%---
+
 ---
-ChatQuestion.
+ChatQuestion
 
 @python
 import random
@@ -93,7 +120,7 @@ Die Lösung ergibt sich durch $ (a+c) + (b+d)i $.
 ========
 
 ---
-Speedreview.
+Speedreview
 
 @options
 time per answer = 4
@@ -112,7 +139,7 @@ $1+2i-2i=$
 ========
 
 ---
-Links.
+Links
 - Komplexe Folgen und Grenzwerte
 - Komplexe Reihen
 - Komplexe Funktionen und Potenzreihen

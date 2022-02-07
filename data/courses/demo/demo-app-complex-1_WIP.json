@@ -1,0 +1,114 @@
+{
+    "type": "course-page",
+    "title": "Komplexe Zahlen",
+    "tags": [],
+    "parts": [
+        {
+            "type": "headline-1",
+            "inputLineNo": 5,
+            "text": "1. Einführung",
+            "error": false
+        },
+        {
+            "type": "paragraph",
+            "inputLineNo": 7,
+            "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.",
+            "error": false
+        },
+        {
+            "type": "paragraph",
+            "inputLineNo": 9,
+            "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.",
+            "error": false
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 17,
+            "text": "",
+            "error": false
+        },
+        {
+            "type": "definition",
+            "inputLineNo": 19,
+            "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX",
+            "error": false
+        },
+        {
+            "type": "example",
+            "inputLineNo": 27,
+            "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:<ul><li> z_1+z_2<br/>  =(2-3)+(3+2i)<br/>  =-1+5i</li><li> z_1-z_2<br/>  =z_1+(-z_2)<br/>  =2+3i+(3+(-2)i)<br/>  =(2+3)+(3+(-2))i<br/>  =5+i</li></ul>",
+            "error": false
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 40,
+            "text": "",
+            "error": false
+        },
+        {
+            "type": "question",
+            "inputLineNo": 42,
+            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne<ul><li> \\( z_1 + z_2 = \\) ?0?</li><li> \\( z_1 - z_2 = \\) ?1?</li></ul>",
+            "error": false,
+            "solution": "<ul><li> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\)</li><li> \\( z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\)</li></ul>",
+            "variable-ids": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "diff",
+                "sum",
+                "z1",
+                "z2"
+            ],
+            "variable-types": [
+                "int",
+                "int",
+                "int",
+                "int",
+                "complex",
+                "complex",
+                "complex",
+                "complex"
+            ],
+            "input-field-types": [
+                "complex-normalform",
+                "complex-normalform"
+            ],
+            "input-field-answers": [
+                "sum",
+                "diff"
+            ]
+        },
+        {
+            "type": "error",
+            "inputLineNo": 96,
+            "text": "error: unknown part type 'ChatQuestion'",
+            "error": false
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 120,
+            "text": "",
+            "error": false
+        },
+        {
+            "type": "error",
+            "inputLineNo": 122,
+            "text": "error: unknown part type 'Speedreview'",
+            "error": false
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 139,
+            "text": "",
+            "error": false
+        },
+        {
+            "type": "error",
+            "inputLineNo": 141,
+            "text": "error: unknown part type 'Links'",
+            "error": false
+        }
+    ]
+}

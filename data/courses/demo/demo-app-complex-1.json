@@ -53,7 +53,7 @@
             ],
             "input-field-types": ["complex-normalform", "complex-normalform"],
             "input-field-answers": ["sum", "diff"],
-            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\).<br/>Berechne:<ul class=\"px-4 py-0 my-0\"><li class=\"py-1\"> \\( z_1 + z_2 = \\) $0$ </li><li class=\"py-1\"> \\(z_1 - z_2 = \\) $1$ </ul>",
+            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\).<br/>Berechne:<ul class=\"px-4 py-0 my-0\"><li class=\"py-1\"> \\( z_1 + z_2 = \\) ?0? </li><li class=\"py-1\"> \\(z_1 - z_2 = \\) ?1? </ul>",
             "solution": "<ul class=\"px-4 py-0 my-0\"><li class=\"py-1\"> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\) </li><li class=\"py-1\"> \\(z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\) </ul>"
         },
         {

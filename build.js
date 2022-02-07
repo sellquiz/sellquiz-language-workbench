@@ -18,7 +18,16 @@
 
 const esbuild = require('esbuild');
 
-// --- node version ---
+esbuild.buildSync({
+    platform: 'node',
+    globalName: 'slwCompiler',
+    minify: true,
+    target: 'es2020',
+    entryPoints: ['src/compiler/index.ts'],
+    bundle: true,
+    outfile: 'dist/slw-compiler.min.js',
+});
+
 esbuild.buildSync({
     platform: 'browser',
     globalName: 'slw',
