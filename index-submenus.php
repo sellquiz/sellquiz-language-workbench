@@ -46,19 +46,19 @@
             <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="undo [Ctrl+Z]"
-                onclick="hide_tooltips();slw.undo();">
+                onclick="hide_tooltips();slwEditor.undo();">
                 <i class="fas fa-undo"></i>
             </button>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="redo [Ctrl+Y]"
-                onclick="hide_tooltips();slw.redo();">
+                onclick="hide_tooltips();slwEditor.redo();">
                 <i class="fas fa-redo"></i>
             </button>
             <button type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="save [Ctrl+S]"
-                onclick="hide_tooltips();slw.save();">
+                onclick="hide_tooltips();slwEditor.save();">
                 <i class="fas fa-hdd"></i>
             </button>
             <div class="dropdown" style="display:inline-block"
@@ -86,37 +86,37 @@
             <button type="button" class="btn btn-success mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="update [F1]"
-                onclick="hide_tooltips();slw.update();">
+                onclick="hide_tooltips();slwEditor.update();">
                 <i class="fas fa-running"></i>
             </button>
             <button id="preview-spell-check" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="spell check"
-                onclick="hide_tooltips();slw.toggle('preview-spell-check');">
+                onclick="hide_tooltips();slwEditor.toggle('preview-spell-check');">
                 <i class="fas fa-spell-check"></i>
             </button>
             <button id="preview-show-source-links" type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="source links"
-                onclick="hide_tooltips();slw.toggle('preview-show-source-links');">
+                onclick="hide_tooltips();slwEditor.toggle('preview-show-source-links');">
                 <i class="fas fa-link"></i>
             </button>
             <button id="preview-show-solutions" type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show solutions"
-                onclick="hide_tooltips();slw.toggle('preview-show-solutions');">
+                onclick="hide_tooltips();slwEditor.toggle('preview-show-solutions');">
                 <i class="fas fa-poll"></i>
             </button>
             <button id="preview-show-variables" type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show variables"
-                onclick="hide_tooltips();slw.toggle('preview-show-variables');">
+                onclick="hide_tooltips();slwEditor.toggle('preview-show-variables');">
                 <i class="fas fa-chevron-down"></i>
             </button>
             <button id="preview-show-export" type="button" class="btn btn-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show 'export' buttons"
-                onclick="hide_tooltips();slw.toggle('preview-show-export');">
+                onclick="hide_tooltips();slwEditor.toggle('preview-show-export');">
                 <i class="fas fa-file-export"></i>
             </button>
         </div>

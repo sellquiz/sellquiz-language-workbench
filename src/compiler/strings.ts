@@ -5,6 +5,18 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
+export const TIKZ_PROG = `
+\\documentclass[class=minimal,border=0pt]{standalone}
+\\usepackage[latin1]{inputenc}
+\\usepackage{tikz}
+\\begin{document}
+\\pagestyle{empty}
+\\begin{tikzpicture}
+$CODE$
+\\end{tikzpicture}
+\\end{document}
+`;
+
 export const PYTHON_PROG = `
 import math
 import numpy

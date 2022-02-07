@@ -11,6 +11,7 @@ import fs from 'fs';
 import process from 'process';
 
 import { JSONType } from './help';
+import { Image } from './image';
 import { Part, PartType } from './part';
 import { Question } from './question';
 
@@ -103,6 +104,7 @@ class Document {
                 let first = true;
                 while (lineIdx < n) {
                     line = lines[lineIdx];
+                    part.src += line + '\n';
                     if (first) {
                         part.id = line.trim();
                     }
@@ -142,9 +144,9 @@ class Document {
                     part.text = this.compileParagraph(part.text);
                     break;
                 case PartType.uncompiledBlock:
-                    if (part.id === 'Definition') this.compileDefinition(part);
-                    else if (part.id === 'Example') this.compileExample(part);
-                    else if (part.id === 'Question') {
+                    if (part.id === 'Definition.') this.compileDefinition(part);
+                    else if (part.id === 'Example.') this.compileExample(part);
+                    else if (part.id === 'Question.') {
                         part.question = new Question();
                         part.question.compileQuestion(part);
                         part.question.text = this.compileParagraph(
@@ -153,6 +155,9 @@ class Document {
                         part.question.solutionText = this.compileParagraph(
                             part.question.solutionText,
                         );
+                    } else if (part.id === 'Tikz.') {
+                        part.image = new Image();
+                        part.image.compileImage(part);
                     } else {
                         part.type = PartType.error;
                         part.text =

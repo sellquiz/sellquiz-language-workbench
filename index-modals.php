@@ -158,7 +158,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="slw.editor.focus();">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="slwEditor.editor.focus();">Close</button>
             </div>
             <!-- TODO: must also focus editor, if ESC key is pressed -->
         </div>

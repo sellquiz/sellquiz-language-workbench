@@ -7,7 +7,9 @@ if [ -e $dbfile ]; then
     then
         rm database.db
         sqlite3 database.db < init.sql
+        php init.php
     fi
 else
     sqlite3 database.db < init.sql
+    php init.php
 fi

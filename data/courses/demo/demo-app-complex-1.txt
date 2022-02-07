@@ -8,16 +8,24 @@
 
 Deshalb erweitert man den Zahlbereich auf die sogenannten **komplexen Zahlen**, die wir später als Ausdrücke der Form $x+y\sqrt{-1}=x+y i$ mit $x,y \in \mathbb{R}$ darstellen werden.
 
-%TODO:
-%---
-%Tikz.
-%TODO: image taken from Wikipedia...
-%---
+---
+Tikz.
+[domain=0:4]
+\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+\draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+\draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
+\draw[color=red] plot[id=x] function{x}
+    node[right] {$f(x) =x$};
+\draw[color=blue] plot[id=cos] function{cos(x)}
+    node[right] {$f(x) = \cos x$};
+\draw[color=orange] plot[id=exp] function{0.05*exp(x)}
+    node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+---
 
 ========
 
 ---
-Definition
+Definition.
 Auf dem $\mathbb{R}^2$ definieren wir
 - Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$
 - Die **Multiplikation** $(x_1,y_1) \cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)$
@@ -25,7 +33,7 @@ Die Menge $\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\mathbb{C
 ---
 
 ---
-Example
+Example.
 Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
 - z_1+z_2
   =(2-3)+(3+2i)
@@ -40,7 +48,7 @@ Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
 ========
 
 ---
-Question
+Question.
 
 @options
 live check
@@ -67,7 +75,7 @@ Sei $z_1 = z1$, $z_2 = z2$. Berechne
 ---
 
 %---
-%Question
+%Question.
 %
 %@options
 %live check
@@ -94,7 +102,7 @@ Sei $z_1 = z1$, $z_2 = z2$. Berechne
 %---
 
 ---
-ChatQuestion
+ChatQuestion.
 
 @python
 import random
@@ -120,7 +128,7 @@ Die Lösung ergibt sich durch $ (a+c) + (b+d)i $.
 ========
 
 ---
-Speedreview
+Speedreview.
 
 @options
 time per answer = 4
@@ -139,7 +147,7 @@ $1+2i-2i=$
 ========
 
 ---
-Links
+Links.
 - Komplexe Folgen und Grenzwerte
 - Komplexe Reihen
 - Komplexe Funktionen und Potenzreihen

@@ -30,12 +30,12 @@ esbuild.buildSync({
 
 esbuild.buildSync({
     platform: 'browser',
-    globalName: 'slw',
+    globalName: 'slwEditor',
     minify: true,
     target: 'es2020',
-    entryPoints: ['src/index.ts'],
+    entryPoints: ['src/editor/index.ts'],
     bundle: true,
-    outfile: 'dist/sellquiz-language-workbench.min.js',
+    outfile: 'dist/slwEditor.min.js',
 });
 
 esbuild.buildSync({

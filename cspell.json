@@ -45,6 +45,7 @@
         "oint",
         "outfile",
         "pagestyle",
+        "pdflatex",
         "prts",
         "randi",
         "randint",

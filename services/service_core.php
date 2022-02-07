@@ -76,6 +76,7 @@ function service($command) {
         case "get_courselist":
             return query($db_path, "SELECT * FROM Course;", $command["query_values"]);
             break;
+        // TODO: case "get_filelist"
         default:
             return json_encode([
                 "error" => true,

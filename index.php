@@ -57,7 +57,7 @@
 
         <script type="text/javascript" id="MathJax-script" async src="node_modules/mathjax/es5/startup.js"></script>
 
-        <script src="dist/sellquiz-language-workbench.min.js?version=<?php $date = date_create(); echo date_timestamp_get($date); ?>"></script>
+        <script src="dist/slwEditor.min.js?version=<?php echo time();?>"></script>
 
         <style>
             body, html {
@@ -116,7 +116,7 @@
         </script>
 
         <script>
-            slw.init();
+            slwEditor.init();
 
             function resize() {
                 //let editorElement = document.getElementById("editor-div");
