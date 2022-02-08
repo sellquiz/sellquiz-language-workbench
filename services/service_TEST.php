@@ -20,12 +20,17 @@
 
 include "service_core.php";
 
+// $command = [
+//     "type" => "get_course_list",
+//     "query_values" => [
+//         /*"name" => "aaa",
+//         "desc" => "bbb"*/
+//     ]
+// ];
+
 $command = [
-    "type" => "get_courselist",
-    "query_values" => [
-        /*"name" => "aaa",
-        "desc" => "bbb"*/
-    ]
+    "type" => "compile_document",
+    "stdin" => "hello, world!"
 ];
 
 echo service($command);

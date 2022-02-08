@@ -48,14 +48,15 @@
         <script src="node_modules/mathjs/lib/browser/math.js"></script>
         <script src="extern/nspell.min.js"></script>
 
-        <script>MathJax = {
+        <!--<script>MathJax = {
             loader: {
-                load: ['input/asciimath', 'output/svg', 'ui/menu']
+                //load: ['input/asciimath', 'output/svg', 'ui/menu']
+                load: ['input/tex', 'output/svg', 'ui/menu']
             }
         };
         </script>
 
-        <script type="text/javascript" id="MathJax-script" async src="node_modules/mathjax/es5/startup.js"></script>
+        <script type="text/javascript" id="MathJax-script" async src="node_modules/mathjax/es5/startup.js"></script>-->
 
         <script src="dist/slwEditor.min.js?version=<?php echo time();?>"></script>
 
@@ -131,12 +132,12 @@
                 resize();
             });
 
-            let typeset_promise = Promise.resolve();
+            /*let typeset_promise = Promise.resolve();
             function typeset() {
                 typeset_promise = typeset_promise.then(() => MathJax.typesetPromise())
                     .catch((err) => console.log('Typeset failed: ' + err.message));
                 return typeset_promise;
-            }
+            }*/
 
         </script>
 

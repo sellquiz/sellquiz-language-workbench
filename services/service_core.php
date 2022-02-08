@@ -70,13 +70,55 @@ function query($database_path, $statement, $values) {
     ]);
 }
 
+function compile($stdin) {
+    $dir_path = sys_get_temp_dir() . '/slw/' . random_int(0, PHP_INT_MAX) . '/';
+    //echo $dir_path; // TODO: remove!
+    mkdir($dir_path, 0777, true);
+    $file_path = $dir_path . 'doc.txt';
+    file_put_contents($file_path, $stdin);
+
+    ob_start();
+    system("node ../dist/slw-compiler.min.js " . $file_path . " " . $file_path . ".json");
+    $output = ob_get_contents();
+    //echo $output; // TODO
+    ob_end_clean();
+
+    return file_get_contents($file_path . ".json");
+
+    /*
+    // run service-prog.js with input as argument
+    ob_start();
+    // 2>&1 redirects stderr to stdout
+    system("cd " . $dir . " && " . $pdflatex_path . " -halt-on-error --shell-escape plot2d.tex 2>&1");
+    $output = ob_get_contents();
+    ob_end_clean();
+    */
+
+    // TODO: remove dir
+}
+
 function service($command) {
+    // TODO: check privileges for all queries!!
     global $sql_list, $db_path;
     switch($command["type"]) {
-        case "get_courselist":
-            return query($db_path, "SELECT * FROM Course;", $command["query_values"]);
+        case "compile_document":
+            return compile($command["stdin"]);
             break;
-        // TODO: case "get_filelist"
+        case "get_course_list":
+            return query($db_path,
+                "SELECT * FROM Course;",
+                $command["query_values"]);
+            break;
+        case "get_document_list":
+            return query($db_path,
+                "SELECT id, documentName, documentDesc, courseId, documentDateCreated, documentDateModified FROM Document WHERE courseId=:courseId;",
+                $command["query_values"]);
+            break;
+        case "get_document":
+            return query($db_path,
+                "SELECT * FROM Document WHERE id=:id;",
+                $command["query_values"]);
+            break;
         default:
             return json_encode([
                 "error" => true,

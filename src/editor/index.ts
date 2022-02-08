@@ -24,10 +24,24 @@ import 'codemirror/addon/mode/overlay';
 // esbuild requires 'codemirror' import AFTER modes and addons
 import * as CodeMirror from 'codemirror';
 
+/*import * as katex from 'katex';
+const tmpElement = document.getElementById('rendered-content');
+katex.render('c = \\pm\\sqrt{a^2 + b^2}', tmpElement, {
+    throwOnError: false,
+});*/
+import * as mathjax from 'mathjax-full/js/mathjax';
+//mathjax.mathjax.document()
+
+TODO: xxx; //https://github.com/mathjax/MathJax-demos-node/blob/master/simple/tex2svg
+
+import * as emulatorCoursePage from '../emulator/coursePage';
+
 export let editor: CodeMirror.EditorFromTextArea = null;
 
-export let current_course = '';
-//export let current_file = '';
+export let currentCourseId = '';
+export let currentCourseName = '';
+export let currentDocumentId = '';
+export let currentDocumentName = '';
 
 export const toggle_states: { [key: string]: boolean } = {
     'preview-spell-check': false,
@@ -37,42 +51,81 @@ export const toggle_states: { [key: string]: boolean } = {
     'preview-show-export': false,
 };
 
-export function refresh_filelist() {
-    const filelist_button = document.getElementById('filelist_button');
-    const filelist_dropdown_items = document.getElementById(
-        'filelist_dropdown_items',
-    );
-    /*axios
+export function loadDocument() {
+    axios
         .post(
-            'services/filelist.php',
+            'services/service.php',
             new URLSearchParams({
-                course: current_course,
+                command: JSON.stringify({
+                    type: 'get_document',
+                    query_values: {
+                        id: currentDocumentId,
+                    },
+                }),
             }),
         )
         .then(function (response) {
             const data = response.data;
-            if (data['status'] === 'error') alert(data['error_message']); // TODO
-            let html = '',
-                i = 0;
-            for (const file of data['file_list']) {
-                html +=
-                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
-                    file +
-                    '</a></li>';
-                if (i == 0) current_file = file;
-                i++;
-            }
-            filelist_dropdown_items.innerHTML = html;
-            filelist_button.innerHTML = current_file;
+            // TODO: check data.error
+            console.log(response.data);
+            editor.setValue(response.data.rows[0][3]);
+            update();
         })
         .catch(function (error) {
-            console.error(error); // TODO: error handling!
-        });*/
+            // TODO
+            console.log(error);
+        });
 }
 
-export function refresh_courselist() {
-    const courselist_button = document.getElementById('courselist_button');
-    const courselist_dropdown_items = document.getElementById(
+export function refreshDocumentList() {
+    const documentListButton = document.getElementById('filelist_button');
+    const documentListDropdownItems = document.getElementById(
+        'filelist_dropdown_items',
+    );
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_document_list',
+                    query_values: {
+                        courseId: currentCourseId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(response.data);
+            let html = '',
+                i = 0;
+            for (const row of data.rows) {
+                const documentId = row[0];
+                const documentName = row[1];
+                html +=
+                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
+                    documentName +
+                    '</a></li>';
+                if (i == 0) {
+                    currentDocumentId = documentId;
+                    currentDocumentName = documentName;
+                }
+                i++;
+            }
+            documentListDropdownItems.innerHTML = html;
+            documentListButton.innerHTML = currentDocumentName;
+            loadDocument();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
+export function refreshCourseList() {
+    const courselistButton = document.getElementById('courselist_button');
+    const courselistDropdownItems = document.getElementById(
         'courselist_dropdown_items',
     );
 
@@ -81,7 +134,7 @@ export function refresh_courselist() {
             'services/service.php',
             new URLSearchParams({
                 command: JSON.stringify({
-                    type: 'get_courselist',
+                    type: 'get_course_list',
                     query_values: {},
                 }),
             }),
@@ -93,59 +146,41 @@ export function refresh_courselist() {
             let html = '',
                 i = 0;
             for (const row of data.rows) {
-                const courseId = row[1];
+                const courseId = row[0];
+                const courseName = row[1];
                 html +=
                     '<li><a class="dropdown-item" style="cursor:pointer;">' +
-                    courseId +
+                    courseName +
                     '</a></li>';
-                if (i == 0) current_course = courseId;
+                if (i == 0) {
+                    currentCourseId = courseId;
+                    currentCourseName = courseName;
+                }
                 i++;
             }
-            courselist_dropdown_items.innerHTML = html;
-            courselist_button.innerHTML = current_course;
-            refresh_filelist();
+            courselistDropdownItems.innerHTML = html;
+            courselistButton.innerHTML = currentCourseName;
+            refreshDocumentList();
         })
         .catch(function (error) {
             // TODO
             console.log(error);
         });
-
-    /*axios
-        .post('services/courselist.php', new URLSearchParams())
-        .then(function (response) {
-            const data = response.data;
-            if (data['status'] === 'error') alert(data['error_message']); // TODO
-            let html = '',
-                i = 0;
-            for (const course of data['course_list']) {
-                html +=
-                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
-                    course +
-                    '</a></li>';
-                if (i == 0) current_course = course;
-                i++;
-            }
-            courselist_dropdown_items.innerHTML = html;
-            courselist_button.innerHTML = current_course;
-            refresh_filelist();
-        })
-        .catch(function (error) {
-            console.error(error); // TODO: error handling!
-        });*/
 }
 
 export function init() {
-    refresh_courselist();
+    refreshCourseList();
 
     // init code editor
     CodeMirror.defineSimpleMode('sellquiz-edit', {
         start: [
             { regex: /\$(?:[^\\]|\\.)*?(?:\$|$)/, token: 'string' },
+            { regex: /\*\*(?:[^\\]|\\.)*?(?:\*\*|$)/, token: 'variable-3' },
             { regex: /`(?:[^\\]|\\.)*?(?:`)/, token: 'string' },
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|Definition\.|Theorem\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Plot2d\.|@tags|@code|@text|@solution|@given|@asserts|@forbidden-keywords|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@answer|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -439,6 +474,34 @@ export function save() {
 }
 
 export function update() {
+    const sourceCode = editor.getValue();
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'compile_document',
+                    stdin: sourceCode,
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(response.data);
+
+            /*
+            const doc = new emulatorCoursePage.CoursePage();
+            doc.import(data);
+            doc.set(document.getElementById('rendered-content'));
+            */
+            //eval('typeset()');
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+
     /*
      const compiler = new compile.Compiler();
      compiler.spellCheck = toggle_states['preview-spell-check'];
@@ -468,8 +531,6 @@ export function update() {
              sellquiz.refreshQuestion(qIdx);
          }
      }*/
-
-    eval('typeset()');
 }
 
 /*

@@ -21,7 +21,7 @@ const esbuild = require('esbuild');
 esbuild.buildSync({
     platform: 'node',
     globalName: 'slwCompiler',
-    minify: true,
+    minify: false, // TODO
     target: 'es2020',
     entryPoints: ['src/compiler/index.ts'],
     bundle: true,
@@ -31,7 +31,7 @@ esbuild.buildSync({
 esbuild.buildSync({
     platform: 'browser',
     globalName: 'slwEditor',
-    minify: true,
+    minify: false, // TODO
     target: 'es2020',
     entryPoints: ['src/editor/index.ts'],
     bundle: true,

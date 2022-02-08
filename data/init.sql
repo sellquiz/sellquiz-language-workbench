@@ -48,15 +48,19 @@ CREATE TABLE Document (
     documentName TEXT NOT NULL,
     documentDesc TEXT,
     documentText TEXT,
-    courseDateCreated INTEGER NOT NULL,  -- UNIX time
-    courseDateModified INTEGER NOT NULL  -- UNIX time
+    courseId INTEGER NOT NULL,
+    documentDateCreated INTEGER NOT NULL,  -- UNIX time
+    documentDateModified INTEGER NOT NULL,  -- UNIX time
+    FOREIGN KEY(courseId) REFERENCES Course(id)
 );
 
 INSERT INTO Document
     (documentName, documentDesc, documentText,
-     courseDateCreated, courseDateModified)
+     courseId,
+     documentDateCreated, documentDateModified)
     VALUES
     ('demo', 'demo document', '',
+     (SELECT id FROM Course WHERE courseName='demo'),
      1640991600, 1640991600);
 
 CREATE TABLE DocumentBackup (

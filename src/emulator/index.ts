@@ -41,7 +41,7 @@ function loadPage(path: string) {
             const data = response.data;
             // import
             coursePage.import(data);
-            coursePage.set();
+            coursePage.set(document.getElementById('content'));
         })
         .catch(function (error) {
             console.error(error); // TODO: error handling!

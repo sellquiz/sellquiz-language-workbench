@@ -124,6 +124,7 @@ export class Question {
         json['solution'] = this.solutionText;
         json['variable-ids'] = this.variableIDs;
         json['variable-types'] = this.variableTypes;
+        json['variable-values'] = this.variableValues;
         json['input-field-types'] = this.inputFieldTypes;
         json['input-field-answers'] = this.inputFieldAnswers;
     }

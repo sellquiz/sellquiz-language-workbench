@@ -61,6 +61,8 @@
                 onclick="hide_tooltips();slwEditor.save();">
                 <i class="fas fa-hdd"></i>
             </button>
+            &nbsp;&nbsp;&nbsp;
+            <i class="fas fa-layer-group"></i>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top"
                     title="select course">
@@ -71,6 +73,8 @@
                 <ul id="courselist_dropdown_items"class="dropdown-menu">
                 </ul>
             </div>
+            &nbsp;&nbsp;&nbsp;
+            <i class="fas fa-file"></i>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top"
                     title="select file">

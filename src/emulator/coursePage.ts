@@ -42,8 +42,8 @@ export class CoursePage {
         }
     }
 
-    set(): void {
-        const content = document.getElementById('content');
+    set(rootElement: HTMLElement): void {
+        const content = rootElement;
         // title
         const divContainer = document.createElement('div');
         divContainer.classList.add('container-fluid');

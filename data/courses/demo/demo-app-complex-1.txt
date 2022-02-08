@@ -102,7 +102,7 @@ Sei $z_1 = z1$, $z_2 = z2$. Berechne
 %---
 
 ---
-ChatQuestion.
+Chatquestion.
 
 @python
 import random
