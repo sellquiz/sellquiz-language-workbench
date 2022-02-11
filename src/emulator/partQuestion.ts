@@ -43,6 +43,10 @@ export class QuestionVariable {
     toMathJs(idx: number): mathjs.MathType {
         const value = this.values[idx];
         switch (this.type) {
+            case QuestionVariableType.Int:
+                return parseInt(value);
+            case QuestionVariableType.Float:
+                return parseFloat(value);
             case QuestionVariableType.Complex:
                 return mathjs.complex(value);
             default:
@@ -148,7 +152,9 @@ export class QuestionInputField {
                 });
                 // "+"
                 tmpElement = document.createElement('span');
-                tmpElement.innerHTML = '\\(+\\)';
+                tmpElement.innerHTML = this.question.coursePage
+                    .getMathJaxInst()
+                    .convertHTML('\\(+\\)');
                 this.htmlElement.appendChild(tmpElement);
                 // imaginary part
                 inputElement = document.createElement('input');
@@ -163,7 +169,9 @@ export class QuestionInputField {
                 });
                 // "i"
                 tmpElement = document.createElement('span');
-                tmpElement.innerHTML = '\\(i\\)';
+                tmpElement.innerHTML = this.question.coursePage
+                    .getMathJaxInst()
+                    .convertHTML('\\(i\\)');
                 this.htmlElement.appendChild(tmpElement);
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
@@ -233,6 +241,7 @@ export class PartQuestion extends Part {
                 );
             }
         }
+        text = this.coursePage.getMathJaxInst().convertHTML(text);
         return text;
     }
     generateDOM(rootElement: HTMLElement): void {
@@ -263,12 +272,39 @@ export class PartQuestion extends Part {
         divCol.appendChild(headline);
         let textElement = document.createElement('p');
         textElement.classList.add('px-1', 'py-0', 'my-0');
-        //textElement.style.borderBottomStyle = 'solid';
-        //textElement.style.borderWidth = '2px';
-        textElement.innerHTML = questionText;
+        if (this.error) {
+            textElement.innerHTML = '<pre>' + this.errorLog + '</pre>';
+        } else textElement.innerHTML = questionText;
         divCol.appendChild(textElement);
         this.addReadEventListener(divContainer);
         this.generateInputElements();
+        // variable values
+        let variableValues = '';
+        for (const v of this.variables) {
+            variableValues += v.id + '=' + v.toMathJs(0) + ', &nbsp;';
+        }
+        headline = document.createElement('p');
+        headline.classList.add(
+            'text-start',
+            'lead',
+            'py-0',
+            'my-0',
+            'my-1',
+            'bg-info',
+            'text-white',
+        );
+        headline.innerHTML = '&nbsp;<b>Variablen</b>';
+        divCol.appendChild(headline);
+        textElement = document.createElement('p');
+        textElement.classList.add(
+            'px-1',
+            'py-0',
+            'my-0',
+            'bg-info',
+            'text-white',
+        );
+        textElement.innerHTML = variableValues;
+        divCol.appendChild(textElement);
         // answer text
         const solutionText = this.generateText(this.solutionText);
         headline = document.createElement('p');
@@ -297,6 +333,8 @@ export class PartQuestion extends Part {
 
     import(data: any): void {
         this.questionText = data['text'];
+        this.error = data['error'];
+        this.errorLog = data['errorLog'];
         if ('solution' in data) {
             this.solutionText = data['solution'];
         }
@@ -314,6 +352,9 @@ export class PartQuestion extends Part {
             switch (typeStr) {
                 case 'int':
                     variable.type = QuestionVariableType.Int;
+                    break;
+                case 'float':
+                    variable.type = QuestionVariableType.Float;
                     break;
                 case 'complex':
                     variable.type = QuestionVariableType.Complex;

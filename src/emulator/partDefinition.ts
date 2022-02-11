@@ -50,5 +50,6 @@ export class PartDefinition extends Part {
     }
     import(data: any): void {
         this.text = data['text'];
+        this.text = this.coursePage.getMathJaxInst().convertHTML(this.text);
     }
 }

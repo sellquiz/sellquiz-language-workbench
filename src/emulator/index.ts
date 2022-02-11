@@ -9,13 +9,16 @@ import axios from 'axios';
 
 import { CoursePage } from './coursePage';
 import { Chat } from './chat';
+import { MathJax } from '../shared/mathjax';
 
-const chatInstance: Chat = new Chat();
+const mathjaxInstance = new MathJax();
+
+const chatInstance = new Chat();
 
 const COURSE_DEF_PATH = 'data/courses/demo/demo-app-complex-1.json';
 const CHAT_DEF_PATH = 'data/courses/demo/demo-app-chat.json';
 
-const coursePage = new CoursePage();
+const coursePage = new CoursePage(mathjaxInstance);
 
 export function init() {
     loadPage(COURSE_DEF_PATH);

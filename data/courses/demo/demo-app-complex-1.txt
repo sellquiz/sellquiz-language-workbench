@@ -35,17 +35,64 @@ Die Menge $\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\mathbb{C
 ---
 Example.
 Sei $z_1=2+3i, z_2=-3+2i$. Dann gilt:
-- z_1+z_2
-  =(2-3)+(3+2i)
-  =-1+5i
-- z_1-z_2
-  =z_1+(-z_2)
-  =2+3i+(3+(-2)i)
-  =(2+3)+(3+(-2))i
-  =5+i
+- $z_1+z_2$
+  $=(2-3)+(3+2i)$
+  $=-1+5i$
+- $z_1-z_2$
+  $=z_1+(-z_2)$
+  $=2+3i+(3+(-2)i)$
+  $=(2+3)+(3+(-2))i$
+  $=5+i$
 ---
 
 ========
+
+---
+Question.
+
+@maxima
+a:3;
+b:4;
+c:a^b;
+
+@text
+Berechne $a^b=$ #c
+---
+
+========
+
+---
+Question.
+
+@octave
+a=3;
+b=4;
+c=a^b;
+
+@text
+Berechne $a^b=$ #c
+---
+
+========
+
+---
+Question.
+
+@sage
+n=123456;
+a=198;
+g=gcd(a,n);
+
+@text
+Sei $"a"=a$ und $"n"=n$.
+- Berechne $gcd(a,n)=$ #g
+
+@solution
+$gcd(a,n)=g$
+---
+
+========
+
 
 ---
 Question.

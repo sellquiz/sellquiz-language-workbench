@@ -10,7 +10,7 @@ import { execSync } from 'child_process';
 
 import { JSONType, makeTempDirectory, deleteTempDirectory } from './help';
 import { Part, PartType } from './part';
-import { PYTHON_PROG } from './strings';
+import { OCTAVE_PROG, PYTHON_PROG, SAGE_PROG } from './strings';
 
 export class Question {
     variableIDs: string[] = [];
@@ -27,25 +27,49 @@ export class Question {
         if ('text' in part.labeledText) this.text = part.labeledText['text'];
         if ('solution' in part.labeledText)
             this.solutionText = part.labeledText['solution'];
-        if ('python' in part.labeledText) {
+        if (
+            'python' in part.labeledText ||
+            'sage' in part.labeledText ||
+            'octave' in part.labeledText
+        ) {
+            let command = '',
+                filename = '',
+                template = '',
+                code = '';
+            if ('python' in part.labeledText) {
+                command = 'python3';
+                filename = 'sell.py';
+                template = PYTHON_PROG;
+                code = part.labeledText['python'];
+                code = '    ' + code.replace(/\n/g, '\n    ');
+            } else if ('sage' in part.labeledText) {
+                command = 'sage';
+                filename = 'sell.sage';
+                template = SAGE_PROG;
+                code = part.labeledText['sage'];
+                code = '    ' + code.replace(/\n/g, '\n    ');
+            } else {
+                // TODO: add ";" at end of each code line to prevent output!!
+                command = 'octave';
+                filename = 'sell.m';
+                template = OCTAVE_PROG;
+                code = part.labeledText['octave'];
+            }
             const tmpDir = makeTempDirectory();
             let res = '';
-            const code =
-                '    ' + part.labeledText['python'].replace(/\n/g, '\n    ');
-            const prog = PYTHON_PROG.replace('$CODE$', code).replace(
-                '$INSTANCES$',
-                '5',
-            ); // TODO: config number of instances
-            fs.writeFileSync(tmpDir + 'sell.py', prog);
+            const prog = template
+                .replace('$CODE$', code)
+                .replace('$INSTANCES$', '5'); // TODO: config number of instances
+            fs.writeFileSync(tmpDir + filename, prog);
             try {
-                res = execSync('python3 ' + tmpDir + 'sell.py', {
+                res = execSync(command + ' ' + tmpDir + filename, {
                     encoding: 'utf-8',
                     timeout: 10000,
                     stdio: 'pipe',
                 });
             } catch (e) {
                 part.error = true;
-                part.text = (e as any)['stderr'];
+                part.errorLog = (e as any)['stderr'];
                 console.log(part.text);
             }
             deleteTempDirectory(tmpDir);
@@ -70,50 +94,77 @@ export class Question {
     private compileText(text: string, generateInputFields = false): string {
         let res = '';
         const n = text.length;
-        let id = '';
         let inMath = false;
         let hashtag = false;
-        text = text + ' '; // text should not end with an ID
+        // tokenize
+        const tokens: string[] = [];
+        let token = '';
         for (let i = 0; i < n; i++) {
             const ch = text[i];
             if (
-                id.length == 0 &&
+                token.length == 0 &&
                 ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
             ) {
-                id += ch;
+                token += ch;
             } else if (
-                id.length > 0 &&
+                token.length > 0 &&
                 ((ch >= 'a' && ch <= 'z') ||
                     (ch >= 'A' && ch <= 'Z') ||
                     (ch >= '0' && ch <= '9'))
             ) {
-                id += ch;
-            } else {
-                if (
-                    generateInputFields &&
-                    !inMath &&
-                    hashtag &&
-                    id.length > 0 &&
-                    this.variableIDs.includes(id)
-                ) {
-                    res += '?' + this.inputFieldAnswers.length + '?';
-                    this.inputFieldAnswers.push(id);
-                    let type = this.variableTypes[this.variableIDs.indexOf(id)];
-                    if (type === 'complex') type = 'complex-normalform'; // TODO: needs to be configurable
-                    this.inputFieldTypes.push(type);
-                } else if (
-                    inMath &&
-                    id.length > 0 &&
-                    this.variableIDs.includes(id)
-                ) {
-                    res += '@' + id + '@';
-                } else if (id.length > 0) {
-                    res += id;
+                token += ch;
+            } else if (ch === '"') {
+                if (token.length > 0) {
+                    tokens.push(token);
+                    token = '';
                 }
-                if (ch === '$') inMath = !inMath;
-                hashtag = inMath == false && ch === '#';
-                id = '';
-                if (!hashtag) res += ch;
+                token += '"';
+                i++;
+                while (i < n && text[i] !== '"') {
+                    token += text[i];
+                    i++;
+                }
+                if (i < n && text[i] === '"') {
+                    token += '"';
+                    i++;
+                }
+                i--;
+            } else {
+                if (token.length > 0) {
+                    tokens.push(token);
+                    token = '';
+                }
+                tokens.push(ch);
+            }
+        }
+        if (token.length > 0) tokens.push(token);
+        // compile
+        for (token of tokens) {
+            if (
+                generateInputFields &&
+                inMath == false &&
+                hashtag &&
+                this.variableIDs.includes(token)
+            ) {
+                res += '?' + this.inputFieldAnswers.length + '?';
+                this.inputFieldAnswers.push(token);
+                let type = this.variableTypes[this.variableIDs.indexOf(token)];
+                if (type === 'int') type = 'text-field';
+                else if (type === 'float') type = 'text-field';
+                else if (type === 'complex') type = 'complex-normalform'; // TODO: needs to be configurable
+                this.inputFieldTypes.push(type);
+            } else if (token === '$') {
+                inMath = !inMath;
+                res += '$';
+            } else if (inMath && this.variableIDs.includes(token)) {
+                res += '@' + token + '@';
+            } else if (inMath && token.startsWith('"') && token.endsWith('"')) {
+                res += token.substring(1, token.length - 1);
+            } else if (token === '#') {
+                hashtag = true;
+            } else {
+                res += token;
+                hashtag = false;
             }
         }
         return res;

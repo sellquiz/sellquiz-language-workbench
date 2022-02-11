@@ -8,7 +8,7 @@
 import { Part } from './part';
 import { CoursePage } from './coursePage';
 
-export class PartExample extends Part {
+export class PartError extends Part {
     text = '';
     constructor(coursePage: CoursePage) {
         super(coursePage);
@@ -29,15 +29,13 @@ export class PartExample extends Part {
         divRow.appendChild(divCol);
         const headline = document.createElement('p');
         headline.classList.add('text-start', 'lead', 'py-0', 'my-0', 'my-1');
-        headline.innerHTML = '<b>Beispiel</b>';
+        headline.innerHTML = '<b>ERROR</b>';
         divCol.appendChild(headline);
         const text = document.createElement('p');
         text.innerHTML = this.text;
         divCol.appendChild(text);
-        this.addReadEventListener(divContainer);
     }
     import(data: any): void {
         this.text = data['text'];
-        this.text = this.coursePage.getMathJaxInst().convertHTML(this.text);
     }
 }

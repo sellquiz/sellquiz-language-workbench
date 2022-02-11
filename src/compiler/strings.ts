@@ -5,6 +5,7 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
+// LaTeX-template for TikZ Scripts
 export const TIKZ_PROG = `
 \\documentclass[class=minimal,border=0pt]{standalone}
 \\usepackage[latin1]{inputenc}
@@ -17,6 +18,7 @@ $CODE$
 \\end{document}
 `;
 
+// Python-template for questions
 export const PYTHON_PROG = `
 import math
 import numpy
@@ -57,7 +59,7 @@ $CODE$
             _ids.append(v)
             _types.append('complex')
             c = str(value)
-            c.replace('j', 'i')
+            c = c.replace('j', 'i')
             if c.startswith('('):
                 c = c[1:-1]
             _values.append(c)
@@ -70,8 +72,8 @@ $CODE$
         for id in _ids:
             __s += id + '#'
         __s += '\\n'
-        for type in _types:
-            __s += type + '#'
+        for _t in _types:
+            __s += _t + '#'
         __s += '\\n'
 
     for value in _values:
@@ -80,3 +82,92 @@ $CODE$
 
 print(__s)
 `;
+
+// SageMath-template for questions
+export const SAGE_PROG = `__s = ''
+_vars = []
+_ignore = ['In', 'Out', 'exit', 'get_ipython', 'quit']
+for __i in range(0, $INSTANCES$):
+
+$CODE$
+
+    if __i == 0:
+        _vars=show_identifiers()
+    _ids=[]
+    _types=[]
+    _values=[]
+    for v in _vars:
+        if v.startswith('_') or v.startswith('__') or v in _ignore:
+            continue
+        value = eval(v)
+        if type(value) == Integer:
+            _ids.append(v)
+            _types.append('int')
+            _values.append(value)
+        else:
+            _ids.append(v)
+            _types.append('unknown')
+            _values.append(value)
+
+    if __i == 0:
+        for id in _ids:
+            __s += id + '#'
+        __s += '\\n'
+        for _t in _types:
+            __s += _t + '#'
+        __s += '\\n'
+
+    for value in _values:
+        __s += str(value) + '#'
+    __s += '\\n'
+
+print(__s)
+`;
+
+// Octave-template for questions
+export const OCTAVE_PROG = `
+$CODE$
+
+%a=3;
+%b=5;
+%A=a*[1 2; 3 4];
+
+% TODO: complex numbers!
+% TODO: multiple instances!
+
+_vars = who;
+
+_ids = '';
+_types = '';
+_values = '';
+for k=1:length(_vars)
+	_ids = strcat(_ids, _vars{k}, '#');
+	_value = eval(_vars{k});
+	if rows(_value)==1 && columns(_value)==1
+		_types = strcat(_types, 'float', '#');
+	else
+		_types = strcat(_types, 'matrix', '#');
+	end
+	_values = strcat(_values, mat2str(_value), '#');
+end
+
+disp(_ids)
+disp(_types)
+disp(_values)
+`;
+
+// TODO: maxima
+
+export const MAXIMA_PROG = `display2d:false;
+stardisp:true;
+e:%e;
+i:%i;
+
+$CODE$
+/*a:3;b:4;c:a^b;*/
+
+values;
+ev(values);
+float(ev(values));
+`;
+// TODO: maxima output needs postprocessing

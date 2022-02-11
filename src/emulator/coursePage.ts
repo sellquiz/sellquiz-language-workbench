@@ -5,6 +5,7 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
+import { MathJax } from '../shared/mathjax';
 import { Part } from './part';
 import { PartDefinition } from './partDefinition';
 import { PartExample } from './partExample';
@@ -15,6 +16,7 @@ import { PartNewPage } from './partNewPage';
 import { PartParagraph } from './partParagraph';
 import { PartQuestion } from './partQuestion';
 import { PartSpeedReview } from './partSpeedReview';
+import { PartError } from './partError';
 
 export class CoursePage {
     private title = '';
@@ -23,6 +25,18 @@ export class CoursePage {
 
     private numPages = 1;
     private visiblePageIdx = 0;
+
+    private mathjaxInst: MathJax = null;
+    private renderProgressBars = true;
+
+    constructor(mathjaxInst: MathJax, renderProgressBars = true) {
+        this.mathjaxInst = mathjaxInst;
+        this.renderProgressBars = renderProgressBars;
+    }
+
+    getMathJaxInst(): MathJax {
+        return this.mathjaxInst;
+    }
 
     getNumPages(): number {
         return this.numPages;
@@ -64,7 +78,7 @@ export class CoursePage {
         // update visibility
         this.updateVisibility();
         // progress bars
-        this.refreshProgressBars();
+        if (this.renderProgressBars) this.refreshProgressBars();
         // navigation
 
         const nav = document.createElement('div');
@@ -141,6 +155,10 @@ export class CoursePage {
                     break;
                 case 'links':
                     partInstance = new PartLinks(this);
+                    partInstance.import(part);
+                    break;
+                case 'error':
+                    partInstance = new PartError(this);
                     partInstance.import(part);
                     break;
                 default:

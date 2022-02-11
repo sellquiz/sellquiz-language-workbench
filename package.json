@@ -31,7 +31,6 @@
         "codemirror": "^5.65.1",
         "dictionary-de": "^2.0.4",
         "dictionary-en": "^3.1.0",
-        "katex": "^0.15.2",
         "lz-string": "^1.4.4",
         "mathjax": "^3.2.0",
         "mathjax-full": "^3.2.0",

@@ -87,6 +87,9 @@
             </div>
         </div>
         <div class="col text-center border-end border-bottom py-1" style="">
+
+    TODO: buttons for mobile and desktop
+
             <button type="button" class="btn btn-success mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="update [F1]"

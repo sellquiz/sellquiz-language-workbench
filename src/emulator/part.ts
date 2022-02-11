@@ -14,14 +14,20 @@ export abstract class Part {
     readFlag = false;
     pageIdx = 0;
     htmlElement: HTMLElement = null; // root
+    error = false;
+    errorLog = '';
     static indexCounter = 0;
+
     constructor(coursePage: CoursePage) {
         this.coursePage = coursePage;
         this.index = Part.indexCounter++;
         this.pageIdx = coursePage == null ? -1 : coursePage.getNumPages() - 1;
     }
+
     abstract import(data: any): void;
+
     abstract generateDOM(rootElement: HTMLElement): void;
+
     addReadEventListener(element: HTMLElement): void {
         const this_ = this;
         if (this.allowReadFlag) {
@@ -36,6 +42,7 @@ export abstract class Part {
             });
         }
     }
+
     updateVisibility(): void {
         if (this.htmlElement == null) return;
         if (this.coursePage.getVisiblePageIdx() == this.pageIdx) {

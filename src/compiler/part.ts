@@ -30,6 +30,7 @@ export class Part {
     type = PartType.unknown;
     text = '';
     error = false;
+    errorLog = '';
     labeledText: { [id: string]: string } = {};
     inputLineNo = 0;
     question: Question = null;
@@ -43,6 +44,7 @@ export class Part {
         j.inputLineNo = this.inputLineNo;
         j.text = this.text;
         j.error = this.error;
+        j.errorLog = this.errorLog;
         j.src = this.src;
         if (this.question != null) this.question.toJson(j);
         if (this.image != null) this.image.toJson(j);

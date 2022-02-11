@@ -24,15 +24,9 @@ import 'codemirror/addon/mode/overlay';
 // esbuild requires 'codemirror' import AFTER modes and addons
 import * as CodeMirror from 'codemirror';
 
-/*import * as katex from 'katex';
-const tmpElement = document.getElementById('rendered-content');
-katex.render('c = \\pm\\sqrt{a^2 + b^2}', tmpElement, {
-    throwOnError: false,
-});*/
-import * as mathjax from 'mathjax-full/js/mathjax';
-//mathjax.mathjax.document()
+import { MathJax } from '../shared/mathjax';
 
-TODO: xxx; //https://github.com/mathjax/MathJax-demos-node/blob/master/simple/tex2svg
+const mathjaxInstance = new MathJax();
 
 import * as emulatorCoursePage from '../emulator/coursePage';
 
@@ -180,7 +174,7 @@ export function init() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@answer|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@sage|@octave|@maxima|@answer|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -426,25 +420,6 @@ export function init() {
             `</a>`;
     }
     document.getElementById('insertCodeList').innerHTML = html;
-
-    // read demo file: TODO: move code!!!!!
-    /*axios
-        .post(
-            'services/read.php',
-            new URLSearchParams({
-                course: 'demo', // TODO
-                file: 'demo-app-complex-1', // TODO
-            }),
-        )
-        .then(function (response) {
-            const data = response.data;
-            if (data['status'] === 'error') alert(data['error_message']); // TODO
-            editor.setValue(data['content']);
-            update();
-        })
-        .catch(function (error) {
-            console.error(error); // TODO: error handling!
-        });*/
 }
 
 /*
@@ -475,6 +450,8 @@ export function save() {
 
 export function update() {
     const sourceCode = editor.getValue();
+    const renderedContentElement = document.getElementById('rendered-content');
+    renderedContentElement.innerHTML = '<h1>PLEASE WAIT</h1>';
     axios
         .post(
             'services/service.php',
@@ -490,65 +467,19 @@ export function update() {
             // TODO: check data.error
             console.log(response.data);
 
-            /*
-            const doc = new emulatorCoursePage.CoursePage();
+            const doc = new emulatorCoursePage.CoursePage(
+                mathjaxInstance,
+                false,
+            );
             doc.import(data);
-            doc.set(document.getElementById('rendered-content'));
-            */
-            //eval('typeset()');
+            renderedContentElement.innerHTML = '';
+            doc.set(renderedContentElement);
         })
         .catch(function (error) {
             // TODO
             console.log(error);
         });
-
-    /*
-     const compiler = new compile.Compiler();
-     compiler.spellCheck = toggle_states['preview-spell-check'];
-     compilerOutput = compiler.compile(editor.getValue());
-     document.getElementById('rendered-content').innerHTML = compilerOutput.html;
-
-     compilerOutput.refresh();*/
-
-    /*// refresh SELL-quizzes -> TODO: move code to quiz.ts
-     sellquiz.reset();
-     sellquiz.setLanguage(lang.language);
-     //sellquiz.setServicePath(TODO);
-     const n = compilerOutput.sellQuizzes.length;
-     for(let i=0; i<n; i++) {
-         const domElement = document.getElementById("sellquiz-" + i);
-         const qIdx = sellquiz.createQuestion(compilerOutput.sellQuizzes[i].src);
-         sellquiz.setQuestionHtmlElement(qIdx, domElement);
-         if(qIdx < 0) {
-             const err = sellquiz.getErrorLog().replace(/\n/g,"<br/>");
-             let html = '<div class="card border-dark"><div class="card-body">';
-             html += '<p class="text-danger"><b>' + err + '</b></p>';
-             html += '</div></div>';
-             domElement.innerHTML = html;
-         } else {
-             const quizHtml = sellquiz.getQuestionHighLevelHTML(qIdx);
-             domElement.innerHTML = quizHtml;
-             sellquiz.refreshQuestion(qIdx);
-         }
-     }*/
 }
-
-/*
- export function eval_prog(idx: number) {
-     if (compilerOutput == null) return;
-     compilerOutput.programmingQuizzes[idx].evaluate();
- }
-
- export function eval_stack(idx: number) {
-     if (compilerOutput == null) return;
-     compilerOutput.stackQuizzes[idx].evaluate();
- }
-
- export function export_stack(idx: number) {
-     if (compilerOutput == null) return;
-     compilerOutput.stackQuizzes[idx].exportMoodleXML();
- }
- */
 
 export function toggle(buttonName: string) {
     const element = document.getElementById(buttonName);
