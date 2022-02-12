@@ -72,29 +72,16 @@ function query($database_path, $statement, $values) {
 
 function compile($stdin) {
     $dir_path = sys_get_temp_dir() . '/slw/' . random_int(0, PHP_INT_MAX) . '/';
-    //echo $dir_path; // TODO: remove!
     mkdir($dir_path, 0777, true);
     $file_path = $dir_path . 'doc.txt';
     file_put_contents($file_path, $stdin);
-
     ob_start();
     system("node ../dist/slw-compiler.min.js " . $file_path . " " . $file_path . ".json");
-    $output = ob_get_contents();
-    //echo $output; // TODO
+    $output = ob_get_contents();  // TODO: check $output
     ob_end_clean();
-
-    return file_get_contents($file_path . ".json");
-
-    /*
-    // run service-prog.js with input as argument
-    ob_start();
-    // 2>&1 redirects stderr to stdout
-    system("cd " . $dir . " && " . $pdflatex_path . " -halt-on-error --shell-escape plot2d.tex 2>&1");
-    $output = ob_get_contents();
-    ob_end_clean();
-    */
-
-    // TODO: remove dir
+    $res = file_get_contents($file_path . ".json");
+    system("rm -r " . $dir_path);
+    return $res;
 }
 
 function service($command) {
@@ -102,7 +89,20 @@ function service($command) {
     global $sql_list, $db_path;
     switch($command["type"]) {
         case "compile_document":
-            return compile($command["stdin"]);
+            $res = json_decode(query($db_path,
+                "SELECT documentText FROM Document WHERE id=:documentId;",
+                $command["query_values"]
+            ));
+            $u = $res->rows[0][0];
+            $v = compile($u);
+            // TODO: insert vs update
+            /*query($db_path,
+                "INSERT INTO Cache (documentId, cacheData) VALUES (:documentId, :cacheData);", [
+                    "documentId" => TODO: CANNOT ACCESS ARRAY THIS WAY!!! $command["query_values"]->documentId,
+                    "cacheData" => $v
+                ]
+            );*/
+            return $v;
             break;
         case "get_course_list":
             return query($db_path,
@@ -117,6 +117,11 @@ function service($command) {
         case "get_document":
             return query($db_path,
                 "SELECT * FROM Document WHERE id=:id;",
+                $command["query_values"]);
+            break;
+        case "save_document":
+            return query($db_path,
+                "UPDATE Document SET documentText=:text WHERE id=:id;",
                 $command["query_values"]);
             break;
         default:

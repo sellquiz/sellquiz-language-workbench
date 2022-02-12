@@ -5,7 +5,7 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
-process.argv[2] = 'data/courses/demo/demo-app-complex-1.txt';
-process.argv[3] = 'data/courses/demo/demo-app-complex-1_WIP.json';
+process.argv[2] = 'src/compiler/test-data/compiler-test-1.txt';
+process.argv[3] = 'src/compiler/test-data/compiler-test-1.json';
 
 import './index';

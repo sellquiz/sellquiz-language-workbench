@@ -5,16 +5,14 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
-// this server side Node.js script compiles course descriptions written in the "SELL Definition Language" into JSON
+// this server side Node.js script compiles course descriptions written in the
+// "SELL Definition Language" into JSON
 
 import fs from 'fs';
 import process from 'process';
 
+import * as help from './help';
 import { Document } from './document';
-
-//const stdin = fs.readFileSync(process.stdin.fd, 'utf-8');
-//console.log(stdin);
-//process.exit(0);
 
 if (process.argv.length != 4) {
     console.error(
@@ -31,12 +29,18 @@ if (fs.existsSync(inputFilePath) == false) {
     process.exit(-1);
 }
 
+let oldOutput: help.JSONType = null;
+
+if (fs.existsSync(outputFilePath)) {
+    oldOutput = JSON.parse(fs.readFileSync(outputFilePath, 'utf-8'));
+}
+
 console.log('converting ' + inputFilePath + ' to ' + outputFilePath);
 
 const doc = new Document();
 
 const input = fs.readFileSync(inputFilePath, 'utf-8');
-const output = doc.compile(input);
+const output = doc.compile(input, oldOutput);
 
 console.log('----- output -----');
 console.log(output);

@@ -26,6 +26,8 @@ import * as CodeMirror from 'codemirror';
 
 import { MathJax } from '../shared/mathjax';
 
+import * as strings from './strings';
+
 const mathjaxInstance = new MathJax();
 
 import * as emulatorCoursePage from '../emulator/coursePage';
@@ -61,13 +63,42 @@ export function loadDocument() {
         .then(function (response) {
             const data = response.data;
             // TODO: check data.error
-            console.log(response.data);
-            editor.setValue(response.data.rows[0][3]);
-            update();
+            console.log(data);
+            editor.setValue(data.rows[0][3]);
+            updateEmulator();
         })
         .catch(function (error) {
             // TODO
             console.log(error);
+        });
+}
+
+export function saveDocument() {
+    if (currentCourseId == '') return;
+    // TODO: create document backup
+    const sourceCode = editor.getValue();
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'save_document',
+                    query_values: {
+                        id: currentDocumentId,
+                        text: sourceCode,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            // TODO: check data.error
+            console.log(response.data);
+            console.log('saved successfully');
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+            console.log('saving failed');
         });
 }
 
@@ -195,22 +226,22 @@ export function init() {
                 nonEmpty: true,
             },
             extraKeys: {
-                'Ctrl-S': function (cm) {
-                    save();
+                'Ctrl-S': function () {
+                    saveDocument();
                 },
-                'Cmd-S': function (cm) {
-                    save();
+                'Cmd-S': function () {
+                    saveDocument();
                 },
-                'Ctrl-F': function (cm) {
+                'Ctrl-F': function () {
                     alert('searching text is unimplemented!');
                 },
-                'Cmd-F': function (cm) {
+                'Cmd-F': function () {
                     alert('searching text is unimplemented!');
                 },
-                F1: function (cm) {
-                    update();
+                F1: function () {
+                    updateEmulator();
                 },
-                F2: function (cm) {
+                F2: function () {
                     document.getElementById('insertCodeButton').click();
                 },
             },
@@ -219,147 +250,8 @@ export function init() {
     editor.setSize(null, '100%');
 
     // populate math symbols
+    const symbols = strings.symbols;
     let html = '<table class="p-1">';
-    const symbols = [
-        'sum',
-        'prod',
-        'xx',
-        '@',
-        'o+',
-        'ox',
-        'o.',
-        '^^',
-        '^^^',
-        'vv',
-        'vvv',
-        'nn',
-        'nnn',
-        'uu',
-        'uuu',
-        'a/b',
-        'a^b',
-        'sqrt(x)',
-        'root(x)(y)',
-        'int',
-        'oint',
-        'del',
-        'grad',
-        '+-',
-        'O/',
-        'oo',
-        'aleph',
-        'abs(x)',
-        'floor(x)',
-        'ceil(x)',
-        'norm(vecx)',
-        '/_',
-        '/_\\',
-        'diamond',
-        'square',
-        'CC',
-        'NN',
-        'QQ',
-        'RR',
-        'ZZ',
-        '"text"',
-        '!=',
-        '<',
-        '>',
-        '<=',
-        '>=',
-        '-<',
-        '-<=',
-        '>-',
-        '>-=',
-        'in',
-        'notin',
-        'sub',
-        'sup',
-        'sube',
-        'supe',
-        '-=',
-        '~=',
-        '~~',
-        'prop',
-        'neg',
-        '=>',
-        '<=>',
-        'AA',
-        'EE',
-        '_|_',
-        'TT',
-        '|--',
-        '|==',
-        '{',
-        '}',
-        '(:',
-        ':)',
-        '<<',
-        '>>',
-        'uarr',
-        'darr',
-        '->',
-        '>->',
-        '->>',
-        '>->>',
-        '|->',
-        'larr',
-        'harr',
-        'rArr',
-        'lArr',
-        'hArr',
-        'hat x',
-        'bar x',
-        'ul x',
-        'vec x',
-        'tilde x',
-        'dot x',
-        'ddot x',
-        'overset(x)(=)',
-        'underset(x)(=)',
-        'ubrace(x)',
-        'obrace(x)',
-        'color(red)(x)',
-        'cancel(x)',
-        'alpha',
-        'beta',
-        'gamma',
-        'delta',
-        'epsilon',
-        'varepsilon',
-        'zeta',
-        'eta',
-        'theta',
-        'vartheta',
-        'iota',
-        'kappa',
-        'lambda',
-        'mu',
-        'nu',
-        'xi',
-        'pi',
-        'rho',
-        'sigma',
-        'tau',
-        'upsilon',
-        'phi',
-        'varphi',
-        'chi',
-        'psi',
-        'omega',
-        'bb "Aa"',
-        'bbb "Aa"',
-        'cc "Aa"',
-        'tt "Aa"',
-        'fr "Aa"',
-        'sf "Aa"',
-        '[[a,b],[c,d]]',
-        '((a),(b))',
-        '[[a,b,|,c],[d,e,|,f]]',
-        'lim_(n->oo) sum_(i=0)^n',
-        'int_0^1 f(x) \\ dx',
-        "f'(x)=dy/dx",
-    ];
     const cols = 16;
     const rows = Math.ceil(symbols.length / cols);
     for (let i = 0; i < rows; i++) {
@@ -436,20 +328,16 @@ export function insertCode(text: string) {
     doc.replaceRange(text, cursor);
 }
 
-export function undo() {
+export function undoEditor() {
     editor.undo();
 }
 
-export function redo() {
+export function redoEditor() {
     editor.redo();
 }
 
-export function save() {
-    alert('unimplemented');
-}
-
-export function update() {
-    const sourceCode = editor.getValue();
+export function updateEmulator() {
+    //const sourceCode = editor.getValue();
     const renderedContentElement = document.getElementById('rendered-content');
     renderedContentElement.innerHTML = '<h1>PLEASE WAIT</h1>';
     axios
@@ -458,7 +346,9 @@ export function update() {
             new URLSearchParams({
                 command: JSON.stringify({
                     type: 'compile_document',
-                    stdin: sourceCode,
+                    query_values: {
+                        documentId: currentDocumentId,
+                    },
                 }),
             }),
         )
@@ -466,7 +356,6 @@ export function update() {
             const data = response.data;
             // TODO: check data.error
             console.log(response.data);
-
             const doc = new emulatorCoursePage.CoursePage(
                 mathjaxInstance,
                 false,
@@ -481,7 +370,7 @@ export function update() {
         });
 }
 
-export function toggle(buttonName: string) {
+export function toggleButton(buttonName: string) {
     const element = document.getElementById(buttonName);
     toggle_states[buttonName] = !toggle_states[buttonName];
     if (toggle_states[buttonName])
@@ -494,10 +383,10 @@ export function toggle(buttonName: string) {
          } else update();*/
         // TODO
     } else if (buttonName === 'preview-show-solutions') {
-        update();
+        updateEmulator();
     } else if (buttonName === 'preview-show-variables') {
-        update();
+        updateEmulator();
     } else if (buttonName === 'preview-show-export') {
-        update();
+        updateEmulator();
     }
 }

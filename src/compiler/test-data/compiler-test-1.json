@@ -71,6 +71,28 @@
         {
             "type": "question",
             "inputLineNo": 50,
+            "text": "Berechne \\(a^b=\\) c",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n\n@maxima\na:3;\nb:4;\nc:a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
+            "solution": "",
+            "variable-ids": [],
+            "variable-types": [],
+            "variable-values": [],
+            "input-field-types": [],
+            "input-field-answers": []
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 62,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "question",
+            "inputLineNo": 64,
             "text": "Berechne \\(@a@^@b@=\\) ?0?",
             "error": false,
             "errorLog": "",
@@ -102,7 +124,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 62,
+            "inputLineNo": 76,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -110,7 +132,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 64,
+            "inputLineNo": 78,
             "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?</li></ul>",
             "error": false,
             "errorLog": "",
@@ -162,7 +184,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 80,
+            "inputLineNo": 94,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -170,7 +192,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 83,
+            "inputLineNo": 97,
             "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne<ul><li> \\( z_1 + z_2 = \\) ?0?</li><li> \\( z_1 - z_2 = \\) ?1?</li></ul>",
             "error": false,
             "errorLog": "",
@@ -198,54 +220,54 @@
             ],
             "variable-values": [
                 [
-                    "3",
+                    "1",
+                    "1",
+                    "1",
                     "2",
-                    "3",
-                    "4",
-                    "-2i",
-                    "6+6i",
-                    "3+2i",
-                    "3+4i"
+                    "-1i",
+                    "2+3i",
+                    "1+1i",
+                    "1+2i"
                 ],
                 [
-                    "4",
-                    "4",
-                    "4",
                     "2",
-                    "2i",
-                    "8+6i",
-                    "4+4i",
-                    "4+2i"
-                ],
-                [
-                    "4",
-                    "4",
-                    "5",
-                    "4",
-                    "-1+0i",
-                    "9+8i",
-                    "4+4i",
-                    "5+4i"
-                ],
-                [
-                    "5",
+                    "2",
                     "1",
                     "4",
-                    "3",
                     "1-2i",
-                    "9+4i",
-                    "5+1i",
-                    "4+3i"
+                    "3+6i",
+                    "2+2i",
+                    "1+4i"
                 ],
                 [
-                    "1",
-                    "2",
+                    "4",
+                    "4",
                     "5",
-                    "1",
-                    "-4+1i",
-                    "6+3i",
-                    "1+2i",
-                    "5+1i"
+                    "3",
+                    "-1+1i",
+                    "9+7i",
+                    "4+4i",
+                    "5+3i"
+                ],
+                [
+                    "2",
+                    "4",
+                    "5",
+                    "5",
+                    "-3-1i",
+                    "7+9i",
+                    "2+4i",
+                    "5+5i"
+                ],
+                [
+                    "3",
+                    "5",
+                    "3",
+                    "4",
+                    "1i",
+                    "6+9i",
+                    "3+5i",
+                    "3+4i"
                 ]
             ],
             "input-field-types": [
@@ -259,7 +281,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 137,
+            "inputLineNo": 151,
             "text": "error: unknown part type 'Chatquestion.'",
             "error": false,
             "errorLog": "",
@@ -267,7 +289,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 161,
+            "inputLineNo": 175,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -275,7 +297,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 163,
+            "inputLineNo": 177,
             "text": "error: unknown part type 'Speedreview.'",
             "error": false,
             "errorLog": "",
@@ -283,7 +305,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 180,
+            "inputLineNo": 194,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -291,7 +313,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 182,
+            "inputLineNo": 196,
             "text": "error: unknown part type 'Links.'",
             "error": false,
             "errorLog": "",

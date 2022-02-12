@@ -71,6 +71,13 @@ CREATE TABLE DocumentBackup (
     FOREIGN KEY(documentId) REFERENCES Document(id)
 );
 
+CREATE TABLE Cache (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    documentId INTEGER NOT NULL,
+    cacheData TEXT,
+    FOREIGN KEY(documentId) REFERENCES Document(id)
+);
+
 CREATE TABLE UserRole (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     userroleName TEXT NOT NULL,

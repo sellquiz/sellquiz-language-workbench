@@ -1,0 +1,323 @@
+{
+    "type": "course-page",
+    "title": "Komplexe Zahlen",
+    "tags": [],
+    "parts": [
+        {
+            "type": "headline-1",
+            "inputLineNo": 5,
+            "text": "1. Einführung",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "paragraph",
+            "inputLineNo": 7,
+            "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "paragraph",
+            "inputLineNo": 9,
+            "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "image",
+            "inputLineNo": 11,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": "Tikz.\n[domain=0:4]\n\\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);\n\\draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};\n\\draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};\n\\draw[color=red] plot[id=x] function{x}\n    node[right] {$f(x) =x$};\n\\draw[color=blue] plot[id=cos] function{cos(x)}\n    node[right] {$f(x) = \\cos x$};\n\\draw[color=orange] plot[id=exp] function{0.05*exp(x)}\n    node[right] {$f(x) = \\frac{1}{20} \\mathrm e^x$};\n---\n",
+            "data": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTg5LjkzM3B0IiBoZWlnaHQ9IjE3MC4wNzNwdCIgdmlld0JveD0iMCAwIDE4OS45MzMgMTcwLjA3MyIgdmVyc2lvbj0iMS4xIj4KPGRlZnM+CjxnPgo8c3ltYm9sIG92ZXJmbG93PSJ2aXNpYmxlIiBpZD0iZ2x5cGgwLTAiPgo8cGF0aCBzdHlsZT0ic3Ryb2tlOm5vbmU7IiBkPSIiLz4KPC9zeW1ib2w+CjxzeW1ib2wgb3ZlcmZsb3c9InZpc2libGUiIGlkPSJnbHlwaDAtMSI+CjxwYXRoIHN0eWxlPSJzdHJva2U6bm9uZTsiIGQ9Ik0gMy4zMjgxMjUgLTMuMDE1NjI1IEMgMy4zOTA2MjUgLTMuMjY1NjI1IDMuNjI1IC00LjE4NzUgNC4zMTI1IC00LjE4NzUgQyA0LjM1OTM3NSAtNC4xODc1IDQuNjA5Mzc1IC00LjE4NzUgNC44MTI1IC00LjA2MjUgQyA0LjUzMTI1IC00IDQuMzQzNzUgLTMuNzY1NjI1IDQuMzQzNzUgLTMuNTE1NjI1IEMgNC4zNDM3NSAtMy4zNTkzNzUgNC40NTMxMjUgLTMuMTcxODc1IDQuNzE4NzUgLTMuMTcxODc1IEMgNC45Mzc1IC0zLjE3MTg3NSA1LjI1IC0zLjM0Mzc1IDUuMjUgLTMuNzUgQyA1LjI1IC00LjI2NTYyNSA0LjY3MTg3NSAtNC40MDYyNSA0LjMyODEyNSAtNC40MDYyNSBDIDMuNzUgLTQuNDA2MjUgMy40MDYyNSAtMy44NzUgMy4yODEyNSAtMy42NTYyNSBDIDMuMDMxMjUgLTQuMzEyNSAyLjUgLTQuNDA2MjUgMi4yMDMxMjUgLTQuNDA2MjUgQyAxLjE3MTg3NSAtNC40MDYyNSAwLjU5Mzc1IC0zLjEyNSAwLjU5Mzc1IC0yLjg3NSBDIDAuNTkzNzUgLTIuNzY1NjI1IDAuNzAzMTI1IC0yLjc2NTYyNSAwLjcxODc1IC0yLjc2NTYyNSBDIDAuNzk2ODc1IC0yLjc2NTYyNSAwLjgyODEyNSAtMi43OTY4NzUgMC44NDM3NSAtMi44NzUgQyAxLjE4NzUgLTMuOTM3NSAxLjg0Mzc1IC00LjE4NzUgMi4xODc1IC00LjE4NzUgQyAyLjM3NSAtNC4xODc1IDIuNzE4NzUgLTQuMDkzNzUgMi43MTg3NSAtMy41MTU2MjUgQyAyLjcxODc1IC0zLjIwMzEyNSAyLjU0Njg3NSAtMi41NDY4NzUgMi4xODc1IC0xLjE0MDYyNSBDIDIuMDMxMjUgLTAuNTMxMjUgMS42NzE4NzUgLTAuMTA5Mzc1IDEuMjM0Mzc1IC0wLjEwOTM3NSBDIDEuMTcxODc1IC0wLjEwOTM3NSAwLjk1MzEyNSAtMC4xMDkzNzUgMC43MzQzNzUgLTAuMjM0Mzc1IEMgMC45ODQzNzUgLTAuMjk2ODc1IDEuMjAzMTI1IC0wLjUgMS4yMDMxMjUgLTAuNzgxMjUgQyAxLjIwMzEyNSAtMS4wNDY4NzUgMC45ODQzNzUgLTEuMTI1IDAuODQzNzUgLTEuMTI1IEMgMC41MzEyNSAtMS4xMjUgMC4yOTY4NzUgLTAuODc1IDAuMjk2ODc1IC0wLjU0Njg3NSBDIDAuMjk2ODc1IC0wLjA5Mzc1IDAuNzgxMjUgMC4xMDkzNzUgMS4yMTg3NSAwLjEwOTM3NSBDIDEuODkwNjI1IDAuMTA5Mzc1IDIuMjUgLTAuNTkzNzUgMi4yNjU2MjUgLTAuNjQwNjI1IEMgMi4zOTA2MjUgLTAuMjgxMjUgMi43NSAwLjEwOTM3NSAzLjM0Mzc1IDAuMTA5Mzc1IEMgNC4zNzUgMC4xMDkzNzUgNC45Mzc1IC0xLjE3MTg3NSA0LjkzNzUgLTEuNDIxODc1IEMgNC45Mzc1IC0xLjUzMTI1IDQuODU5Mzc1IC0xLjUzMTI1IDQuODI4MTI1IC0xLjUzMTI1IEMgNC43MzQzNzUgLTEuNTMxMjUgNC43MTg3NSAtMS40ODQzNzUgNC42ODc1IC0xLjQyMTg3NSBDIDQuMzU5Mzc1IC0wLjM0Mzc1IDMuNjg3NSAtMC4xMDkzNzUgMy4zNzUgLTAuMTA5Mzc1IEMgMi45ODQzNzUgLTAuMTA5Mzc1IDIuODI4MTI1IC0wLjQyMTg3NSAyLjgyODEyNSAtMC43NjU2MjUgQyAyLjgyODEyNSAtMC45ODQzNzUgMi44NzUgLTEuMjAzMTI1IDIuOTg0Mzc1IC0xLjY0MDYyNSBaIE0gMy4zMjgxMjUgLTMuMDE1NjI1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMC0yIj4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSAzLjY1NjI1IC0zLjk4NDM3NSBMIDQuNTE1NjI1IC0zLjk4NDM3NSBDIDQuNzE4NzUgLTMuOTg0Mzc1IDQuODEyNSAtMy45ODQzNzUgNC44MTI1IC00LjE4NzUgQyA0LjgxMjUgLTQuMjk2ODc1IDQuNzE4NzUgLTQuMjk2ODc1IDQuNTQ2ODc1IC00LjI5Njg3NSBMIDMuNzE4NzUgLTQuMjk2ODc1IEwgMy45MjE4NzUgLTUuNDM3NSBDIDMuOTY4NzUgLTUuNjQwNjI1IDQuMTA5Mzc1IC02LjM0Mzc1IDQuMTcxODc1IC02LjQ2ODc1IEMgNC4yNSAtNi42NTYyNSA0LjQyMTg3NSAtNi44MTI1IDQuNjQwNjI1IC02LjgxMjUgQyA0LjY3MTg3NSAtNi44MTI1IDQuOTM3NSAtNi44MTI1IDUuMTI1IC02LjYyNSBDIDQuNjg3NSAtNi41OTM3NSA0LjU3ODEyNSAtNi4yMzQzNzUgNC41NzgxMjUgLTYuMDkzNzUgQyA0LjU3ODEyNSAtNS44NTkzNzUgNC43NjU2MjUgLTUuNzM0Mzc1IDQuOTUzMTI1IC01LjczNDM3NSBDIDUuMjE4NzUgLTUuNzM0Mzc1IDUuNSAtNS45Njg3NSA1LjUgLTYuMzQzNzUgQyA1LjUgLTYuNzk2ODc1IDUuMDQ2ODc1IC03LjAzMTI1IDQuNjQwNjI1IC03LjAzMTI1IEMgNC4yOTY4NzUgLTcuMDMxMjUgMy42NzE4NzUgLTYuODQzNzUgMy4zNzUgLTUuODU5Mzc1IEMgMy4zMTI1IC01LjY1NjI1IDMuMjgxMjUgLTUuNTQ2ODc1IDMuMDQ2ODc1IC00LjI5Njg3NSBMIDIuMzU5Mzc1IC00LjI5Njg3NSBDIDIuMTU2MjUgLTQuMjk2ODc1IDIuMDQ2ODc1IC00LjI5Njg3NSAyLjA0Njg3NSAtNC4xMDkzNzUgQyAyLjA0Njg3NSAtMy45ODQzNzUgMi4xNDA2MjUgLTMuOTg0Mzc1IDIuMzI4MTI1IC0zLjk4NDM3NSBMIDIuOTg0Mzc1IC0zLjk4NDM3NSBMIDIuMjUgLTAuMDQ2ODc1IEMgMi4wNjI1IDAuOTIxODc1IDEuODkwNjI1IDEuODI4MTI1IDEuMzc1IDEuODI4MTI1IEMgMS4zMjgxMjUgMS44MjgxMjUgMS4wOTM3NSAxLjgyODEyNSAwLjg5MDYyNSAxLjY0MDYyNSBDIDEuMzU5Mzc1IDEuNjA5Mzc1IDEuNDUzMTI1IDEuMjUgMS40NTMxMjUgMS4xMDkzNzUgQyAxLjQ1MzEyNSAwLjg3NSAxLjI2NTYyNSAwLjc1IDEuMDc4MTI1IDAuNzUgQyAwLjgxMjUgMC43NSAwLjUzMTI1IDAuOTg0Mzc1IDAuNTMxMjUgMS4zNTkzNzUgQyAwLjUzMTI1IDEuNzk2ODc1IDAuOTY4NzUgMi4wNDY4NzUgMS4zNzUgMi4wNDY4NzUgQyAxLjkyMTg3NSAyLjA0Njg3NSAyLjMyODEyNSAxLjQ1MzEyNSAyLjUgMS4wNzgxMjUgQyAyLjgyODEyNSAwLjQ1MzEyNSAzLjA0Njg3NSAtMC43NSAzLjA2MjUgLTAuODI4MTI1IFogTSAzLjY1NjI1IC0zLjk4NDM3NSAiLz4KPC9zeW1ib2w+CjxzeW1ib2wgb3ZlcmZsb3c9InZpc2libGUiIGlkPSJnbHlwaDEtMCI+CjxwYXRoIHN0eWxlPSJzdHJva2U6bm9uZTsiIGQ9IiIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMS0xIj4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSAzLjI5Njg3NSAyLjM5MDYyNSBDIDMuMjk2ODc1IDIuMzU5Mzc1IDMuMjk2ODc1IDIuMzQzNzUgMy4xMjUgMi4xNzE4NzUgQyAxLjg5MDYyNSAwLjkyMTg3NSAxLjU2MjUgLTAuOTY4NzUgMS41NjI1IC0yLjUgQyAxLjU2MjUgLTQuMjM0Mzc1IDEuOTM3NSAtNS45Njg3NSAzLjE3MTg3NSAtNy4yMDMxMjUgQyAzLjI5Njg3NSAtNy4zMjgxMjUgMy4yOTY4NzUgLTcuMzQzNzUgMy4yOTY4NzUgLTcuMzc1IEMgMy4yOTY4NzUgLTcuNDUzMTI1IDMuMjY1NjI1IC03LjQ4NDM3NSAzLjIwMzEyNSAtNy40ODQzNzUgQyAzLjA5Mzc1IC03LjQ4NDM3NSAyLjIwMzEyNSAtNi43OTY4NzUgMS42MDkzNzUgLTUuNTMxMjUgQyAxLjEwOTM3NSAtNC40Mzc1IDAuOTg0Mzc1IC0zLjMyODEyNSAwLjk4NDM3NSAtMi41IEMgMC45ODQzNzUgLTEuNzE4NzUgMS4wOTM3NSAtMC41MTU2MjUgMS42NDA2MjUgMC42MjUgQyAyLjI1IDEuODQzNzUgMy4wOTM3NSAyLjUgMy4yMDMxMjUgMi41IEMgMy4yNjU2MjUgMi41IDMuMjk2ODc1IDIuNDY4NzUgMy4yOTY4NzUgMi4zOTA2MjUgWiBNIDMuMjk2ODc1IDIuMzkwNjI1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMS0yIj4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSAyLjg3NSAtMi41IEMgMi44NzUgLTMuMjY1NjI1IDIuNzY1NjI1IC00LjQ2ODc1IDIuMjE4NzUgLTUuNjA5Mzc1IEMgMS42MjUgLTYuODI4MTI1IDAuNzY1NjI1IC03LjQ4NDM3NSAwLjY3MTg3NSAtNy40ODQzNzUgQyAwLjYwOTM3NSAtNy40ODQzNzUgMC41NjI1IC03LjQzNzUgMC41NjI1IC03LjM3NSBDIDAuNTYyNSAtNy4zNDM3NSAwLjU2MjUgLTcuMzI4MTI1IDAuNzUgLTcuMTQwNjI1IEMgMS43MzQzNzUgLTYuMTU2MjUgMi4yOTY4NzUgLTQuNTc4MTI1IDIuMjk2ODc1IC0yLjUgQyAyLjI5Njg3NSAtMC43ODEyNSAxLjkzNzUgMC45Njg3NSAwLjcwMzEyNSAyLjIxODc1IEMgMC41NjI1IDIuMzQzNzUgMC41NjI1IDIuMzU5Mzc1IDAuNTYyNSAyLjM5MDYyNSBDIDAuNTYyNSAyLjQ1MzEyNSAwLjYwOTM3NSAyLjUgMC42NzE4NzUgMi41IEMgMC43NjU2MjUgMi41IDEuNjcxODc1IDEuODEyNSAyLjI1IDAuNTQ2ODc1IEMgMi43NjU2MjUgLTAuNTQ2ODc1IDIuODc1IC0xLjY1NjI1IDIuODc1IC0yLjUgWiBNIDIuODc1IC0yLjUgIi8+Cjwvc3ltYm9sPgo8c3ltYm9sIG92ZXJmbG93PSJ2aXNpYmxlIiBpZD0iZ2x5cGgxLTMiPgo8cGF0aCBzdHlsZT0ic3Ryb2tlOm5vbmU7IiBkPSJNIDYuODQzNzUgLTMuMjY1NjI1IEMgNyAtMy4yNjU2MjUgNy4xODc1IC0zLjI2NTYyNSA3LjE4NzUgLTMuNDUzMTI1IEMgNy4xODc1IC0zLjY1NjI1IDcgLTMuNjU2MjUgNi44NTkzNzUgLTMuNjU2MjUgTCAwLjg5MDYyNSAtMy42NTYyNSBDIDAuNzUgLTMuNjU2MjUgMC41NjI1IC0zLjY1NjI1IDAuNTYyNSAtMy40NTMxMjUgQyAwLjU2MjUgLTMuMjY1NjI1IDAuNzUgLTMuMjY1NjI1IDAuODkwNjI1IC0zLjI2NTYyNSBaIE0gNi44NTkzNzUgLTEuMzI4MTI1IEMgNyAtMS4zMjgxMjUgNy4xODc1IC0xLjMyODEyNSA3LjE4NzUgLTEuNTMxMjUgQyA3LjE4NzUgLTEuNzE4NzUgNyAtMS43MTg3NSA2Ljg0Mzc1IC0xLjcxODc1IEwgMC44OTA2MjUgLTEuNzE4NzUgQyAwLjc1IC0xLjcxODc1IDAuNTYyNSAtMS43MTg3NSAwLjU2MjUgLTEuNTMxMjUgQyAwLjU2MjUgLTEuMzI4MTI1IDAuNzUgLTEuMzI4MTI1IDAuODkwNjI1IC0xLjMyODEyNSBaIE0gNi44NTkzNzUgLTEuMzI4MTI1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMS00Ij4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSAxLjE3MTg3NSAtMi4xNzE4NzUgQyAxLjE3MTg3NSAtMy43OTY4NzUgMS45ODQzNzUgLTQuMjE4NzUgMi41MTU2MjUgLTQuMjE4NzUgQyAyLjYwOTM3NSAtNC4yMTg3NSAzLjIzNDM3NSAtNC4yMDMxMjUgMy41NzgxMjUgLTMuODQzNzUgQyAzLjE3MTg3NSAtMy44MTI1IDMuMTA5Mzc1IC0zLjUxNTYyNSAzLjEwOTM3NSAtMy4zOTA2MjUgQyAzLjEwOTM3NSAtMy4xMjUgMy4yOTY4NzUgLTIuOTM3NSAzLjU2MjUgLTIuOTM3NSBDIDMuODI4MTI1IC0yLjkzNzUgNC4wMzEyNSAtMy4wOTM3NSA0LjAzMTI1IC0zLjQwNjI1IEMgNC4wMzEyNSAtNC4wNzgxMjUgMy4yNjU2MjUgLTQuNDY4NzUgMi41IC00LjQ2ODc1IEMgMS4yNSAtNC40Njg3NSAwLjM0Mzc1IC0zLjM5MDYyNSAwLjM0Mzc1IC0yLjE1NjI1IEMgMC4zNDM3NSAtMC44NzUgMS4zMjgxMjUgMC4xMDkzNzUgMi40ODQzNzUgMC4xMDkzNzUgQyAzLjgxMjUgMC4xMDkzNzUgNC4xNDA2MjUgLTEuMDkzNzUgNC4xNDA2MjUgLTEuMTg3NSBDIDQuMTQwNjI1IC0xLjI4MTI1IDQuMDMxMjUgLTEuMjgxMjUgNCAtMS4yODEyNSBDIDMuOTIxODc1IC0xLjI4MTI1IDMuODkwNjI1IC0xLjI1IDMuODc1IC0xLjE4NzUgQyAzLjU5Mzc1IC0wLjI2NTYyNSAyLjkzNzUgLTAuMTQwNjI1IDIuNTc4MTI1IC0wLjE0MDYyNSBDIDIuMDQ2ODc1IC0wLjE0MDYyNSAxLjE3MTg3NSAtMC41NjI1IDEuMTcxODc1IC0yLjE3MTg3NSBaIE0gMS4xNzE4NzUgLTIuMTcxODc1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMS01Ij4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSA0LjY4NzUgLTIuMTQwNjI1IEMgNC42ODc1IC0zLjQwNjI1IDMuNzAzMTI1IC00LjQ2ODc1IDIuNSAtNC40Njg3NSBDIDEuMjUgLTQuNDY4NzUgMC4yODEyNSAtMy4zNzUgMC4yODEyNSAtMi4xNDA2MjUgQyAwLjI4MTI1IC0wLjg0Mzc1IDEuMzEyNSAwLjEwOTM3NSAyLjQ4NDM3NSAwLjEwOTM3NSBDIDMuNjg3NSAwLjEwOTM3NSA0LjY4NzUgLTAuODc1IDQuNjg3NSAtMi4xNDA2MjUgWiBNIDIuNSAtMC4xNDA2MjUgQyAyLjA2MjUgLTAuMTQwNjI1IDEuNjI1IC0wLjM0Mzc1IDEuMzU5Mzc1IC0wLjgxMjUgQyAxLjEwOTM3NSAtMS4yNSAxLjEwOTM3NSAtMS44NTkzNzUgMS4xMDkzNzUgLTIuMjE4NzUgQyAxLjEwOTM3NSAtMi42MDkzNzUgMS4xMDkzNzUgLTMuMTQwNjI1IDEuMzQzNzUgLTMuNTc4MTI1IEMgMS42MDkzNzUgLTQuMDMxMjUgMi4wNzgxMjUgLTQuMjUgMi40ODQzNzUgLTQuMjUgQyAyLjkyMTg3NSAtNC4yNSAzLjM0Mzc1IC00LjAzMTI1IDMuNjA5Mzc1IC0zLjU5Mzc1IEMgMy44NzUgLTMuMTcxODc1IDMuODc1IC0yLjU5Mzc1IDMuODc1IC0yLjIxODc1IEMgMy44NzUgLTEuODU5Mzc1IDMuODc1IC0xLjMxMjUgMy42NTYyNSAtMC44NzUgQyAzLjQyMTg3NSAtMC40MjE4NzUgMi45ODQzNzUgLTAuMTQwNjI1IDIuNSAtMC4xNDA2MjUgWiBNIDIuNSAtMC4xNDA2MjUgIi8+Cjwvc3ltYm9sPgo8c3ltYm9sIG92ZXJmbG93PSJ2aXNpYmxlIiBpZD0iZ2x5cGgxLTYiPgo8cGF0aCBzdHlsZT0ic3Ryb2tlOm5vbmU7IiBkPSJNIDIuMDc4MTI1IC0xLjkzNzUgQyAyLjI5Njg3NSAtMS44OTA2MjUgMy4xMDkzNzUgLTEuNzM0Mzc1IDMuMTA5Mzc1IC0xLjAxNTYyNSBDIDMuMTA5Mzc1IC0wLjUxNTYyNSAyLjc2NTYyNSAtMC4xMDkzNzUgMS45ODQzNzUgLTAuMTA5Mzc1IEMgMS4xNDA2MjUgLTAuMTA5Mzc1IDAuNzgxMjUgLTAuNjcxODc1IDAuNTkzNzUgLTEuNTMxMjUgQyAwLjU2MjUgLTEuNjU2MjUgMC41NjI1IC0xLjY4NzUgMC40NTMxMjUgLTEuNjg3NSBDIDAuMzI4MTI1IC0xLjY4NzUgMC4zMjgxMjUgLTEuNjI1IDAuMzI4MTI1IC0xLjQ1MzEyNSBMIDAuMzI4MTI1IC0wLjEyNSBDIDAuMzI4MTI1IDAuMDQ2ODc1IDAuMzI4MTI1IDAuMTA5Mzc1IDAuNDM3NSAwLjEwOTM3NSBDIDAuNDg0Mzc1IDAuMTA5Mzc1IDAuNSAwLjA5Mzc1IDAuNjg3NSAtMC4wOTM3NSBDIDAuNzAzMTI1IC0wLjEwOTM3NSAwLjcwMzEyNSAtMC4xMjUgMC44OTA2MjUgLTAuMzEyNSBDIDEuMzI4MTI1IDAuMDkzNzUgMS43ODEyNSAwLjEwOTM3NSAxLjk4NDM3NSAwLjEwOTM3NSBDIDMuMTI1IDAuMTA5Mzc1IDMuNTkzNzUgLTAuNTYyNSAzLjU5Mzc1IC0xLjI4MTI1IEMgMy41OTM3NSAtMS43OTY4NzUgMy4yOTY4NzUgLTIuMTA5Mzc1IDMuMTcxODc1IC0yLjIxODc1IEMgMi44NDM3NSAtMi41NDY4NzUgMi40NTMxMjUgLTIuNjI1IDIuMDMxMjUgLTIuNzAzMTI1IEMgMS40Njg3NSAtMi44MTI1IDAuODEyNSAtMi45Mzc1IDAuODEyNSAtMy41MTU2MjUgQyAwLjgxMjUgLTMuODc1IDEuMDYyNSAtNC4yODEyNSAxLjkyMTg3NSAtNC4yODEyNSBDIDMuMDE1NjI1IC00LjI4MTI1IDMuMDc4MTI1IC0zLjM3NSAzLjA5Mzc1IC0zLjA3ODEyNSBDIDMuMDkzNzUgLTIuOTg0Mzc1IDMuMTg3NSAtMi45ODQzNzUgMy4yMDMxMjUgLTIuOTg0Mzc1IEMgMy4zNDM3NSAtMi45ODQzNzUgMy4zNDM3NSAtMy4wMzEyNSAzLjM0Mzc1IC0zLjIxODc1IEwgMy4zNDM3NSAtNC4yMzQzNzUgQyAzLjM0Mzc1IC00LjM5MDYyNSAzLjM0Mzc1IC00LjQ2ODc1IDMuMjM0Mzc1IC00LjQ2ODc1IEMgMy4xODc1IC00LjQ2ODc1IDMuMTU2MjUgLTQuNDY4NzUgMy4wMzEyNSAtNC4zNDM3NSBDIDMgLTQuMzEyNSAyLjkwNjI1IC00LjIxODc1IDIuODU5Mzc1IC00LjE4NzUgQyAyLjQ4NDM3NSAtNC40Njg3NSAyLjA3ODEyNSAtNC40Njg3NSAxLjkyMTg3NSAtNC40Njg3NSBDIDAuNzAzMTI1IC00LjQ2ODc1IDAuMzI4MTI1IC0zLjc5Njg3NSAwLjMyODEyNSAtMy4yMzQzNzUgQyAwLjMyODEyNSAtMi44OTA2MjUgMC40ODQzNzUgLTIuNjA5Mzc1IDAuNzUgLTIuMzkwNjI1IEMgMS4wNzgxMjUgLTIuMTQwNjI1IDEuMzU5Mzc1IC0yLjA3ODEyNSAyLjA3ODEyNSAtMS45Mzc1IFogTSAyLjA3ODEyNSAtMS45Mzc1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMS03Ij4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iTSAxLjEwOTM3NSAtMi41MTU2MjUgQyAxLjE3MTg3NSAtNCAyLjAxNTYyNSAtNC4yNSAyLjM1OTM3NSAtNC4yNSBDIDMuMzc1IC00LjI1IDMuNDg0Mzc1IC0yLjkwNjI1IDMuNDg0Mzc1IC0yLjUxNTYyNSBaIE0gMS4xMDkzNzUgLTIuMjk2ODc1IEwgMy44OTA2MjUgLTIuMjk2ODc1IEMgNC4xMDkzNzUgLTIuMjk2ODc1IDQuMTQwNjI1IC0yLjI5Njg3NSA0LjE0MDYyNSAtMi41MTU2MjUgQyA0LjE0MDYyNSAtMy41IDMuNTkzNzUgLTQuNDY4NzUgMi4zNTkzNzUgLTQuNDY4NzUgQyAxLjIwMzEyNSAtNC40Njg3NSAwLjI4MTI1IC0zLjQzNzUgMC4yODEyNSAtMi4xODc1IEMgMC4yODEyNSAtMC44NTkzNzUgMS4zMjgxMjUgMC4xMDkzNzUgMi40Njg3NSAwLjEwOTM3NSBDIDMuNjg3NSAwLjEwOTM3NSA0LjE0MDYyNSAtMSA0LjE0MDYyNSAtMS4xODc1IEMgNC4xNDA2MjUgLTEuMjgxMjUgNC4wNjI1IC0xLjMxMjUgNCAtMS4zMTI1IEMgMy45MjE4NzUgLTEuMzEyNSAzLjg5MDYyNSAtMS4yNSAzLjg3NSAtMS4xNzE4NzUgQyAzLjUzMTI1IC0wLjE0MDYyNSAyLjYyNSAtMC4xNDA2MjUgMi41MzEyNSAtMC4xNDA2MjUgQyAyLjAzMTI1IC0wLjE0MDYyNSAxLjY0MDYyNSAtMC40Mzc1IDEuNDA2MjUgLTAuODEyNSBDIDEuMTA5Mzc1IC0xLjI4MTI1IDEuMTA5Mzc1IC0xLjkzNzUgMS4xMDkzNzUgLTIuMjk2ODc1IFogTSAxLjEwOTM3NSAtMi4yOTY4NzUgIi8+Cjwvc3ltYm9sPgo8c3ltYm9sIG92ZXJmbG93PSJ2aXNpYmxlIiBpZD0iZ2x5cGgyLTAiPgo8cGF0aCBzdHlsZT0ic3Ryb2tlOm5vbmU7IiBkPSIiLz4KPC9zeW1ib2w+CjxzeW1ib2wgb3ZlcmZsb3c9InZpc2libGUiIGlkPSJnbHlwaDItMSI+CjxwYXRoIHN0eWxlPSJzdHJva2U6bm9uZTsiIGQ9Ik0gMi4zMjgxMjUgLTQuNDM3NSBDIDIuMzI4MTI1IC00LjYyNSAyLjMyODEyNSAtNC42MjUgMi4xMjUgLTQuNjI1IEMgMS42NzE4NzUgLTQuMTg3NSAxLjA0Njg3NSAtNC4xODc1IDAuNzY1NjI1IC00LjE4NzUgTCAwLjc2NTYyNSAtMy45Mzc1IEMgMC45MjE4NzUgLTMuOTM3NSAxLjM5MDYyNSAtMy45Mzc1IDEuNzY1NjI1IC00LjEyNSBMIDEuNzY1NjI1IC0wLjU3ODEyNSBDIDEuNzY1NjI1IC0wLjM0Mzc1IDEuNzY1NjI1IC0wLjI1IDEuMDc4MTI1IC0wLjI1IEwgMC44MTI1IC0wLjI1IEwgMC44MTI1IDAgQyAwLjkzNzUgMCAxLjc5Njg3NSAtMC4wMzEyNSAyLjA0Njg3NSAtMC4wMzEyNSBDIDIuMjY1NjI1IC0wLjAzMTI1IDMuMTQwNjI1IDAgMy4yOTY4NzUgMCBMIDMuMjk2ODc1IC0wLjI1IEwgMy4wMzEyNSAtMC4yNSBDIDIuMzI4MTI1IC0wLjI1IDIuMzI4MTI1IC0wLjM0Mzc1IDIuMzI4MTI1IC0wLjU3ODEyNSBaIE0gMi4zMjgxMjUgLTQuNDM3NSAiLz4KPC9zeW1ib2w+CjxzeW1ib2wgb3ZlcmZsb3c9InZpc2libGUiIGlkPSJnbHlwaDItMiI+CjxwYXRoIHN0eWxlPSJzdHJva2U6bm9uZTsiIGQ9Ik0gMy41MTU2MjUgLTEuMjY1NjI1IEwgMy4yODEyNSAtMS4yNjU2MjUgQyAzLjI2NTYyNSAtMS4xMDkzNzUgMy4xODc1IC0wLjcwMzEyNSAzLjA5Mzc1IC0wLjY0MDYyNSBDIDMuMDQ2ODc1IC0wLjU5Mzc1IDIuNTE1NjI1IC0wLjU5Mzc1IDIuNDA2MjUgLTAuNTkzNzUgTCAxLjEyNSAtMC41OTM3NSBDIDEuODU5Mzc1IC0xLjIzNDM3NSAyLjEwOTM3NSAtMS40Mzc1IDIuNTE1NjI1IC0xLjc2NTYyNSBDIDMuMDMxMjUgLTIuMTcxODc1IDMuNTE1NjI1IC0yLjYwOTM3NSAzLjUxNTYyNSAtMy4yNjU2MjUgQyAzLjUxNTYyNSAtNC4xMDkzNzUgMi43ODEyNSAtNC42MjUgMS44OTA2MjUgLTQuNjI1IEMgMS4wMzEyNSAtNC42MjUgMC40Mzc1IC00LjAxNTYyNSAwLjQzNzUgLTMuMzc1IEMgMC40Mzc1IC0zLjAzMTI1IDAuNzM0Mzc1IC0yLjk4NDM3NSAwLjgxMjUgLTIuOTg0Mzc1IEMgMC45Njg3NSAtMi45ODQzNzUgMS4xNzE4NzUgLTMuMTA5Mzc1IDEuMTcxODc1IC0zLjM1OTM3NSBDIDEuMTcxODc1IC0zLjQ4NDM3NSAxLjEyNSAtMy43MzQzNzUgMC43NjU2MjUgLTMuNzM0Mzc1IEMgMC45ODQzNzUgLTQuMjE4NzUgMS40NTMxMjUgLTQuMzc1IDEuNzgxMjUgLTQuMzc1IEMgMi40ODQzNzUgLTQuMzc1IDIuODQzNzUgLTMuODI4MTI1IDIuODQzNzUgLTMuMjY1NjI1IEMgMi44NDM3NSAtMi42NTYyNSAyLjQwNjI1IC0yLjE4NzUgMi4xODc1IC0xLjkzNzUgTCAwLjUxNTYyNSAtMC4yNjU2MjUgQyAwLjQzNzUgLTAuMjAzMTI1IDAuNDM3NSAtMC4xODc1IDAuNDM3NSAwIEwgMy4zMTI1IDAgWiBNIDMuNTE1NjI1IC0xLjI2NTYyNSAiLz4KPC9zeW1ib2w+CjxzeW1ib2wgb3ZlcmZsb3c9InZpc2libGUiIGlkPSJnbHlwaDItMyI+CjxwYXRoIHN0eWxlPSJzdHJva2U6bm9uZTsiIGQ9Ik0gMy41OTM3NSAtMi4yMTg3NSBDIDMuNTkzNzUgLTIuOTg0Mzc1IDMuNSAtMy41NDY4NzUgMy4xODc1IC00LjAzMTI1IEMgMi45Njg3NSAtNC4zNDM3NSAyLjUzMTI1IC00LjYyNSAxLjk4NDM3NSAtNC42MjUgQyAwLjM1OTM3NSAtNC42MjUgMC4zNTkzNzUgLTIuNzE4NzUgMC4zNTkzNzUgLTIuMjE4NzUgQyAwLjM1OTM3NSAtMS43MTg3NSAwLjM1OTM3NSAwLjE0MDYyNSAxLjk4NDM3NSAwLjE0MDYyNSBDIDMuNTkzNzUgMC4xNDA2MjUgMy41OTM3NSAtMS43MTg3NSAzLjU5Mzc1IC0yLjIxODc1IFogTSAxLjk4NDM3NSAtMC4wNjI1IEMgMS42NTYyNSAtMC4wNjI1IDEuMjM0Mzc1IC0wLjI1IDEuMDkzNzUgLTAuODEyNSBDIDEgLTEuMjE4NzUgMSAtMS43OTY4NzUgMSAtMi4zMTI1IEMgMSAtMi44MjgxMjUgMSAtMy4zNTkzNzUgMS4wOTM3NSAtMy43MzQzNzUgQyAxLjI1IC00LjI4MTI1IDEuNjg3NSAtNC40Mzc1IDEuOTg0Mzc1IC00LjQzNzUgQyAyLjM1OTM3NSAtNC40Mzc1IDIuNzE4NzUgLTQuMjAzMTI1IDIuODQzNzUgLTMuNzk2ODc1IEMgMi45NTMxMjUgLTMuNDIxODc1IDIuOTY4NzUgLTIuOTIxODc1IDIuOTY4NzUgLTIuMzEyNSBDIDIuOTY4NzUgLTEuNzk2ODc1IDIuOTY4NzUgLTEuMjgxMjUgMi44NzUgLTAuODQzNzUgQyAyLjczNDM3NSAtMC4yMDMxMjUgMi4yNjU2MjUgLTAuMDYyNSAxLjk4NDM3NSAtMC4wNjI1IFogTSAxLjk4NDM3NSAtMC4wNjI1ICIvPgo8L3N5bWJvbD4KPHN5bWJvbCBvdmVyZmxvdz0idmlzaWJsZSIgaWQ9ImdseXBoMy0wIj4KPHBhdGggc3R5bGU9InN0cm9rZTpub25lOyIgZD0iIi8+Cjwvc3ltYm9sPgo8c3ltYm9sIG92ZXJmbG93PSJ2aXNpYmxlIiBpZD0iZ2x5cGgzLTEiPgo8cGF0aCBzdHlsZT0ic3Ryb2tlOm5vbmU7IiBkPSJNIDEuNzM0Mzc1IC0wLjczNDM3NSBDIDEuNjcxODc1IC0wLjUgMS40Mzc1IC0wLjEyNSAxLjA3ODEyNSAtMC4xMjUgQyAxLjA2MjUgLTAuMTI1IDAuODQzNzUgLTAuMTI1IDAuNzAzMTI1IC0wLjIxODc1IEMgMC45ODQzNzUgLTAuMzEyNSAxLjAxNTYyNSAtMC41NjI1IDEuMDE1NjI1IC0wLjYwOTM3NSBDIDEuMDE1NjI1IC0wLjc2NTYyNSAwLjg5MDYyNSAtMC44NTkzNzUgMC43MzQzNzUgLTAuODU5Mzc1IEMgMC41MzEyNSAtMC44NTkzNzUgMC4zMjgxMjUgLTAuNzAzMTI1IDAuMzI4MTI1IC0wLjQzNzUgQyAwLjMyODEyNSAtMC4wOTM3NSAwLjcxODc1IDAuMDYyNSAxLjA2MjUgMC4wNjI1IEMgMS4zOTA2MjUgMC4wNjI1IDEuNjcxODc1IC0wLjEyNSAxLjg0Mzc1IC0wLjQyMTg3NSBDIDIuMDE1NjI1IC0wLjA2MjUgMi4zOTA2MjUgMC4wNjI1IDIuNjcxODc1IDAuMDYyNSBDIDMuNDg0Mzc1IDAuMDYyNSAzLjkwNjI1IC0wLjc5Njg3NSAzLjkwNjI1IC0xIEMgMy45MDYyNSAtMS4wOTM3NSAzLjgxMjUgLTEuMDkzNzUgMy43OTY4NzUgLTEuMDkzNzUgQyAzLjY4NzUgLTEuMDkzNzUgMy42ODc1IC0xLjA0Njg3NSAzLjY1NjI1IC0wLjk2ODc1IEMgMy41MTU2MjUgLTAuNDg0Mzc1IDMuMDkzNzUgLTAuMTI1IDIuNzAzMTI1IC0wLjEyNSBDIDIuNDIxODc1IC0wLjEyNSAyLjI4MTI1IC0wLjMxMjUgMi4yODEyNSAtMC41NzgxMjUgQyAyLjI4MTI1IC0wLjc2NTYyNSAyLjQ1MzEyNSAtMS4zOTA2MjUgMi42NDA2MjUgLTIuMTcxODc1IEMgMi43ODEyNSAtMi43MDMxMjUgMy4wOTM3NSAtMi44NzUgMy4zMjgxMjUgLTIuODc1IEMgMy4zNDM3NSAtMi44NzUgMy41NDY4NzUgLTIuODc1IDMuNzAzMTI1IC0yLjc4MTI1IEMgMy40ODQzNzUgLTIuNzE4NzUgMy4zOTA2MjUgLTIuNTE1NjI1IDMuMzkwNjI1IC0yLjM5MDYyNSBDIDMuMzkwNjI1IC0yLjI1IDMuNTE1NjI1IC0yLjE0MDYyNSAzLjY3MTg3NSAtMi4xNDA2MjUgQyAzLjgyODEyNSAtMi4xNDA2MjUgNC4wNjI1IC0yLjI2NTYyNSA0LjA2MjUgLTIuNTYyNSBDIDQuMDYyNSAtMi45NTMxMjUgMy42MDkzNzUgLTMuMDc4MTI1IDMuMzQzNzUgLTMuMDc4MTI1IEMgMi45ODQzNzUgLTMuMDc4MTI1IDIuNzAzMTI1IC0yLjg0Mzc1IDIuNTYyNSAtMi41NzgxMjUgQyAyLjQzNzUgLTIuODU5Mzc1IDIuMTA5Mzc1IC0zLjA3ODEyNSAxLjcxODc1IC0zLjA3ODEyNSBDIDAuOTM3NSAtMy4wNzgxMjUgMC41IC0yLjIxODc1IDAuNSAtMiBDIDAuNSAtMS45MjE4NzUgMC41OTM3NSAtMS45MjE4NzUgMC42MDkzNzUgLTEuOTIxODc1IEMgMC43MDMxMjUgLTEuOTIxODc1IDAuNzAzMTI1IC0xLjkzNzUgMC43NSAtMi4wMzEyNSBDIDAuOTIxODc1IC0yLjU3ODEyNSAxLjM1OTM3NSAtMi44NzUgMS43MDMxMjUgLTIuODc1IEMgMS45Mzc1IC0yLjg3NSAyLjEyNSAtMi43NSAyLjEyNSAtMi40MjE4NzUgQyAyLjEyNSAtMi4yODEyNSAyLjAzMTI1IC0xLjkzNzUgMS45Njg3NSAtMS42ODc1IFogTSAxLjczNDM3NSAtMC43MzQzNzUgIi8+Cjwvc3ltYm9sPgo8L2c+CjxjbGlwUGF0aCBpZD0iY2xpcDEiPgogIDxwYXRoIGQ9Ik0gMTYgMTcgTCAxNyAxNyBMIDE3IDE3MC4wNzQyMTkgTCAxNiAxNzAuMDc0MjE5IFogTSAxNiAxNyAiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8ZyBpZD0ic3VyZmFjZTEiPgo8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZS13aWR0aDowLjE5OTI1O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZTpyZ2IoNTAlLDUwJSw1MCUpO3N0cm9rZS1vcGFjaXR5OjE7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiBkPSJNIC0yLjgzNDA5NCAtMjguMzQ1MTI1IEwgMTEwLjU1MjYyNSAtMjguMzQ1MTI1IE0gLTIuODM0MDk0IC0wLjAwMTM3NSBMIDExMC41NTI2MjUgLTAuMDAxMzc1IE0gLTIuODM0MDk0IDI4LjM0NjI4MSBMIDExMC41NTI2MjUgMjguMzQ2MjgxIE0gLTIuODM0MDk0IDU2LjY5MzkzNyBMIDExMC41NTI2MjUgNTYuNjkzOTM3IE0gLTIuODM0MDk0IDg1LjA0MTU5NCBMIDExMC41NTI2MjUgODUuMDQxNTk0IE0gMC4wMDE4NDM3NSAtMzEuMTgxMDYzIEwgMC4wMDE4NDM3NSAxMTAuNTUzMzEyIE0gMjguMzQ1NTk0IC0zMS4xODEwNjMgTCAyOC4zNDU1OTQgMTEwLjU1MzMxMiBNIDU2LjY5MzI1IC0zMS4xODEwNjMgTCA1Ni42OTMyNSAxMTAuNTUzMzEyIE0gODUuMDQwOTA2IC0zMS4xODEwNjMgTCA4NS4wNDA5MDYgMTEwLjU1MzMxMiAiIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDE2LjMzOCwxMzUuODU4KSIvPgo8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZS13aWR0aDowLjM5ODU7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlOnJnYigwJSwwJSwwJSk7c3Ryb2tlLW9wYWNpdHk6MTtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiIGQ9Ik0gLTUuNjcwMDMxIC0wLjAwMTM3NSBMIDExOC41OTk1IC0wLjAwMTM3NSAiIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDE2LjMzOCwxMzUuODU4KSIvPgo8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZS13aWR0aDowLjMxODc5O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2U6cmdiKDAlLDAlLDAlKTtzdHJva2Utb3BhY2l0eToxO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgZD0iTSAtMS4xOTQwMzMgMS41OTIzNzUgQyAtMS4wOTYzNzYgMC45OTQ3MTkgMC4wMDEyOCAwLjEwMDE4NyAwLjI5ODE1NSAtMC4wMDEzNzUgQyAwLjAwMTI4IC0wLjA5OTAzMTMgLTEuMDk2Mzc2IC0wLjk5NzQ2OSAtMS4xOTQwMzMgLTEuNTk1MTI1ICIgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMTM0LjkzNjIyLDEzNS44NTgpIi8+CjxnIHN0eWxlPSJmaWxsOnJnYigwJSwwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDAtMSIgeD0iMTM4LjkxMiIgeT0iMTM4LjAwMyIvPgo8L2c+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMSkiIGNsaXAtcnVsZT0ibm9uemVybyI+CjxwYXRoIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlLXdpZHRoOjAuMzk4NTtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2U6cmdiKDAlLDAlLDAlKTtzdHJva2Utb3BhY2l0eToxO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgZD0iTSAwLjAwMTg0Mzc1IC0zNC4wMTcgTCAwLjAwMTg0Mzc1IDExOC41OTYyODEgIiB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxNi4zMzgsMTM1Ljg1OCkiLz4KPC9nPgo8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZS13aWR0aDowLjMxODc5O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2U6cmdiKDAlLDAlLDAlKTtzdHJva2Utb3BhY2l0eToxO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgZD0iTSAtMS4xOTcyNTEgMS41OTU4MTMgQyAtMS4wOTU2ODkgMC45OTgxNTYgLTAuMDAxOTM4NzUgMC4wOTk3MTg4IDAuMjk4ODQyIC0wLjAwMTg0Mzc1IEMgLTAuMDAxOTM4NzUgLTAuMDk5NSAtMS4wOTU2ODkgLTAuOTk3OTM3IC0xLjE5NzI1MSAtMS41OTU1OTQgIiB0cmFuc2Zvcm09Im1hdHJpeCgwLC0xLC0xLDAsMTYuMzM4LDE3LjI1OTc4KSIvPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMCUsMCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgwLTIiIHg9IjYuNjQxIiB5PSIxMC43OTMiLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMCUsMCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTEiIHg9IjEyLjU5MSIgeT0iMTAuNzkzIi8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDAlLDAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMC0xIiB4PSIxNi40NjYiIHk9IjEwLjc5MyIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigwJSwwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDEtMiIgeD0iMjIuMTYiIHk9IjEwLjc5MyIvPgo8L2c+CjxwYXRoIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlLXdpZHRoOjAuMzk4NTtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2U6cmdiKDEwMCUsMCUsMCUpO3N0cm9rZS1vcGFjaXR5OjE7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiBkPSJNIDAuMDAxODQzNzUgLTAuMDAxMzc1IEwgNC43MjQ1IDQuNzI1MTg3IEwgNDcuMjQ0MDMxIDQ3LjI0NDcxOSBMIDUxLjk3MDU5NCA1MS45NjczNzUgTCA1Ni42OTMyNSA1Ni42OTM5MzcgTCA2MS40MTk4MTIgNjEuNDE2NTk0IEwgNjYuMTQyNDY5IDY2LjE0MzE1NiBMIDEwOC42NjIgMTA4LjY2MjY4NyBMIDExMy4zODg1NjMgMTEzLjM4NTM0NCAiIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLC0xLDE2LjMzOCwxMzUuODU4KSIvPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMTAwJSwwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDAtMiIgeD0iMTMzLjI0MyIgeT0iMjQuOTYzIi8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDEwMCUsMCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTEiIHg9IjEzOS4xOTMiIHk9IjI0Ljk2MyIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMC0xIiB4PSIxNDMuMDY4IiB5PSIyNC45NjMiLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMTAwJSwwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDEtMiIgeD0iMTQ4Ljc2MSIgeT0iMjQuOTYzIi8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDEwMCUsMCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTMiIHg9IjE1NS40MDUwNTgiIHk9IjI0Ljk2MyIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMC0xIiB4PSIxNjUuOTE5IiB5PSIyNC45NjMiLz4KPC9nPgo8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZS13aWR0aDowLjM5ODU7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlOnJnYigwJSwwJSwxMDAlKTtzdHJva2Utb3BhY2l0eToxO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgZD0iTSAwLjAwMTg0Mzc1IDI4LjM0NjI4MSBMIDQuNzI0NSAyNy45NTU2NTYgTCA5LjQ0NzE1NiAyNi43ODc2ODcgTCAxNC4xNzM3MTkgMjQuODc3NTMxIEwgMTguODk2Mzc1IDIyLjI3NTk2OSBMIDIzLjYyMjkzNyAxOS4wNjExMjUgTCAyOC4zNDU1OTQgMTUuMzE1MDMxIEwgMzMuMDcyMTU2IDExLjE0NzA2MiBMIDM3Ljc5NDgxMiA2LjY2NjU5NCBMIDQyLjUyMTM3NSAyLjAwNjQzNyBMIDQ3LjI0NDAzMSAtMi43MTIzMTMgTCA1MS45NzA1OTQgLTcuMzU2ODQ0IEwgNTYuNjkzMjUgLTExLjc5ODI1IEwgNjEuNDE5ODEyIC0xNS45MDc2MjUgTCA2Ni4xNDI0NjkgLTE5LjU3OTUgTCA3MC44NjUxMjUgLTIyLjcwODQwNiBMIDc1LjU5MTY4OCAtMjUuMjA4NDA2IEwgODAuMzE0MzQ0IC0yNy4wMDkxODggTCA4NS4wNDA5MDYgLTI4LjA2Mzg3NSBMIDg5Ljc2MzU2MyAtMjguMzM3MzEzIEwgOTQuNDkwMTI1IC0yNy44MjU1OTQgTCA5OS4yMTI3ODEgLTI2LjU0NDM0NCBMIDEwMy45MzkzNDQgLTI0LjUyODcxOSBMIDEwOC42NjIgLTIxLjgyOTUgTCAxMTMuMzg4NTYzIC0xOC41Mjg3MTkgIiB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxNi4zMzgsMTM1Ljg1OCkiLz4KPGcgc3R5bGU9ImZpbGw6cmdiKDAlLDAlLDEwMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgwLTIiIHg9IjEzMy4yNDMiIHk9IjE1Ni44NzciLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMCUsMCUsMTAwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDEtMSIgeD0iMTM5LjE5MyIgeT0iMTU2Ljg3NyIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigwJSwwJSwxMDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMC0xIiB4PSIxNDMuMDY4IiB5PSIxNTYuODc3Ii8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDAlLDAlLDEwMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTIiIHg9IjE0OC43NjEiIHk9IjE1Ni44NzciLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMCUsMCUsMTAwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDEtMyIgeD0iMTU1LjQwNTA1OCIgeT0iMTU2Ljg3NyIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigwJSwwJSwxMDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMS00IiB4PSIxNjUuOTIzNTcxIiB5PSIxNTYuODc3Ii8+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTUiIHg9IjE3MC4zNTA5NSIgeT0iMTU2Ljg3NyIvPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMS02IiB4PSIxNzUuMzMyMjUiIHk9IjE1Ni44NzciLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMCUsMCUsMTAwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDAtMSIgeD0iMTgwLjkxOSIgeT0iMTU2Ljg3NyIvPgo8L2c+CjxwYXRoIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlLXdpZHRoOjAuMzk4NTtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2U6cmdiKDEwMCUsNTAlLDAlKTtzdHJva2Utb3BhY2l0eToxO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgZD0iTSAwLjAwMTg0Mzc1IDEuNDE2NTk0IEwgNC43MjQ1IDEuNjc0NDA2IEwgOS40NDcxNTYgMS45NzkwOTQgTCAxNC4xNzM3MTkgMi4zMzg0NjkgTCAxOC44OTYzNzUgMi43NjAzNDQgTCAyMy42MjI5MzcgMy4yNjAzNDQgTCAyOC4zNDU1OTQgMy44NTQwOTQgTCAzMy4wNzIxNTYgNC41NDk0MDYgTCAzNy43OTQ4MTIgNS4zNzc1MzEgTCA0Mi41MjEzNzUgNi4zNTAxODcgTCA0Ny4yNDQwMzEgNy41MDI1MzEgTCA1MS45NzA1OTQgOC44NjU4MTIgTCA1Ni42OTMyNSAxMC40NzEyODEgTCA2MS40MTk4MTIgMTIuMzczNjI1IEwgNjYuMTQyNDY5IDE0LjYxNTgxMiBMIDcwLjg2NTEyNSAxNy4yNjgxNTYgTCA3NS41OTE2ODggMjAuMzk3MDYyIEwgODAuMzE0MzQ0IDI0LjA5NjI4MSBMIDg1LjA0MDkwNiAyOC40NjczNzUgTCA4OS43NjM1NjMgMzMuNjMxNDM3IEwgOTQuNDkwMTI1IDM5LjcyOTA5NCBMIDk5LjIxMjc4MSA0Ni45MzYxMjUgTCAxMDMuOTM5MzQ0IDU1LjQ0Nzg0NCBMIDEwOC42NjIgNjUuNTAyNTMxIEwgMTEzLjM4ODU2MyA3Ny4zODUzNDQgIiB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwtMSwxNi4zMzgsMTM1Ljg1OCkiLz4KPGcgc3R5bGU9ImZpbGw6cmdiKDEwMCUsNTAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMC0yIiB4PSIxMzMuMjQzIiB5PSI2MC45NjYiLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMTAwJSw1MCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTEiIHg9IjEzOS4xOTMiIHk9IjYwLjk2NiIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDUwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDAtMSIgeD0iMTQzLjA2OCIgeT0iNjAuOTY2Ii8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDEwMCUsNTAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMS0yIiB4PSIxNDguNzYxIiB5PSI2MC45NjYiLz4KPC9nPgo8ZyBzdHlsZT0iZmlsbDpyZ2IoMTAwJSw1MCUsMCUpO2ZpbGwtb3BhY2l0eToxOyI+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgxLTMiIHg9IjE1NS40MDUwNTgiIHk9IjYwLjk2NiIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDUwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDItMSIgeD0iMTY5LjEiIHk9IjU3LjA0MyIvPgo8L2c+CjxwYXRoIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlLXdpZHRoOjAuMzk4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZTpyZ2IoMTAwJSw1MCUsMCUpO3N0cm9rZS1vcGFjaXR5OjE7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiBkPSJNIC0wLjAwMTcxODc1IC0wLjAwMTU2MjUgTCA3Ljk0MzU5NCAtMC4wMDE1NjI1ICIgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsLTEsMTY3LjExNSw1OC40NzUpIi8+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDUwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDItMiIgeD0iMTY3LjExNSIgeT0iNjQuNDAxIi8+CiAgPHVzZSB4bGluazpocmVmPSIjZ2x5cGgyLTMiIHg9IjE3MS4wODY1NzkiIHk9IjY0LjQwMSIvPgo8L2c+CjxnIHN0eWxlPSJmaWxsOnJnYigxMDAlLDUwJSwwJSk7ZmlsbC1vcGFjaXR5OjE7Ij4KICA8dXNlIHhsaW5rOmhyZWY9IiNnbHlwaDEtNyIgeD0iMTc2LjI1MyIgeT0iNjAuOTY2Ii8+CjwvZz4KPGcgc3R5bGU9ImZpbGw6cmdiKDEwMCUsNTAlLDAlKTtmaWxsLW9wYWNpdHk6MTsiPgogIDx1c2UgeGxpbms6aHJlZj0iI2dseXBoMy0xIiB4PSIxODAuNjgxIiB5PSI1Ny4zNSIvPgo8L2c+CjwvZz4KPC9zdmc+Cg=="
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 25,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "definition",
+            "inputLineNo": 27,
+            "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX",
+            "error": false,
+            "errorLog": "",
+            "src": "Definition.\nAuf dem $\\mathbb{R}^2$ definieren wir\n- Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$\n- Die **Multiplikation** $(x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)$\nDie Menge $\\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\\mathbb{C}$ der komplexen Zahlen oder als **Gaußsche Zahlenebene** bezeichnet. XXX\n---\n"
+        },
+        {
+            "type": "example",
+            "inputLineNo": 35,
+            "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:<ul><li> \\(z_1+z_2\\)<br/>  \\(=(2-3)+(3+2i)\\)<br/>  \\(=-1+5i\\)</li><li> \\(z_1-z_2\\)<br/>  \\(=z_1+(-z_2)\\)<br/>  \\(=2+3i+(3+(-2)i)\\)<br/>  \\(=(2+3)+(3+(-2))i\\)<br/>  \\(=5+i\\)</li></ul>",
+            "error": false,
+            "errorLog": "",
+            "src": "Example.\nSei $z_1=2+3i, z_2=-3+2i$. Dann gilt:\n- $z_1+z_2$\n  $=(2-3)+(3+2i)$\n  $=-1+5i$\n- $z_1-z_2$\n  $=z_1+(-z_2)$\n  $=2+3i+(3+(-2)i)$\n  $=(2+3)+(3+(-2))i$\n  $=5+i$\n---\n"
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 48,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "question",
+            "inputLineNo": 50,
+            "text": "Berechne \\(a^b=\\) c",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n\n@maxima\na:3;\nb:4;\nc:a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
+            "solution": "",
+            "variable-ids": [],
+            "variable-types": [],
+            "variable-values": [],
+            "input-field-types": [],
+            "input-field-answers": []
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 62,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "question",
+            "inputLineNo": 50,
+            "text": "Berechne \\(@a@^@b@=\\) ?0?",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n\n@octave\na=3;\nb=4;\nc=a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
+            "solution": "",
+            "variable-ids": [
+                "a",
+                "b",
+                "c"
+            ],
+            "variable-types": [
+                "float",
+                "float",
+                "float"
+            ],
+            "variable-values": [
+                [
+                    "3",
+                    "4",
+                    "81"
+                ]
+            ],
+            "input-field-types": [
+                "text-field"
+            ],
+            "input-field-answers": [
+                "c"
+            ]
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 76,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "question",
+            "inputLineNo": 64,
+            "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?</li></ul>",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n\n@sage\nn=123456;\na=198;\ng=gcd(a,n);\n\n@text\nSei $\"a\"=a$ und $\"n\"=n$.\n- Berechne $gcd(a,n)=$ #g\n\n@solution\n$gcd(a,n)=g$\n---\n",
+            "solution": "\\(gcd(@a@,@n@)=@g@\\)",
+            "variable-ids": [
+                "a",
+                "g",
+                "n"
+            ],
+            "variable-types": [
+                "int",
+                "int",
+                "int"
+            ],
+            "variable-values": [
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ]
+            ],
+            "input-field-types": [
+                "text-field"
+            ],
+            "input-field-answers": [
+                "g"
+            ]
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 94,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "question",
+            "inputLineNo": 83,
+            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne<ul><li> \\( z_1 + z_2 = \\) ?0?</li><li> \\( z_1 - z_2 = \\) ?1?</li></ul>",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n\n@options\nlive check\nrepeat on error\n\n@python\na = random.randint(1,5)\nb = random.randint(1,5)\nc = random.randint(1,5)\nd = random.randint(1,5)\nz1 = a + b*1j\nz2 = c + d*1j\nsum = z1 + z2\ndiff = z1 - z2\n\n@text\nSei $z_1 = z1$, $z_2 = z2$. Berechne\n- $ z_1 + z_2 = $ #sum\n- $ z_1 - z_2 = $ #diff\n\n@solution\n- $ z_1 + z_2 = (a+c) + (b+d)i $\n- $ z_1 - z_2 = (a-c) + (b-d)i $\n---\n",
+            "solution": "<ul><li> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\)</li><li> \\( z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\)</li></ul>",
+            "variable-ids": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "diff",
+                "sum",
+                "z1",
+                "z2"
+            ],
+            "variable-types": [
+                "int",
+                "int",
+                "int",
+                "int",
+                "complex",
+                "complex",
+                "complex",
+                "complex"
+            ],
+            "variable-values": [
+                [
+                    "3",
+                    "2",
+                    "3",
+                    "4",
+                    "-2i",
+                    "6+6i",
+                    "3+2i",
+                    "3+4i"
+                ],
+                [
+                    "4",
+                    "4",
+                    "4",
+                    "2",
+                    "2i",
+                    "8+6i",
+                    "4+4i",
+                    "4+2i"
+                ],
+                [
+                    "4",
+                    "4",
+                    "5",
+                    "4",
+                    "-1+0i",
+                    "9+8i",
+                    "4+4i",
+                    "5+4i"
+                ],
+                [
+                    "5",
+                    "1",
+                    "4",
+                    "3",
+                    "1-2i",
+                    "9+4i",
+                    "5+1i",
+                    "4+3i"
+                ],
+                [
+                    "1",
+                    "2",
+                    "5",
+                    "1",
+                    "-4+1i",
+                    "6+3i",
+                    "1+2i",
+                    "5+1i"
+                ]
+            ],
+            "input-field-types": [
+                "complex-normalform",
+                "complex-normalform"
+            ],
+            "input-field-answers": [
+                "sum",
+                "diff"
+            ]
+        },
+        {
+            "type": "error",
+            "inputLineNo": 137,
+            "text": "error: unknown part type 'Chatquestion.'",
+            "error": false,
+            "errorLog": "",
+            "src": "Chatquestion.\n\n@python\nimport random\na = random.randint(1,5)\nb = random.randint(1,5)\nc = random.randint(1,5)\nd = random.randint(1,5)\nz1 = a + b*1j\nz2 = c + d*1j\nsum = z1 + z2\n\n@text\nAddiere $z1$ und $z2$.\n\n@answer\nsum\n\n@solution\nDie Lösung ergibt sich durch $ (a+c) + (b+d)i $.\n---\n"
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 175,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "error",
+            "inputLineNo": 163,
+            "text": "error: unknown part type 'Speedreview.'",
+            "error": false,
+            "errorLog": "",
+            "src": "Speedreview.\n\n@options\ntime per answer = 4\n\n@questions\n$i^2=$\n    $-1$, $1$, $0$, $i$\n$z=x+yi$ heißt...\n    Normalform, Koordinaten, Polarform, Imaginärteil\n$|-2i|=$\n    $2$, $2i$, $1$, $0$\n$1+2i-2i=$\n    $1$, $0$, $1+4i$, $-1$\n---\n"
+        },
+        {
+            "type": "new-page",
+            "inputLineNo": 194,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": ""
+        },
+        {
+            "type": "error",
+            "inputLineNo": 182,
+            "text": "error: unknown part type 'Links.'",
+            "error": false,
+            "errorLog": "",
+            "src": "Links.\n- Komplexe Folgen und Grenzwerte\n- Komplexe Reihen\n- Komplexe Funktionen und Potenzreihen\n- Komplexe Potenzen und Wurzeln\n---\n"
+        }
+    ]
+}

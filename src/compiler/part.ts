@@ -35,10 +35,12 @@ export class Part {
     inputLineNo = 0;
     question: Question = null;
     image: Image = null;
+    oldJson: JSONType = null;
     constructor(inputLineNo: number) {
         this.inputLineNo = inputLineNo;
     }
     toJson(): JSONType {
+        if (this.oldJson != null) return this.oldJson;
         const j: JSONType = {};
         j.type = this.type;
         j.inputLineNo = this.inputLineNo;

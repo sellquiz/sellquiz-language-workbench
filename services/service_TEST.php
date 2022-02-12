@@ -30,7 +30,9 @@ include "service_core.php";
 
 $command = [
     "type" => "compile_document",
-    "stdin" => "hello, world!"
+    "query_values" => [
+        "documentId" => "1"
+    ]
 ];
 
 echo service($command);

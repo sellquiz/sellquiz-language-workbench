@@ -20,8 +20,10 @@ export class Document {
     private subsection = 2;
     private susubsection = 3;
     private forceNewParagraph = false;
+    private oldOutput: JSONType = null;
 
-    compile(input: string): string {
+    compile(input: string, oldOutput: JSONType): string {
+        this.oldOutput = oldOutput;
         const lines = input.split('\n');
         const n = lines.length;
         for (let lineIdx = 0; lineIdx < n; lineIdx++) {
@@ -98,6 +100,20 @@ export class Document {
                     if (first) first = false;
                     lineIdx++;
                 } // TODO: check EOF
+                if (this.oldOutput != null) {
+                    // do not compile again, if old output can be reused
+                    const oldParts = <Array<JSONType>>this.oldOutput['parts'];
+                    for (const oldPart of oldParts) {
+                        if (
+                            'src' in oldPart &&
+                            (<string>oldPart.src).length > 0 &&
+                            oldPart.src === part.src
+                        ) {
+                            part.type = <PartType>oldPart.type;
+                            part.oldJson = oldPart;
+                        }
+                    }
+                }
             } else {
                 let part: Part = null;
                 if (
@@ -122,9 +138,11 @@ export class Document {
                     part.text = this.compileParagraph(part.text);
                     break;
                 case PartType.uncompiledBlock:
-                    if (part.id === 'Definition.') this.compileDefinition(part);
-                    else if (part.id === 'Example.') this.compileExample(part);
-                    else if (part.id === 'Question.') {
+                    if (part.id === 'Definition.') {
+                        this.compileDefinition(part);
+                    } else if (part.id === 'Example.') {
+                        this.compileExample(part);
+                    } else if (part.id === 'Question.') {
                         part.question = new Question();
                         part.question.compileQuestion(part);
                         part.question.text = this.compileParagraph(
