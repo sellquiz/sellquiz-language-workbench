@@ -39,6 +39,18 @@ export let currentCourseName = '';
 export let currentDocumentId = '';
 export let currentDocumentName = '';
 
+let mobileMode = false;
+
+export function setMobileMode() {
+    mobileMode = true;
+    updateEmulator();
+}
+
+export function setDesktopMode() {
+    mobileMode = false;
+    updateEmulator();
+}
+
 export const toggle_states: { [key: string]: boolean } = {
     'preview-spell-check': false,
     'preview-show-source-links': true,
@@ -239,9 +251,12 @@ export function init() {
                     alert('searching text is unimplemented!');
                 },
                 F1: function () {
-                    updateEmulator();
+                    updateEmulator(true);
                 },
                 F2: function () {
+                    updateEmulator(false);
+                },
+                F3: function () {
                     document.getElementById('insertCodeButton').click();
                 },
             },
@@ -336,16 +351,19 @@ export function redoEditor() {
     editor.redo();
 }
 
-export function updateEmulator() {
+export function updateEmulator(fastUpdate = true) {
     //const sourceCode = editor.getValue();
     const renderedContentElement = document.getElementById('rendered-content');
-    renderedContentElement.innerHTML = '<h1>PLEASE WAIT</h1>';
+    renderedContentElement.innerHTML =
+        '<div class="col bg-white"><h1>PLEASE WAIT</h1></div>';
     axios
         .post(
             'services/service.php',
             new URLSearchParams({
                 command: JSON.stringify({
-                    type: 'compile_document',
+                    type: fastUpdate
+                        ? 'compile_document_fast'
+                        : 'compile_document',
                     query_values: {
                         documentId: currentDocumentId,
                     },
@@ -362,7 +380,13 @@ export function updateEmulator() {
             );
             doc.import(data);
             renderedContentElement.innerHTML = '';
-            doc.set(renderedContentElement);
+
+            const view = document.createElement('div');
+            view.style.backgroundColor = '#FFFFFF';
+            renderedContentElement.appendChild(view);
+            if (mobileMode) view.style.maxWidth = '480px';
+
+            doc.set(view);
         })
         .catch(function (error) {
             // TODO

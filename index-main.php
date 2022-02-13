@@ -142,8 +142,13 @@
             style="display:none;">
             TODO
         </div>
-        <div class="col m0 p-0 border-end" style="height: 100%; overflow-y: scroll;">
-            <div id="rendered-content"></div>
+        <div id="lab"
+            class="col m-0 p-0 border-end"
+            style="display:none;">
+            TODO
+        </div>
+        <div class="col m-0 p-0 border-end bg-secondary" style="height: 100%; overflow-y: scroll;">
+            <div id="rendered-content" class="col p-2"></div>
         </div>
     </div>
 </div>

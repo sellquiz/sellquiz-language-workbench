@@ -90,6 +90,8 @@
                     id === "users" ? "block" : "none";
                 document.getElementById("bugs").style.display =
                     id === "bugs" ? "block" : "none";
+                document.getElementById("lab").style.display =
+                    id === "lab" ? "block" : "none";
 
                 document.getElementById("tab-editor").className =
                     id === "editor" ? "nav-link active" : "nav-link";
@@ -103,6 +105,8 @@
                     id === "users" ? "nav-link active" : "nav-link";
                 document.getElementById("tab-bugs").className =
                     id === "bugs" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-lab").className =
+                    id === "lab" ? "nav-link active" : "nav-link";
             }
         </script>
 

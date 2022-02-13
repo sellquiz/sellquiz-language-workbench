@@ -70,16 +70,20 @@ function query($database_path, $statement, $values) {
     ]);
 }
 
-function compile($stdin) {
+function compile($stdin, $cache) {
+    // TODO: $cache
     $dir_path = sys_get_temp_dir() . '/slw/' . random_int(0, PHP_INT_MAX) . '/';
     mkdir($dir_path, 0777, true);
-    $file_path = $dir_path . 'doc.txt';
-    file_put_contents($file_path, $stdin);
+    $file_path_in = $dir_path . 'doc.txt';
+    file_put_contents($file_path_in, $stdin);
+    $file_path_out = $dir_path . 'doc.json';
+    if(strlen($cache) > 0)
+        file_put_contents($file_path_out, $cache);
     ob_start();
-    system("node ../dist/slw-compiler.min.js " . $file_path . " " . $file_path . ".json");
+    system("node ../dist/slw-compiler.min.js " . $file_path_in . " " . $file_path_out);
     $output = ob_get_contents();  // TODO: check $output
     ob_end_clean();
-    $res = file_get_contents($file_path . ".json");
+    $res = file_get_contents($file_path_out);
     system("rm -r " . $dir_path);
     return $res;
 }
@@ -89,19 +93,25 @@ function service($command) {
     global $sql_list, $db_path;
     switch($command["type"]) {
         case "compile_document":
+        case "compile_document_fast":
+            $fast = strcmp($command["type"], "compile_document_fast") == 0;
+            // get input and cache
             $res = json_decode(query($db_path,
-                "SELECT documentText FROM Document WHERE id=:documentId;",
+                "SELECT documentText, documentCache FROM Document WHERE id=:documentId;",
                 $command["query_values"]
             ));
             $u = $res->rows[0][0];
-            $v = compile($u);
-            // TODO: insert vs update
-            /*query($db_path,
-                "INSERT INTO Cache (documentId, cacheData) VALUES (:documentId, :cacheData);", [
-                    "documentId" => TODO: CANNOT ACCESS ARRAY THIS WAY!!! $command["query_values"]->documentId,
-                    "cacheData" => $v
-                ]
-            );*/
+            $cache = $res->rows[0][1];
+            if($fast == false)
+                $cache = '';
+            // compile
+            $v = compile($u, $cache);
+            // update cache
+            query($db_path,
+                "UPDATE Document SET documentCache=:cache WHERE id=:id;", [
+                    "cache" => $v,
+                    "id" => $command["query_values"]["documentId"]
+                ]);
             return $v;
             break;
         case "get_course_list":

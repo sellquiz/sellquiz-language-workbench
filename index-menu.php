@@ -75,7 +75,7 @@
                         title="edit box"
                         style="cursor:pointer;"
                         onclick="openTab('box');">
-                        <i class="fas fa-th-large"></i>
+                        <i class="fa-solid fa-table-cells-large"></i>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -85,7 +85,7 @@
                         title="ticket"
                         style="cursor:pointer;"
                         onclick="openTab('ticket');">
-                        <i class="fas fa-ticket-alt"></i>
+                        <i class="fa-solid fa-ticket"></i>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -112,12 +112,23 @@
                     <a id="tab-bugs" class="nav-link"
                     data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
-                        title="report bugs"
+                        title="bug reporting"
                         style="cursor:pointer;"
                         onclick="openTab('bugs');">
                         <i class="fas fa-bug"></i>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="tab-lab" class="nav-link"
+                    data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="lab management"
+                        style="cursor:pointer;"
+                        onclick="openTab('lab');">
+                        <i class="fa-solid fa-flask"></i>
+                    </a>
+                </li>
+
             </ul>
         </div>
         <div class="col m-0 p-0 text-end border-bottom text-secondary">

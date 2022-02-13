@@ -48,6 +48,7 @@ CREATE TABLE Document (
     documentName TEXT NOT NULL,
     documentDesc TEXT,
     documentText TEXT,
+    documentCache TEXT,
     courseId INTEGER NOT NULL,
     documentDateCreated INTEGER NOT NULL,  -- UNIX time
     documentDateModified INTEGER NOT NULL,  -- UNIX time
@@ -55,11 +56,11 @@ CREATE TABLE Document (
 );
 
 INSERT INTO Document
-    (documentName, documentDesc, documentText,
+    (documentName, documentDesc, documentText, documentCache,
      courseId,
      documentDateCreated, documentDateModified)
     VALUES
-    ('demo', 'demo document', '',
+    ('demo', 'demo document', '', '',
      (SELECT id FROM Course WHERE courseName='demo'),
      1640991600, 1640991600);
 
@@ -71,12 +72,12 @@ CREATE TABLE DocumentBackup (
     FOREIGN KEY(documentId) REFERENCES Document(id)
 );
 
-CREATE TABLE Cache (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    documentId INTEGER NOT NULL,
-    cacheData TEXT,
-    FOREIGN KEY(documentId) REFERENCES Document(id)
-);
+-- CREATE TABLE Cache (
+--     id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     documentId INTEGER NOT NULL,
+--     cacheData TEXT,
+--     FOREIGN KEY(documentId) REFERENCES Document(id)
+-- );
 
 CREATE TABLE UserRole (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

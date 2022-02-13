@@ -26,7 +26,7 @@
                 <button id="insertCodeButton"
                     type="button" class="btn btn-dark mx-0 btn-sm"
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="insert template [F2]">
+                    title="insert template [F3]">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </span>
@@ -65,7 +65,7 @@
             <i class="fas fa-layer-group"></i>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="select course">
+                    title="course selection">
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="courselist_button" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
@@ -77,7 +77,7 @@
             <i class="fas fa-file"></i>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="select file">
+                    title="document selection">
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="filelist_button" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
@@ -88,15 +88,41 @@
         </div>
         <div class="col text-center border-end border-bottom py-1" style="">
 
-    TODO: buttons: mobile/desktop
-    TODO: button: build w/o cache
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary btn-sm" for="btnradio1"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="desktop preview"
+                    onclick="slwEditor.setDesktopMode();">
+                    <i class="fa-solid fa-desktop"></i>
+                </label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary btn-sm" for="btnradio2"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="mobile preview"
+                    onclick="slwEditor.setMobileMode();">
+                    &nbsp;<i class="fa-solid fa-mobile-screen-button"></i>&nbsp;
+                </label>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;
 
             <button type="button" class="btn btn-success mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
-                title="update [F1]"
-                onclick="hide_tooltips();slwEditor.updateEmulator();">
-                <i class="fas fa-running"></i>
+                title="fast update [F1]"
+                onclick="hide_tooltips();slwEditor.updateEmulator(true);">
+                <i class="fa-solid fa-forward-fast"></i>
             </button>
+            <button type="button" class="btn btn-success mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="full update [F2]"
+                onclick="hide_tooltips();slwEditor.updateEmulator(false);">
+                <i class="fa-solid fa-play"></i>
+            </button>
+
+            &nbsp;&nbsp;&nbsp;
+
             <button id="preview-spell-check" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="spell check"
