@@ -28,11 +28,15 @@ include "service_core.php";
 //     ]
 // ];
 
+// $command = [
+//     "type" => "compile_document",
+//     "query_values" => [
+//         "documentId" => "1"
+//     ]
+// ];
+
 $command = [
-    "type" => "compile_document",
-    "query_values" => [
-        "documentId" => "1"
-    ]
+    "type" => "check_system"
 ];
 
 echo service($command);

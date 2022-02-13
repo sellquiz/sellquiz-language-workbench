@@ -88,10 +88,29 @@ function compile($stdin, $cache) {
     return $res;
 }
 
+function check_system() {
+    $commands = array("node", "python3", "pdflatex", "sage", "octave", "maxima", "pdf2svg", "sqlite3", "gnuplot", "java", "javac");
+    $s = "";
+    foreach($commands as $command) {
+        $s = $s . $command . ': ';
+        $res = shell_exec("which " . $command);
+        if(empty($res)) {
+            $s = $s . 'NOT INSTALLED (run e.g. "sudo apt install ' . $command . '")';
+        } else {
+            $s = $s . 'OK';
+        }
+        $s = $s . "\n";
+    }
+    return $s;
+}
+
 function service($command) {
     // TODO: check privileges for all queries!!
     global $sql_list, $db_path;
     switch($command["type"]) {
+        case "check_system":
+            return check_system();
+            break;
         case "compile_document":
         case "compile_document_fast":
             $fast = strcmp($command["type"], "compile_document_fast") == 0;
