@@ -27,8 +27,9 @@
         <div class="col m-0 p-0 w-100">
             <ul class="nav nav-tabs m-0 p-0 w-100 bg-dark">
                 <li class="nav-item">
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;
                 </li>
+
                 <li class="nav-item">
                     <span data-bs-toggle="modal"
                         data-bs-target="#modal-login">
@@ -55,13 +56,30 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </li>
+
                 <li class="nav-item">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-dark text-primary"
+                        data-bs-toggle="tooltip"
+                        data-bs-html="true"
+                        data-bs-placement="bottom"
+                        title='help'
+                        style="cursor:pointer;"
+                        onclick="alert('help is not yet available :-(');">
+                        <i class="fa-solid fa-question"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
                 <li class="nav-item">
                     <a id="tab-editor" class="nav-link active"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="edit document"
                         style="cursor:pointer;"
                         onclick="openTab('editor');">
@@ -71,7 +89,7 @@
                 <li class="nav-item">
                     <a id="tab-box" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="edit box"
                         style="cursor:pointer;"
                         onclick="openTab('box');">
@@ -81,7 +99,7 @@
                 <li class="nav-item">
                     <a id="tab-ticket" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="ticket"
                         style="cursor:pointer;"
                         onclick="openTab('ticket');">
@@ -91,7 +109,7 @@
                 <li class="nav-item">
                     <a id="tab-filetree" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="file tree"
                         style="cursor:pointer;"
                         onclick="openTab('filetree');">
@@ -101,7 +119,7 @@
                 <li class="nav-item">
                     <a id="tab-users" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="user management"
                         style="cursor:pointer;"
                         onclick="openTab('users');">
@@ -111,7 +129,7 @@
                 <li class="nav-item">
                     <a id="tab-bugs" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="bug reporting"
                         style="cursor:pointer;"
                         onclick="openTab('bugs');">
@@ -121,7 +139,7 @@
                 <li class="nav-item">
                     <a id="tab-lab" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="bottom"
+                        data-bs-placement="left"
                         title="lab management"
                         style="cursor:pointer;"
                         onclick="openTab('lab');">

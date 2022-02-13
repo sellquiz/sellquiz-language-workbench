@@ -206,6 +206,37 @@ export function refreshCourseList() {
 }
 
 export function init() {
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'check_system',
+                }),
+            }),
+        )
+        .then(function (response) {
+            let data = response.data;
+            if (data.includes('NOT INSTALLED')) {
+                const renderedContentElement =
+                    document.getElementById('rendered-content');
+                data = data.replace(/\n/g, '<br/>');
+                renderedContentElement.innerHTML =
+                    '<p class="text-danger bg-white">' +
+                    '<b>MISSING DEPENDENCIES ON SERVER:</b>' +
+                    '<br/><br/>' +
+                    data +
+                    '<br/>Please reload this page after installation!';
+                ('</p>');
+            } else init2();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
+function init2() {
     refreshCourseList();
 
     // init code editor
@@ -385,6 +416,7 @@ export function updateEmulator(fastUpdate = true) {
             view.style.backgroundColor = '#FFFFFF';
             renderedContentElement.appendChild(view);
             if (mobileMode) view.style.maxWidth = '480px';
+            else view.style.maxWidth = '1024px';
 
             doc.set(view);
         })
