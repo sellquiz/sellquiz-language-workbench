@@ -22,36 +22,6 @@ Tikz.
     node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
 ---
 
-# Lab
-
----
-Authentication.
-
-@database
-batin-its-lab-1
-
-@input
-matriculation-number
-access-token
----
-
----
-Question.
-@text
-Berechne xxx
----
-
----
-JavaProgram.
-
-@id
-task-1
-
-@text
-Blub
----
-
-
 
 ========
 

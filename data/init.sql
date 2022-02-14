@@ -30,6 +30,21 @@ INSERT INTO Settings
     VALUES
     (1, 'Demo');
 
+CREATE TABLE Server (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    serverName TEXT NOT NULL
+);
+
+INSERT INTO Server
+    (serverName)
+    VALUES
+    ('test');
+
+INSERT INTO Server
+    (serverName)
+    VALUES
+    ('production');
+
 CREATE TABLE Course (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     courseName TEXT NOT NULL,
@@ -48,12 +63,21 @@ CREATE TABLE Document (
     documentName TEXT NOT NULL,
     documentDesc TEXT,
     documentText TEXT,
-    documentCache TEXT,
+    documentCache TEXT, -- TODO: rename to documentCompiled
     courseId INTEGER NOT NULL,
     documentDateCreated INTEGER NOT NULL,  -- UNIX time
     documentDateModified INTEGER NOT NULL,  -- UNIX time
     FOREIGN KEY(courseId) REFERENCES Course(id)
 );
+
+INSERT INTO Document
+    (documentName, documentDesc, documentText, documentCache,
+     courseId,
+     documentDateCreated, documentDateModified)
+    VALUES
+    ('its', 'demo document', '', '',
+     (SELECT id FROM Course WHERE courseName='demo'),
+     1640991600, 1640991600);
 
 INSERT INTO Document
     (documentName, documentDesc, documentText, documentCache,

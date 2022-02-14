@@ -1,0 +1,33 @@
+##### Lab 1
+
+!tex
+
+---
+Authentication.
+
+@database
+batin-its-lab-1
+
+@input
+matriculation-number
+access-token
+---
+
+
+# Exercise 1
+
+---
+Question.
+@text
+Berechne xxx
+---
+
+---
+JavaProgram.
+
+@id
+task-1
+
+@text
+Blub
+---
