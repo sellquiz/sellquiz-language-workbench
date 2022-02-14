@@ -11,7 +11,11 @@ import { CoursePage } from './coursePage';
 import { MathJax } from '../shared/mathjax';
 
 const mathjaxInstance = new MathJax();
-const coursePage = new CoursePage(mathjaxInstance, false);
+const coursePage = new CoursePage(mathjaxInstance, {
+    renderProgressBars: false,
+    showQuestionVariables: false,
+    showSolution: false,
+});
 
 export function init(
     serverName: string,

@@ -18,7 +18,11 @@ const chatInstance = new Chat();
 const COURSE_DEF_PATH = 'data/courses/demo/demo-app-complex-1.json';
 const CHAT_DEF_PATH = 'data/courses/demo/demo-app-chat.json';
 
-const coursePage = new CoursePage(mathjaxInstance);
+const coursePage = new CoursePage(mathjaxInstance, {
+    renderProgressBars: true,
+    showQuestionVariables: false,
+    showSolution: false,
+});
 
 export function init() {
     loadPage(COURSE_DEF_PATH);

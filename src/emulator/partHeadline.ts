@@ -22,7 +22,7 @@ export class PartHeadline extends Part {
         const divCol = document.createElement('div');
         divCol.classList.add('col', 'py-1');
         divRow.appendChild(divCol);
-        divCol.innerHTML = '<h2>' + this.text + '</h2>';
+        divCol.innerHTML = '<br/><h2>' + this.text + '</h2>';
     }
     import(data: any): void {
         this.text = data['text'];

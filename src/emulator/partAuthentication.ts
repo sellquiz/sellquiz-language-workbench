@@ -28,7 +28,7 @@ export class PartAuthentication extends Part {
             <div class="col-md-5 mx-0">
                 <div class="input-group px-0 mx-0">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" class="form-control" placeholder="Matrikelnummer">
+                    <input type="text" class="form-control" placeholder="Matrikelnummer (letzte 4 Ziffern)">
                 </div>
             </div>
             <div class="col-md-5 mx-0">

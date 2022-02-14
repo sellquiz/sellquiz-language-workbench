@@ -9,6 +9,7 @@ import { JSONType } from './help';
 import { Question } from './question';
 import { Image } from './image';
 import { Authentication } from './authentication';
+import { ProgrammingQuestion } from './programmingQuestion';
 
 export enum PartType {
     unknown = 'unknown',
@@ -21,6 +22,7 @@ export enum PartType {
     definition = 'definition',
     example = 'example',
     question = 'question',
+    programmingQuestion = 'programming-question',
     image = 'image',
     newPage = 'new-page',
     authentication = 'authentication',
@@ -37,6 +39,7 @@ export class Part {
     inputLineNo = 0;
 
     question: Question = null;
+    programmingQuestion: ProgrammingQuestion = null;
     image: Image = null;
     authentication: Authentication = null;
 
@@ -54,6 +57,8 @@ export class Part {
         j.errorLog = this.errorLog;
         j.src = this.src;
         if (this.question != null) this.question.toJson(j);
+        if (this.programmingQuestion != null)
+            this.programmingQuestion.toJson(j);
         if (this.image != null) this.image.toJson(j);
         if (this.authentication != null) this.authentication.toJson(j);
         return j;

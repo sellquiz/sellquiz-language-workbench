@@ -84,6 +84,22 @@ export class QuestionInputField {
             inputStrings.push(element.value);
         //console.log('user solution: ' + inputStrings);
         switch (this.answerVariable.type) {
+            case QuestionVariableType.Int:
+            case QuestionVariableType.Float:
+                if (
+                    Math.abs(
+                        parseFloat(sampleSolution) -
+                            parseFloat(inputStrings[0]),
+                    ) < 1e-6
+                ) {
+                    // TODO: configure precision
+                    this.htmlInputElements[0].style.backgroundColor = 'green';
+                    this.htmlInputElements[0].style.color = 'white';
+                } else {
+                    this.htmlInputElements[0].style.backgroundColor = 'red';
+                    this.htmlInputElements[0].style.color = 'white';
+                }
+                break;
             case QuestionVariableType.Complex:
                 if (
                     Math.abs(
@@ -147,9 +163,9 @@ export class QuestionInputField {
                 inputElement.classList.add('mx-1');
                 inputElement.placeholder = '';
                 inputElement.size = 5;
-                inputElement.addEventListener('keyup', () => {
+                /*inputElement.addEventListener('keyup', () => {
                     this.evaluate();
-                });
+                });*/
                 // "+"
                 tmpElement = document.createElement('span');
                 tmpElement.innerHTML = this.question.coursePage
@@ -164,9 +180,9 @@ export class QuestionInputField {
                 inputElement.classList.add('mx-1');
                 inputElement.placeholder = '';
                 inputElement.size = 5;
-                inputElement.addEventListener('keyup', () => {
+                /*inputElement.addEventListener('keyup', () => {
                     this.evaluate();
-                });
+                });*/
                 // "i"
                 tmpElement = document.createElement('span');
                 tmpElement.innerHTML = this.question.coursePage
@@ -198,6 +214,9 @@ export class PartQuestion extends Part {
     variables: QuestionVariable[] = [];
     inputFields: QuestionInputField[] = [];
     variantIdx = 0; // TODO: random!
+
+    showVariables = false;
+    showSolution = false;
 
     private getVariable(id: string): QuestionVariable {
         for (let i = 0; i < this.variables.length; i++) {
@@ -244,6 +263,7 @@ export class PartQuestion extends Part {
         text = this.coursePage.getMathJaxInst().convertHTML(text);
         return text;
     }
+
     generateDOM(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
         this.htmlElement = divContainer;
@@ -276,59 +296,75 @@ export class PartQuestion extends Part {
             textElement.innerHTML = '<pre>' + this.errorLog + '</pre>';
         } else textElement.innerHTML = questionText;
         divCol.appendChild(textElement);
-        this.addReadEventListener(divContainer);
+        //this.addReadEventListener(divContainer);
         this.generateInputElements();
         // variable values
-        let variableValues = '';
-        for (const v of this.variables) {
-            variableValues += v.id + '=' + v.toMathJs(0) + ', &nbsp;';
+        if (this.showVariables) {
+            let variableValues = '';
+            for (const v of this.variables) {
+                variableValues += v.id + '=' + v.toMathJs(0) + ', &nbsp;';
+            }
+            headline = document.createElement('p');
+            headline.classList.add(
+                'text-start',
+                'lead',
+                'py-0',
+                'my-0',
+                'my-1',
+                'bg-info',
+                'text-white',
+            );
+            headline.innerHTML = '&nbsp;<b>Variablen</b>';
+            divCol.appendChild(headline);
+            textElement = document.createElement('p');
+            textElement.classList.add(
+                'px-1',
+                'py-0',
+                'my-0',
+                'bg-info',
+                'text-white',
+            );
+            textElement.innerHTML = variableValues;
+            divCol.appendChild(textElement);
         }
-        headline = document.createElement('p');
-        headline.classList.add(
-            'text-start',
-            'lead',
-            'py-0',
-            'my-0',
-            'my-1',
-            'bg-info',
-            'text-white',
-        );
-        headline.innerHTML = '&nbsp;<b>Variablen</b>';
-        divCol.appendChild(headline);
-        textElement = document.createElement('p');
-        textElement.classList.add(
-            'px-1',
-            'py-0',
-            'my-0',
-            'bg-info',
-            'text-white',
-        );
-        textElement.innerHTML = variableValues;
-        divCol.appendChild(textElement);
         // answer text
-        const solutionText = this.generateText(this.solutionText);
-        headline = document.createElement('p');
-        headline.classList.add(
-            'text-start',
-            'lead',
-            'py-0',
-            'my-0',
-            'my-1',
-            'bg-success',
-            'text-white',
-        );
-        headline.innerHTML = '&nbsp;<b>Lösung</b>';
-        divCol.appendChild(headline);
-        textElement = document.createElement('p');
-        textElement.classList.add(
-            'px-1',
-            'py-0',
-            'my-0',
-            'bg-success',
-            'text-white',
-        );
-        textElement.innerHTML = solutionText;
-        divCol.appendChild(textElement);
+        if (this.showSolution) {
+            const solutionText = this.generateText(this.solutionText);
+            headline = document.createElement('p');
+            headline.classList.add(
+                'text-start',
+                'lead',
+                'py-0',
+                'my-0',
+                'my-1',
+                'bg-success',
+                'text-white',
+            );
+            headline.innerHTML = '&nbsp;<b>Lösung</b>';
+            divCol.appendChild(headline);
+            textElement = document.createElement('p');
+            textElement.classList.add(
+                'px-1',
+                'py-0',
+                'my-0',
+                'bg-success',
+                'text-white',
+            );
+            textElement.innerHTML = solutionText;
+            divCol.appendChild(textElement);
+        }
+        // save button
+        const button = document.createElement('button');
+        button.type = 'button';
+        divContainer.appendChild(button);
+        button.classList.add('btn', 'btn-primary', 'my-1');
+        button.innerHTML = 'Auswerten';
+        const this_ = this;
+        button.addEventListener('click', function () {
+            for (const inputField of this_.inputFields) {
+                inputField.evaluate();
+            }
+        });
     }
 
     import(data: any): void {

@@ -18,6 +18,13 @@ import { PartQuestion } from './partQuestion';
 import { PartSpeedReview } from './partSpeedReview';
 import { PartError } from './partError';
 import { PartAuthentication } from './partAuthentication';
+import { PartProgrammingQuestion } from './partProgrammingQuestion';
+
+export interface CoursePageOptions {
+    renderProgressBars: boolean;
+    showQuestionVariables: boolean;
+    showSolution: boolean;
+}
 
 export class CoursePage {
     private title = '';
@@ -28,11 +35,15 @@ export class CoursePage {
     private visiblePageIdx = 0;
 
     private mathjaxInst: MathJax = null;
-    private renderProgressBars = true;
+    private renderProgressBars = false;
+    private showQuestionVariables = false;
+    private showSolution = false;
 
-    constructor(mathjaxInst: MathJax, renderProgressBars = true) {
+    constructor(mathjaxInst: MathJax, options: CoursePageOptions) {
         this.mathjaxInst = mathjaxInst;
-        this.renderProgressBars = renderProgressBars;
+        this.renderProgressBars = options.renderProgressBars;
+        this.showQuestionVariables = options.showQuestionVariables;
+        this.showSolution = options.showSolution;
     }
 
     getMathJaxInst(): MathJax {
@@ -59,6 +70,9 @@ export class CoursePage {
 
     set(rootElement: HTMLElement): void {
         const content = rootElement;
+
+        content.appendChild(document.createElement('br'));
+
         // title
         const divContainer = document.createElement('div');
         divContainer.classList.add('container-fluid');
@@ -81,40 +95,41 @@ export class CoursePage {
         // progress bars
         if (this.renderProgressBars) this.refreshProgressBars();
         // navigation
+        if (this.numPages > 1) {
+            const nav = document.createElement('div');
+            content.appendChild(nav);
+            nav.classList.add('text-center');
+            nav.appendChild(document.createElement('br'));
 
-        const nav = document.createElement('div');
-        content.appendChild(nav);
-        nav.classList.add('text-center');
-        nav.appendChild(document.createElement('br'));
+            const btnGroup = document.createElement('div');
+            nav.appendChild(btnGroup);
+            btnGroup.classList.add('btn-group');
+            const backwardBtn = document.createElement('button');
+            backwardBtn.type = 'button';
+            backwardBtn.classList.add('btn', 'btn-dark');
+            backwardBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            backwardBtn.addEventListener('click', () => {
+                if (this.visiblePageIdx > 0) {
+                    this.visiblePageIdx--;
+                    this.updateVisibility();
+                }
+            });
+            btnGroup.appendChild(backwardBtn);
+            const forwardBtn = document.createElement('button');
+            forwardBtn.type = 'button';
+            forwardBtn.classList.add('btn', 'btn-dark');
+            forwardBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            forwardBtn.addEventListener('click', () => {
+                if (this.visiblePageIdx < this.numPages - 1) {
+                    this.visiblePageIdx++;
+                    this.updateVisibility();
+                }
+            });
+            btnGroup.appendChild(forwardBtn);
+        }
 
-        const btnGroup = document.createElement('div');
-        nav.appendChild(btnGroup);
-        btnGroup.classList.add('btn-group');
-        const backwardBtn = document.createElement('button');
-        backwardBtn.type = 'button';
-        backwardBtn.classList.add('btn', 'btn-dark');
-        backwardBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        backwardBtn.addEventListener('click', () => {
-            if (this.visiblePageIdx > 0) {
-                this.visiblePageIdx--;
-                this.updateVisibility();
-            }
-        });
-        btnGroup.appendChild(backwardBtn);
-        const forwardBtn = document.createElement('button');
-        forwardBtn.type = 'button';
-        forwardBtn.classList.add('btn', 'btn-dark');
-        forwardBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        forwardBtn.addEventListener('click', () => {
-            if (this.visiblePageIdx < this.numPages - 1) {
-                this.visiblePageIdx++;
-                this.updateVisibility();
-            }
-        });
-        btnGroup.appendChild(forwardBtn);
-
-        nav.appendChild(document.createElement('br'));
-        nav.appendChild(document.createElement('br'));
+        content.appendChild(document.createElement('br'));
+        content.appendChild(document.createElement('br'));
     }
 
     import(json: any): void {
@@ -152,6 +167,12 @@ export class CoursePage {
                     break;
                 case 'question':
                     partInstance = new PartQuestion(this);
+                    partInstance.showVariables = this.showQuestionVariables;
+                    partInstance.showSolution = this.showSolution;
+                    partInstance.import(part);
+                    break;
+                case 'programming-question':
+                    partInstance = new PartProgrammingQuestion(this);
                     partInstance.import(part);
                     break;
                 case 'speed-review':
