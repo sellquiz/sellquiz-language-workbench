@@ -25,7 +25,7 @@ esbuild.buildSync({
     target: 'es2020',
     entryPoints: ['src/compiler/index.ts'],
     bundle: true,
-    outfile: 'dist/slw-compiler.min.js',
+    outfile: 'dist/slwCompiler.min.js',
 });
 
 esbuild.buildSync({
@@ -45,5 +45,5 @@ esbuild.buildSync({
     target: 'es2020',
     entryPoints: ['src/emulator/index.ts'],
     bundle: true,
-    outfile: 'dist/slw-emulator.min.js',
+    outfile: 'dist/slwEmulator.min.js',
 });
