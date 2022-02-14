@@ -1,5 +1,6 @@
 data/database.db
 data/database_dump.sql
+data/servers/*.db
 
 node_modules/
 cache/
