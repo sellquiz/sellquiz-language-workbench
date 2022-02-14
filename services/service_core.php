@@ -20,9 +20,8 @@
 
 include "help.php";
 
-
-$db_path="../data/database.db";
-
+$db_path = "../data/database.db";
+$db_server_path = "../data/servers/";
 
 function query($database_path, $statement, $values) {
     $db = new SQLite3($database_path);
@@ -38,7 +37,7 @@ function query($database_path, $statement, $values) {
         $db->close();
         return json_encode([
             "error" => true,
-            "error_str" => "SQL syntax error"
+            "error_str" => "SQL syntax error: " . $e
         ]);
     }
     if($query_result == false) {
@@ -80,7 +79,7 @@ function compile($stdin, $cache) {
     if(strlen($cache) > 0)
         file_put_contents($file_path_out, $cache);
     ob_start();
-    system("node ../dist/slw-compiler.min.js " . $file_path_in . " " . $file_path_out);
+    system("node ../dist/slwCompiler.min.js " . $file_path_in . " " . $file_path_out);
     $output = ob_get_contents();  // TODO: check $output
     ob_end_clean();
     $res = file_get_contents($file_path_out);
@@ -105,12 +104,56 @@ function check_system() {
 }
 
 function service($command) {
+
     // TODO: check privileges for all queries!!
-    global $sql_list, $db_path;
+    global $sql_list, $db_path, $db_server_path;
     switch($command["type"]) {
+
+        case "publish_document":
+            // get compiled document
+            $res = json_decode(query($db_path,
+                "SELECT d.courseId, d.documentName, d.documentText, d.documentCache, c.courseName FROM Document d, Course c WHERE c.id = d.courseId AND d.id=:documentId;",
+                $command["query_values"]
+            )); // TODO: check for errors
+            $courseId = $res->rows[0][0];
+            $documentName = $res->rows[0][1];
+            $documentText = $res->rows[0][2];
+            $documentCompiled = $res->rows[0][3];
+            $courseName = $res->rows[0][4];
+            // insert course (if not existing)
+            $params = [
+                "courseId" => $courseId,
+                "courseName" => $courseName
+            ];
+            query($db_server_path . $command["query_values"]["serverName"] . '.db',
+                 "insert or ignore into Course (id, courseName) values (:courseId,:courseName);",
+                 $params);
+            // insert document (if not existing)
+            $params = [
+                "documentId" => $command["query_values"]["documentId"],
+                "documentName" => $documentName,
+                "documentText" => $documentText,
+                "documentCompiled" => $documentCompiled,
+                "courseId" => $courseId
+            ];
+            query($db_server_path . $command["query_values"]["serverName"] . '.db',
+                "DELETE FROM Document WHERE id=:documentId;",
+                $params);
+            query($db_server_path . $command["query_values"]["serverName"] . '.db',
+                 "INSERT INTO Document (id, documentName, documentText, documentCompiled, courseId) VALUES (:documentId,:documentName,:documentText,:documentCompiled,:courseId);",
+                 $params);
+            break;
+
+        case "get_emulator_document":
+            return query($db_server_path . $command["query_values"]["serverName"] . '.db',
+                "SELECT d.documentCompiled FROM Document d, Course c WHERE d.courseId = c.id AND d.documentName=:documentName AND c.courseName=:courseName;",
+                $command["query_values"]);
+            break;
+
         case "check_system":
             return check_system();
             break;
+
         case "compile_document":
         case "compile_document_fast":
             $fast = strcmp($command["type"], "compile_document_fast") == 0;
@@ -133,26 +176,37 @@ function service($command) {
                 ]);
             return $v;
             break;
+
+        case "get_server_list":
+            return query($db_path,
+                "SELECT * FROM Server;",
+                $command["query_values"]);
+            break;
+
         case "get_course_list":
             return query($db_path,
                 "SELECT * FROM Course;",
                 $command["query_values"]);
             break;
+
         case "get_document_list":
             return query($db_path,
                 "SELECT id, documentName, documentDesc, courseId, documentDateCreated, documentDateModified FROM Document WHERE courseId=:courseId;",
                 $command["query_values"]);
             break;
+
         case "get_document":
             return query($db_path,
                 "SELECT * FROM Document WHERE id=:id;",
                 $command["query_values"]);
             break;
+
         case "save_document":
             return query($db_path,
                 "UPDATE Document SET documentText=:text WHERE id=:id;",
                 $command["query_values"]);
             break;
+
         default:
             return json_encode([
                 "error" => true,

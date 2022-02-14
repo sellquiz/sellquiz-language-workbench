@@ -35,9 +35,26 @@ include "service_core.php";
 //     ]
 // ];
 
+// $command = [
+//     "type" => "check_system"
+// ];
+
 $command = [
-    "type" => "check_system"
+    "type" => "publish_document",
+    "query_values" => [
+        "serverName" => "test",
+        "documentId" => "1",
+    ]
 ];
+
+// $command = [
+//     "type" => "get_emulator_document",
+//     "query_values" => [
+//         "serverName" => "test",
+//         "courseName" => "demo",
+//         "documentName" => "demo",
+//     ]
+// ];
 
 echo service($command);
 
