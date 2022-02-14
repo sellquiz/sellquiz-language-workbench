@@ -36,3 +36,30 @@ CREATE TABLE Document (
     UNIQUE(id),
     FOREIGN KEY(courseId) REFERENCES Course(id)
 );
+
+CREATE TABLE Student (
+    id INTEGER NOT NULL, -- matriculation number
+    accessToken TEXT,
+    UNIQUE(id)
+);
+
+-- TODO: remove test student
+INSERT INTO Student
+    (id, accessToken)
+    VALUES
+    (1337314, 'abcdefg-123456');
+
+CREATE TABLE StudentData (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    documentId INTEGER NOT NULL,
+    studentId INTEGER NOT NULL,
+    studentDataAnswerId TEXT,
+
+    studentDataInput TEXT, -- divided by # in case of multiple fields
+    studentDataRandomNumbers TEXT, -- divided by # in case of multiple numbers
+    studentDataScore100 NUMBER, -- score := studentDataScore100 / 100.0
+
+    studentDataDate INTEGER NOT NULL,  -- UNIX time
+    FOREIGN KEY(documentId) REFERENCES Document(id),
+    FOREIGN KEY(studentId) REFERENCES Student(id)
+);

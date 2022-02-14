@@ -1,6 +1,8 @@
-##### Lab 1
+##### ITS - Lab 1
 
 !tex
+
+Melden Sie sich mit den bekannten Logindaten an, um die Aufgaben zu sehen:
 
 ---
 Authentication.
@@ -13,20 +15,44 @@ matriculation-number
 access-token
 ---
 
+Der Praktikumsversuch ist in zwei Bereiche geteilt:
+- Randomisierte Aufgaben, die zur Freischaltung der Programmieraufgaben führen
+- Programmieraufgaben in Java
 
-# Exercise 1
+
+!require-authentication
+
+# Vorbereitungsaufgaben
 
 ---
 Question.
+
+@settings
+id = task-ex-1
+score = 2
+max-attempts = 2
+
+% TODO: allow to access #matriculation-number in questions
+
+@sage
+n = 24;
+a = 6;
+g = gcd(a,n);
+
 @text
-Berechne xxx
+Berechne $\gcd(a,n)=$ #g
 ---
 
----
-JavaProgram.
+!require-min-score 2
 
-@id
-task-1
+# Programmieraufgaben
+
+---
+JavaQuestion.
+
+@settings
+id = task-prog-1
+min-comment-precentage = 25
 
 @text
 Blub
