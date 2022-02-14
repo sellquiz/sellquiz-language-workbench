@@ -8,6 +8,7 @@
 import { JSONType } from './help';
 import { Question } from './question';
 import { Image } from './image';
+import { Authentication } from './authentication';
 
 export enum PartType {
     unknown = 'unknown',
@@ -22,6 +23,7 @@ export enum PartType {
     question = 'question',
     image = 'image',
     newPage = 'new-page',
+    authentication = 'authentication',
 }
 
 export class Part {
@@ -33,8 +35,11 @@ export class Part {
     errorLog = '';
     labeledText: { [id: string]: string } = {};
     inputLineNo = 0;
+
     question: Question = null;
     image: Image = null;
+    authentication: Authentication = null;
+
     oldJson: JSONType = null;
     constructor(inputLineNo: number) {
         this.inputLineNo = inputLineNo;
@@ -50,6 +55,7 @@ export class Part {
         j.src = this.src;
         if (this.question != null) this.question.toJson(j);
         if (this.image != null) this.image.toJson(j);
+        if (this.authentication != null) this.authentication.toJson(j);
         return j;
     }
 }

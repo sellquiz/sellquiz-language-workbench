@@ -12,8 +12,19 @@
             "src": ""
         },
         {
+            "type": "authentication",
+            "inputLineNo": 8,
+            "text": "",
+            "error": false,
+            "errorLog": "",
+            "src": "Authentication.\n\n@database\nbatin-its-lab-1\n\n@input\nmatriculation-number\naccess-token\n---\n",
+            "database": "batin-its-lab-1",
+            "requireMatriculationNumber": true,
+            "requireAccessToken": true
+        },
+        {
             "type": "paragraph",
-            "inputLineNo": 7,
+            "inputLineNo": 20,
             "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.",
             "error": false,
             "errorLog": "",
@@ -21,7 +32,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 9,
+            "inputLineNo": 22,
             "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.",
             "error": false,
             "errorLog": "",
@@ -38,7 +49,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 25,
+            "inputLineNo": 38,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -62,7 +73,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 48,
+            "inputLineNo": 61,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -84,7 +95,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 62,
+            "inputLineNo": 75,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -124,7 +135,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 76,
+            "inputLineNo": 89,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -184,7 +195,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 94,
+            "inputLineNo": 107,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -289,7 +300,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 175,
+            "inputLineNo": 188,
             "text": "",
             "error": false,
             "errorLog": "",
@@ -305,7 +316,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 194,
+            "inputLineNo": 207,
             "text": "",
             "error": false,
             "errorLog": "",

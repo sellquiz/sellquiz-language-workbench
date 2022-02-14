@@ -9,6 +9,7 @@ import { JSONType } from './help';
 import { Image } from './image';
 import { Part, PartType } from './part';
 import { Question } from './question';
+import { Authentication } from './authentication';
 
 export class Document {
     private type = 'course-page';
@@ -138,22 +139,16 @@ export class Document {
                     part.text = this.compileParagraph(part.text);
                     break;
                 case PartType.uncompiledBlock:
-                    if (part.id === 'Definition.') {
+                    if (part.id === 'Authentication.') {
+                        this.compileAuthentication(part);
+                    } else if (part.id === 'Definition.') {
                         this.compileDefinition(part);
                     } else if (part.id === 'Example.') {
                         this.compileExample(part);
                     } else if (part.id === 'Question.') {
-                        part.question = new Question();
-                        part.question.compileQuestion(part);
-                        part.question.text = this.compileParagraph(
-                            part.question.text,
-                        );
-                        part.question.solutionText = this.compileParagraph(
-                            part.question.solutionText,
-                        );
+                        this.compileQuestion(part);
                     } else if (part.id === 'Tikz.') {
-                        part.image = new Image();
-                        part.image.compileImage(part);
+                        this.compileImage(part);
                     } else {
                         part.type = PartType.error;
                         part.text =
@@ -164,14 +159,36 @@ export class Document {
         }
         return JSON.stringify(this.toJson(), null, 4);
     }
+
+    private compileAuthentication(part: Part): void {
+        part.authentication = new Authentication();
+        part.authentication.compileAuthentication(part);
+    }
+
     private compileDefinition(part: Part): void {
         part.type = PartType.definition;
         part.text = this.compileParagraph(part.labeledText['']);
     }
+
     private compileExample(part: Part): void {
         part.type = PartType.example;
         part.text = this.compileParagraph(part.labeledText['']);
     }
+
+    private compileQuestion(part: Part): void {
+        part.question = new Question();
+        part.question.compileQuestion(part);
+        part.question.text = this.compileParagraph(part.question.text);
+        part.question.solutionText = this.compileParagraph(
+            part.question.solutionText,
+        );
+    }
+
+    private compileImage(part: Part): void {
+        part.image = new Image();
+        part.image.compileImage(part);
+    }
+
     private compileParagraph(text: string): string {
         let res = '';
         const n = text.length;
@@ -232,6 +249,7 @@ export class Document {
         if (isList) res += '</li></ul>';
         return res;
     }
+
     toJson(): JSONType {
         const j: JSONType = {};
         j.type = this.type;
