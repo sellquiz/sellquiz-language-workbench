@@ -24,16 +24,16 @@
             <span data-bs-toggle="modal"
                 data-bs-target="#insertCodeModal">
                 <button id="insertCodeButton"
-                    type="button" class="btn btn-dark mx-0 btn-sm"
+                    type="button" class="btn btn-outline-dark mx-0 btn-sm"
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="insert template [F3]">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </span>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="insert math symbol">
-                <button class="btn btn-sm btn-dark dropdown-toggle"
+                <button class="btn btn-sm btn-outline-dark dropdown-toggle"
                     type="button" id="" data-bs-toggle="dropdown"
                     onclick="hide_tooltips();">
                     &Sigma;
@@ -43,19 +43,19 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-dark mx-0 btn-sm"
+            <button type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="undo [Ctrl+Z]"
                 onclick="hide_tooltips();slwEditor.undoEditor();">
                 <i class="fas fa-undo"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm"
+            <button type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="redo [Ctrl+Y]"
                 onclick="hide_tooltips();slwEditor.redoEditor();">
                 <i class="fas fa-redo"></i>
             </button>
-            <button type="button" class="btn btn-dark mx-0 btn-sm"
+            <button type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="save [Ctrl+S]"
                 onclick="hide_tooltips();slwEditor.saveDocument();">
@@ -108,13 +108,13 @@
 
             &nbsp;&nbsp;&nbsp;
 
-            <button type="button" class="btn btn-success mx-0 btn-sm"
+            <button type="button" class="btn btn-outline-success mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="fast update [F1]"
                 onclick="hide_tooltips();slwEditor.updateEmulator(true);">
                 <i class="fa-solid fa-forward-fast"></i>
             </button>
-            <button type="button" class="btn btn-success mx-0 btn-sm"
+            <button type="button" class="btn btn-outline-success mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="full update [F2]"
                 onclick="hide_tooltips();slwEditor.updateEmulator(false);">
@@ -129,25 +129,26 @@
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-spell-check');">
                 <i class="fas fa-spell-check"></i>
             </button>
-            <button id="preview-show-source-links" type="button" class="btn btn-dark mx-0 btn-sm"
+            <button id="preview-show-source-links" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="source links"
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-source-links');">
                 <i class="fas fa-link"></i>
             </button>
-            <button id="preview-show-solutions" type="button" class="btn btn-dark mx-0 btn-sm"
+            <button id="preview-show-solutions" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show solutions"
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-solutions');">
                 <i class="fas fa-poll"></i>
             </button>
-            <button id="preview-show-variables" type="button" class="btn btn-dark mx-0 btn-sm"
+            <button id="preview-show-variables" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show variables"
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-variables');">
-                <i class="fas fa-chevron-down"></i>
+                <!--<i class="fas fa-chevron-down"></i>-->
+                &nbsp;<i class="fa-solid fa-info"></i>&nbsp;
             </button>
-            <button id="preview-show-export" type="button" class="btn btn-dark mx-0 btn-sm"
+            <button id="preview-show-export" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show 'export' buttons"
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-export');">

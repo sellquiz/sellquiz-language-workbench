@@ -17,6 +17,7 @@
  ******************************************************************************/
 
 import axios from 'axios';
+
 import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/mode/simple';
 import 'codemirror/addon/selection/active-line';
@@ -294,7 +295,7 @@ function init2() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -451,10 +452,11 @@ export function updateEmulator(fastUpdate = true) {
             const data = response.data;
             // TODO: check data.error
             console.log(response.data);
-            const doc = new emulatorCoursePage.CoursePage(
-                mathjaxInstance,
-                false,
-            );
+            const doc = new emulatorCoursePage.CoursePage(mathjaxInstance, {
+                renderProgressBars: false,
+                showQuestionVariables: toggle_states['preview-show-variables'],
+                showSolution: toggle_states['preview-show-solutions'],
+            });
             doc.import(data);
             renderedContentElement.innerHTML = '';
             //xx renderedContentElement.classList.add('container');
@@ -521,7 +523,7 @@ export function visitServer() {
     if (currentServerId == '') return; // TODO: show error
     const server = currentServerName;
     const course = currentCourseName;
-    const document = currentCourseName;
+    const document = currentDocumentName;
     window
         .open(
             'emulator.php?server=' +

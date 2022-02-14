@@ -79,7 +79,7 @@
                 <li class="nav-item">
                     <a id="tab-editor" class="nav-link active"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="edit document"
                         style="cursor:pointer;"
                         onclick="openTab('editor');">
@@ -89,7 +89,7 @@
                 <li class="nav-item">
                     <a id="tab-box" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="edit box"
                         style="cursor:pointer;"
                         onclick="openTab('box');">
@@ -99,7 +99,7 @@
                 <li class="nav-item">
                     <a id="tab-ticket" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="ticket"
                         style="cursor:pointer;"
                         onclick="openTab('ticket');">
@@ -109,7 +109,7 @@
                 <li class="nav-item">
                     <a id="tab-filetree" class="nav-link"
                         data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="file tree"
                         style="cursor:pointer;"
                         onclick="openTab('filetree');">
@@ -119,7 +119,7 @@
                 <li class="nav-item">
                     <a id="tab-users" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="user management"
                         style="cursor:pointer;"
                         onclick="openTab('users');">
@@ -129,7 +129,7 @@
                 <li class="nav-item">
                     <a id="tab-bugs" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="bug reporting"
                         style="cursor:pointer;"
                         onclick="openTab('bugs');">
@@ -139,7 +139,7 @@
                 <li class="nav-item">
                     <a id="tab-lab" class="nav-link"
                     data-bs-toggle="tooltip"
-                        data-bs-placement="left"
+                        data-bs-placement="bottom"
                         title="lab management"
                         style="cursor:pointer;"
                         onclick="openTab('lab');">
