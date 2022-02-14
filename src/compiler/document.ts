@@ -9,6 +9,10 @@ import { JSONType } from './help';
 import { Image } from './image';
 import { Part, PartType } from './part';
 import { Question } from './question';
+import {
+    ProgrammingQuestion,
+    ProgrammingQuestionType,
+} from './programmingQuestion';
 import { Authentication } from './authentication';
 
 export class Document {
@@ -149,6 +153,11 @@ export class Document {
                         this.compileQuestion(part);
                     } else if (part.id === 'Tikz.') {
                         this.compileImage(part);
+                    } else if (part.id === 'JavaQuestion.') {
+                        this.compileProgrammingQuestion(
+                            ProgrammingQuestionType.JavaProgram,
+                            part,
+                        );
                     } else {
                         part.type = PartType.error;
                         part.text =
@@ -182,6 +191,14 @@ export class Document {
         part.question.solutionText = this.compileParagraph(
             part.question.solutionText,
         );
+    }
+
+    private compileProgrammingQuestion(
+        type: ProgrammingQuestionType,
+        part: Part,
+    ): void {
+        part.programmingQuestion = new ProgrammingQuestion();
+        part.programmingQuestion.compileProgrammingQuestion(part, type);
     }
 
     private compileImage(part: Part): void {
