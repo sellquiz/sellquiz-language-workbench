@@ -8,63 +8,47 @@
 import axios from 'axios';
 
 import { CoursePage } from './coursePage';
-import { Chat } from './chat';
 import { MathJax } from '../shared/mathjax';
 
 const mathjaxInstance = new MathJax();
+const coursePage = new CoursePage(mathjaxInstance, false);
 
-const chatInstance = new Chat();
-
-const COURSE_DEF_PATH = 'data/courses/demo/demo-app-complex-1.json';
-const CHAT_DEF_PATH = 'data/courses/demo/demo-app-chat.json';
-
-const coursePage = new CoursePage(mathjaxInstance);
-
-export function init() {
-    loadPage(COURSE_DEF_PATH);
-    // get chat definition
+export function init(
+    serverName: string,
+    courseName: string,
+    documentName: string,
+): void {
     axios
-        .get(CHAT_DEF_PATH)
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_emulator_document',
+                    query_values: {
+                        serverName: serverName,
+                        courseName: courseName,
+                        documentName: documentName,
+                    },
+                }),
+            }),
+        )
         .then(function (response) {
             const data = response.data;
-            chatInstance.import(data);
-            // TODO: next line is a test!
-            //chatInstance.triggerQuestion();
+            // TODO: check data.error
+            console.log(data);
+
+            const compiled = data.rows[0][0];
+            init2(compiled);
         })
         .catch(function (error) {
-            console.error(error); // TODO: error handling!
+            // TODO
+            console.log(error);
         });
 }
 
-function loadPage(path: string) {
-    // get course page definition
-    axios
-        .get(path)
-        .then(function (response) {
-            const data = response.data;
-            // import
-            coursePage.import(data);
-            coursePage.set(document.getElementById('content'));
-        })
-        .catch(function (error) {
-            console.error(error); // TODO: error handling!
-        });
+function init2(compiled: string): void {
+    coursePage.import(JSON.parse(compiled));
+    const content = document.getElementById('content');
+    content.innerHTML = '';
+    coursePage.set(content);
 }
-
-export function getChatHistory(): string[] {
-    return chatInstance.getChatHistory();
-}
-
-export function sendChatMessage(msg: string): void {
-    chatInstance.chat(msg);
-}
-
-/*
-import fs from 'fs';
-const data = fs.readFileSync(
-    'data/courses/demo/demo-app-complex-1.json',
-    'utf-8',
-);
-const page = new CoursePage();
-page.import(JSON.parse(data));
-*/

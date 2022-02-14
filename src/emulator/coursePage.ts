@@ -17,6 +17,7 @@ import { PartParagraph } from './partParagraph';
 import { PartQuestion } from './partQuestion';
 import { PartSpeedReview } from './partSpeedReview';
 import { PartError } from './partError';
+import { PartAuthentication } from './partAuthentication';
 
 export class CoursePage {
     private title = '';
@@ -121,6 +122,10 @@ export class CoursePage {
         for (const part of json['parts']) {
             let partInstance = null;
             switch (part['type']) {
+                case 'authentication':
+                    partInstance = new PartAuthentication(this);
+                    partInstance.import(part);
+                    break;
                 case 'headline-1':
                     partInstance = new PartHeadline(this);
                     partInstance.import(part);
