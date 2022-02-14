@@ -62,7 +62,7 @@
                 <i class="fas fa-hdd"></i>
             </button>
             &nbsp;&nbsp;&nbsp;
-            <i class="fas fa-layer-group"></i>
+            <span class="text-primary"><i class="fas fa-layer-group"></i></span>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="course selection">
@@ -74,7 +74,7 @@
                 </ul>
             </div>
             &nbsp;&nbsp;&nbsp;
-            <i class="fas fa-file"></i>
+            <span class="text-primary"><i class="fas fa-file"></i></span>
             <div class="dropdown" style="display:inline-block"
                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="document selection">
@@ -153,6 +153,36 @@
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-export');">
                 <i class="fas fa-file-export"></i>
             </button>
+
+            &nbsp;&nbsp;&nbsp;
+
+            <span class="text-danger"><i class="fa-solid fa-database"></i></span>
+            <div class="dropdown" style="display:inline-block"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="server selection">
+                <button class="btn btn-sm btn-danger dropdown-toggle"
+                    type="button" id="serverlist_button" data-bs-toggle="dropdown"
+                    onclick="hide_tooltips();">
+                </button>
+                <ul id="serverlist_dropdown_items"class="dropdown-menu">
+                </ul>
+            </div>
+            <button type="button" class="btn btn-danger mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="publish to selected server [F10]"
+                onclick="hide_tooltips();slwEditor.publish();">
+                <i class="fa-solid fa-upload"></i>
+            </button>
+
+            <button type="button" class="btn btn-danger mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="visit selected server [F11]"
+                onclick="hide_tooltips();slwEditor.visitServer();">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
+
+
+
         </div>
     </div>
 </div>

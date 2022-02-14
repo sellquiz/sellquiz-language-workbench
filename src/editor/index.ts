@@ -34,6 +34,8 @@ import * as emulatorCoursePage from '../emulator/coursePage';
 
 export let editor: CodeMirror.EditorFromTextArea = null;
 
+export let currentServerId = '';
+export let currentServerName = '';
 export let currentCourseId = '';
 export let currentCourseName = '';
 export let currentDocumentId = '';
@@ -111,6 +113,49 @@ export function saveDocument() {
             // TODO
             console.log(error);
             console.log('saving failed');
+        });
+}
+
+export function refreshServerList() {
+    const serverListButton = document.getElementById('serverlist_button');
+    const serverListDropdownItems = document.getElementById(
+        'serverlist_dropdown_items',
+    );
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_server_list',
+                    query_values: {},
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(response.data);
+            let html = '',
+                i = 0;
+            for (const row of data.rows) {
+                const serverId = row[0];
+                const serverName = row[1];
+                html +=
+                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
+                    serverName +
+                    '</a></li>';
+                if (i == 0) {
+                    currentServerId = serverId;
+                    currentServerName = serverName;
+                }
+                i++;
+            }
+            serverListDropdownItems.innerHTML = html;
+            serverListButton.innerHTML = currentServerName;
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
         });
 }
 
@@ -237,6 +282,7 @@ export function init() {
 }
 
 function init2() {
+    refreshServerList();
     refreshCourseList();
 
     // init code editor
@@ -248,7 +294,7 @@ function init2() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@sage|@octave|@maxima|@answer|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaBlock\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -411,19 +457,82 @@ export function updateEmulator(fastUpdate = true) {
             );
             doc.import(data);
             renderedContentElement.innerHTML = '';
+            //xx renderedContentElement.classList.add('container');
 
-            const view = document.createElement('div');
-            view.style.backgroundColor = '#FFFFFF';
-            renderedContentElement.appendChild(view);
-            if (mobileMode) view.style.maxWidth = '480px';
-            else view.style.maxWidth = '1024px';
+            const viewRow = document.createElement('div');
+            viewRow.classList.add(
+                'row',
+                'justify-content-md-center',
+                'p-0',
+                'm-0',
+            );
+            renderedContentElement.appendChild(viewRow);
 
-            doc.set(view);
+            const viewCol = document.createElement('div');
+            viewCol.classList.add(
+                'col',
+                'border',
+                'border-dark',
+                'rounded',
+                'my-2',
+            );
+            viewCol.style.backgroundColor = '#FFFFFF';
+            viewRow.appendChild(viewCol);
+
+            if (mobileMode) viewCol.style.maxWidth = '480px';
+            else viewCol.style.maxWidth = '1024px';
+
+            doc.set(viewCol);
         })
         .catch(function (error) {
             // TODO
             console.log(error);
         });
+}
+
+export function publish() {
+    if (currentServerId == '') return; // TODO: show error
+    if (currentDocumentId == '') return; // TODO: show error
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'publish_document',
+                    query_values: {
+                        serverName: currentServerName,
+                        documentId: currentDocumentId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
+export function visitServer() {
+    if (currentServerId == '') return; // TODO: show error
+    const server = currentServerName;
+    const course = currentCourseName;
+    const document = currentCourseName;
+    window
+        .open(
+            'emulator.php?server=' +
+                encodeURIComponent(server) +
+                '&course=' +
+                encodeURIComponent(course) +
+                '&document=' +
+                encodeURIComponent(document),
+            '_blank',
+        )
+        .focus();
 }
 
 export function toggleButton(buttonName: string) {
