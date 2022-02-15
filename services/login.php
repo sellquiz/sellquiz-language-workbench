@@ -18,9 +18,27 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-include 'lib.php';
+include 'service_core.php';
 
-session_destroy();
+$user = $_POST["login-user"];
+$password = $_POST["login-password"];
+
+$command = [
+    "type" => "login",
+    "query_values" => [
+        "user" => $user,
+        "password" => $password
+    ]
+];
+service($command);
+
+/*$userpath = "../data/users/" . $user . ".json";
+
+if(file_exists($userpath)) {
+    $userdata = json_decode(file_get_contents($userpath), true);
+    if(password_verify($password, $userdata["password-hash"]))
+        $_SESSION['slw_user'] = $user;
+}*/
 
 header("Location: ../index.php");
 

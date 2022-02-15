@@ -39,13 +39,13 @@ include "service_core.php";
 //     "type" => "check_system"
 // ];
 
-$command = [
-    "type" => "publish_document",
-    "query_values" => [
-        "serverName" => "test",
-        "documentId" => "1",
-    ]
-];
+// $command = [
+//     "type" => "publish_document",
+//     "query_values" => [
+//         "serverName" => "test",
+//         "documentId" => "1",
+//     ]
+// ];
 
 // $command = [
 //     "type" => "get_emulator_document",
@@ -55,6 +55,14 @@ $command = [
 //         "documentName" => "demo",
 //     ]
 // ];
+
+$command = [
+    "type" => "login",
+    "query_values" => [
+        "user" => "admin",
+        "password" => "admin"
+    ]
+];
 
 echo service($command);
 

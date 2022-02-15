@@ -18,10 +18,20 @@
  * KIND, either impressed or implied.                                         *
  ******************************************************************************/
 
-include "help.php";
-
 $db_path = "../data/database.db";
 $db_server_path = "../data/servers/";
+
+session_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include "help.php";
+
+function is_admin() {
+    return strcmp($_SESSION["slw_user"], "admin") == 0;
+}
 
 function query($database_path, $statement, $values) {
     $db = new SQLite3($database_path);
@@ -108,6 +118,20 @@ function service($command) {
     // TODO: check privileges for all queries!!
     global $sql_list, $db_path, $db_server_path;
     switch($command["type"]) {
+
+        case "login":
+            $res = json_decode(query($db_path,
+                "SELECT userPasswordHash FROM User WHERE userName=:user;",
+                $command["query_values"]
+            )); // TODO: check for errors
+            if(count($res->rows) > 0) {
+                $passwordHash = $res->rows[0][0];
+                if(password_verify($command["query_values"]["password"], $passwordHash)) {
+                    $_SESSION['slw_user'] = $command["query_values"]["user"];
+                    return "login successful";
+                }
+            }
+            break;
 
         case "publish_document":
             // get compiled document
