@@ -186,7 +186,7 @@ export class Document {
 
     private compileQuestion(part: Part): void {
         part.question = new Question();
-        part.question.compileQuestion(part);
+        part.question.compileQuestion(part, 5); // TODO: config number of instances
         part.question.text = this.compileParagraph(part.question.text);
         part.question.solutionText = this.compileParagraph(
             part.question.solutionText,
@@ -256,6 +256,7 @@ export class Document {
                 }
             } else if (ch === '\n') {
                 col = -1;
+                res += ch;
             } else {
                 res += ch;
             }

@@ -12,21 +12,33 @@ import { JSONType, makeTempDirectory, deleteTempDirectory } from './help';
 import { Part, PartType } from './part';
 import { OCTAVE_PROG, PYTHON_PROG, SAGE_PROG } from './strings';
 
+// TODO: enum for variableTypes and inputFieldTypes
+
 export class Question {
+    numberOfInstances = 0;
+
+    multipleChoiceTexts: string[] = [];
+    multipleChoiceAnswers: boolean[] = [];
+
     variableIDs: string[] = [];
     variableTypes: string[] = [];
-    variableValues: string[][] = [];
+    variableValues: string[][] = []; // outer: instances, inner: value for each variable as given in list variableIDs
+    variableTexts: string[] = [];
     inputFieldTypes: string[] = [];
     inputFieldAnswers: string[] = [];
     text = '';
     solutionText = '';
 
-    compileQuestion(part: Part): void {
+    compileQuestion(part: Part, numberOfInstances: number): void {
+        this.numberOfInstances = numberOfInstances;
         part.type = PartType.question;
         // TODO: options
-        if ('text' in part.labeledText) this.text = part.labeledText['text'];
-        if ('solution' in part.labeledText)
+        if ('text' in part.labeledText) {
+            this.text = part.labeledText['text'];
+        }
+        if ('solution' in part.labeledText) {
             this.solutionText = part.labeledText['solution'];
+        }
         if (
             'python' in part.labeledText ||
             'sage' in part.labeledText ||
@@ -59,7 +71,7 @@ export class Question {
             let res = '';
             const prog = template
                 .replace('$CODE$', code)
-                .replace('$INSTANCES$', '5'); // TODO: config number of instances
+                .replace('$INSTANCES$', '' + numberOfInstances);
             fs.writeFileSync(tmpDir + filename, prog);
             try {
                 res = execSync(command + ' ' + tmpDir + filename, {
@@ -92,6 +104,53 @@ export class Question {
     }
 
     private compileText(text: string, generateInputFields = false): string {
+        // extract multiple choice options
+        if (generateInputFields) {
+            let processed = '';
+            const lines = text.split('\n');
+            let placedMultipleChoiceBlock = false;
+            for (let line of lines) {
+                const tmp = line.trim().replace(/ /g, '').replace(/\t/g, '');
+                if (tmp.startsWith('[]') || tmp.startsWith('[x]')) {
+                    let i = 0;
+                    while (i < line.length) {
+                        if (line[i] == ']') break;
+                        i++;
+                    }
+                    line = line.substring(i + 1).trim();
+                    this.multipleChoiceTexts.push(line);
+                    if (placedMultipleChoiceBlock == false) {
+                        processed += '?mc?';
+                        placedMultipleChoiceBlock = true;
+                    }
+                    if (tmp.startsWith('[]')) {
+                        this.multipleChoiceAnswers.push(false);
+                    } else if (tmp.startsWith('[x]')) {
+                        this.multipleChoiceAnswers.push(true);
+                    }
+                } else {
+                    processed += line + '\n';
+                }
+            }
+            text = processed;
+            // create variables
+            if (this.variableValues.length == 0) {
+                for (let k = 0; k < this.numberOfInstances; k++)
+                    this.variableValues.push([]);
+            }
+            for (let i = 0; i < this.multipleChoiceAnswers.length; i++) {
+                this.variableIDs.push('mc__' + i);
+                this.variableTypes.push('bool');
+                this.variableTexts.push(this.multipleChoiceTexts[i]);
+                this.inputFieldTypes.push('check-box');
+                this.inputFieldAnswers.push('mc__' + i);
+                for (let k = 0; k < this.numberOfInstances; k++)
+                    this.variableValues[k][i] = this.multipleChoiceAnswers[i]
+                        ? 'true'
+                        : 'false';
+            }
+        }
+
         let res = '';
         const n = text.length;
         let inMath = false;
@@ -138,9 +197,27 @@ export class Question {
             }
         }
         if (token.length > 0) tokens.push(token);
-        // compile
+        // compile:
+        //   ?idx?  index of input field (starting at 0)
+        //   @id@   id of variable
+        //   $...$  equation
         for (token of tokens) {
-            if (
+            /*if (token === 'CHECKBOXCHECKED' || token === 'CHECKBOXUNCHECKED') {
+                const checked = token === 'CHECKBOXCHECKED';
+                res += '?' + this.inputFieldAnswers.length + '?';
+                const variableId = 'mc__' + this.inputFieldAnswers.length;
+                this.variableIDs.push(variableId);
+                this.variableTypes.push('bool');
+                if (this.variableValues.length == 0) {
+                    for (let i = 0; i < this.numberOfInstances; i++)
+                        this.variableValues.push([]);
+                }
+                for (let i = 0; i < this.numberOfInstances; i++) {
+                    this.variableValues[i].push(checked ? 'true' : 'false');
+                }
+                this.inputFieldAnswers.push(variableId);
+                this.inputFieldTypes.push('check-box');
+            } else */ if (
                 generateInputFields &&
                 inMath == false &&
                 hashtag &&
@@ -176,6 +253,7 @@ export class Question {
         json['variable-ids'] = this.variableIDs;
         json['variable-types'] = this.variableTypes;
         json['variable-values'] = this.variableValues;
+        json['variable-texts'] = this.variableTexts;
         json['input-field-types'] = this.inputFieldTypes;
         json['input-field-answers'] = this.inputFieldAnswers;
     }

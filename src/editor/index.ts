@@ -20,7 +20,8 @@ import axios from 'axios';
 
 import 'codemirror/mode/clike/clike';
 import 'codemirror/addon/mode/simple';
-import 'codemirror/addon/selection/active-line';
+//import 'codemirror/addon/selection/active-line';  TODO: reactivate??
+import 'codemirror/addon/selection/mark-selection';
 import 'codemirror/addon/mode/overlay';
 // esbuild requires 'codemirror' import AFTER modes and addons
 import * as CodeMirror from 'codemirror';
@@ -42,6 +43,8 @@ export let currentCourseName = '';
 export let currentDocumentId = '';
 export let currentDocumentName = '';
 
+let editorLastSavedText = '';
+
 let mobileMode = false;
 
 export function setMobileMode() {
@@ -62,7 +65,11 @@ export const toggle_states: { [key: string]: boolean } = {
     'preview-show-export': false,
 };
 
-export function loadDocument() {
+export function loadDocument(documentId: string) {
+    if (editor.getValue() !== editorLastSavedText) {
+        alert('unsaved changes!!!!!');
+    }
+    currentDocumentId = documentId;
     axios
         .post(
             'services/service.php',
@@ -70,7 +77,7 @@ export function loadDocument() {
                 command: JSON.stringify({
                     type: 'get_document',
                     query_values: {
-                        id: currentDocumentId,
+                        id: documentId,
                     },
                 }),
             }),
@@ -78,8 +85,45 @@ export function loadDocument() {
         .then(function (response) {
             const data = response.data;
             // TODO: check data.error
-            console.log(data);
-            editor.setValue(data.rows[0][3]);
+            //console.log(data);
+
+            currentDocumentName = data.rows[0][1];
+            const documentListButton =
+                document.getElementById('filelist_button');
+            documentListButton.innerHTML = currentDocumentName;
+
+            let text = data.rows[0][3];
+            text = text.replace(/\r/g, ''); // remove Windows carriage return
+            editor.setValue(text);
+            editorLastSavedText = text;
+
+            /*TODO: mark all blocks between --- and ---
+            const markers = [];
+            markers.push(
+                editor.markText(
+                    { line: 6, ch: 0 },
+                    { line: 14, ch: 0 },
+                    {
+                        css: 'background-color: #EEEEFF',
+                        inclusiveLeft: true,
+                        inclusiveRight: true,
+                    },
+                ),
+            );
+            markers.push(
+                editor.markText(
+                    { line: 23, ch: 0 },
+                    { line: 38, ch: 0 },
+                    {
+                        css: 'background-color: #E2E2E2',
+                        inclusiveLeft: true,
+                        inclusiveRight: true,
+                    },
+                ),
+            );
+            //markers.forEach((marker) => marker.clear());
+            */
+
             updateEmulator();
         })
         .catch(function (error) {
@@ -107,6 +151,7 @@ export function saveDocument() {
         )
         .then(function (response) {
             // TODO: check data.error
+            editorLastSavedText = sourceCode;
             console.log(response.data);
             console.log('saved successfully');
         })
@@ -187,7 +232,10 @@ export function refreshDocumentList() {
                 const documentId = row[0];
                 const documentName = row[1];
                 html +=
-                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
+                    '<li><a class="dropdown-item" style="cursor:pointer;"' +
+                    ' onclick="slwEditor.loadDocument(' +
+                    documentId +
+                    ');">' +
                     documentName +
                     '</a></li>';
                 if (i == 0) {
@@ -198,7 +246,7 @@ export function refreshDocumentList() {
             }
             documentListDropdownItems.innerHTML = html;
             documentListButton.innerHTML = currentDocumentName;
-            loadDocument();
+            loadDocument(currentDocumentId);
         })
         .catch(function (error) {
             // TODO
@@ -295,7 +343,7 @@ function init2() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@title|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -312,9 +360,9 @@ function init2() {
             mode: 'sellquiz-edit',
             lineNumbers: true,
             lineWrapping: true,
-            styleActiveLine: {
+            /*styleActiveLine: {  // TODO: reactivate??
                 nonEmpty: true,
-            },
+            },*/
             extraKeys: {
                 'Ctrl-S': function () {
                     saveDocument();
@@ -459,7 +507,6 @@ export function updateEmulator(fastUpdate = true) {
             });
             doc.import(data);
             renderedContentElement.innerHTML = '';
-            //xx renderedContentElement.classList.add('container');
 
             const viewRow = document.createElement('div');
             viewRow.classList.add(

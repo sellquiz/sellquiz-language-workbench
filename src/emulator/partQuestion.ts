@@ -12,6 +12,7 @@ import * as mathjs from 'mathjs';
 import { Part } from './part';
 
 export enum QuestionVariableType {
+    Bool = 'bool',
     Int = 'int',
     Float = 'float',
     Complex = 'complex',
@@ -26,6 +27,7 @@ export class QuestionVariable {
         const value = this.values[idx];
         let s = '';
         switch (this.type) {
+            case QuestionVariableType.Bool:
             case QuestionVariableType.Int:
             case QuestionVariableType.Float:
             case QuestionVariableType.Complex:
@@ -63,6 +65,7 @@ export class QuestionVariable {
 export enum QuestionInputFieldType {
     TextField = 'text-field',
     ComplexNormalform = 'complex-normalform',
+    CheckBox = 'check-box',
 }
 
 export class QuestionInputField {
@@ -139,6 +142,13 @@ export class QuestionInputField {
         let tmpElement: HTMLElement;
         let inputElement: HTMLInputElement;
         switch (this.type) {
+            case QuestionInputFieldType.CheckBox:
+                inputElement = document.createElement('input');
+                this.htmlInputElements.push(inputElement);
+                this.htmlElement.appendChild(inputElement);
+                inputElement.type = 'checkbox';
+                // TODO: feedback element
+                break;
             case QuestionInputFieldType.TextField:
                 inputElement = document.createElement('input');
                 this.htmlInputElements.push(inputElement);
@@ -253,6 +263,8 @@ export class PartQuestion extends Part {
             } while (oldText !== text);
         }
         if (placeInputs) {
+            TODO: '?mc?';
+
             for (let i = 0; i < this.inputFields.length; i++) {
                 text = text.replace(
                     '?' + i + '?',
@@ -365,6 +377,9 @@ export class PartQuestion extends Part {
                 inputField.evaluate();
             }
         });
+        // spacing
+        divContainer.appendChild(document.createElement('br'));
+        divContainer.appendChild(document.createElement('br'));
     }
 
     import(data: any): void {
@@ -386,6 +401,9 @@ export class PartQuestion extends Part {
             variable.id = vId;
             const typeStr = data['variable-types'][i];
             switch (typeStr) {
+                case 'bool':
+                    variable.type = QuestionVariableType.Bool;
+                    break;
                 case 'int':
                     variable.type = QuestionVariableType.Int;
                     break;
@@ -419,6 +437,9 @@ export class PartQuestion extends Part {
                     break;
                 case 'complex-normalform':
                     inputField.type = QuestionInputFieldType.ComplexNormalform;
+                    break;
+                case 'check-box':
+                    inputField.type = QuestionInputFieldType.CheckBox;
                     break;
                 default:
                     console.assert(

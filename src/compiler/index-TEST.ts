@@ -5,6 +5,9 @@
  * GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007                         *
  ******************************************************************************/
 
+// ATTENTION: delete output JSON file for full compilation
+//   otherwise only an incremental update of changed source is compiled.
+
 process.argv[2] = 'src/compiler/test-data/compiler-test-1.txt';
 process.argv[3] = 'src/compiler/test-data/compiler-test-1.json';
 

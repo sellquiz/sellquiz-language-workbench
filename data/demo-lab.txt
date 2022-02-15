@@ -6,10 +6,8 @@ Melden Sie sich mit den bekannten Logindaten an, um die Aufgaben zu sehen:
 
 ---
 Authentication.
-
 @database
 batin-its-lab-1
-
 @input
 matriculation-number
 access-token
@@ -19,29 +17,43 @@ Der Praktikumsversuch ist in zwei Bereiche geteilt:
 - Randomisierte Aufgaben, die zur Freischaltung der Programmieraufgaben führen
 - Programmieraufgaben in Java
 
-
 !require-authentication
 
 # Vorbereitungsaufgaben
 
 ---
 Question.
+@title
+IPsec Protocols
+@text
+Which are IPsec protocols?
+[] TLS
+[x] IKE
+[x] ESP
+[] DNS
+[x] AH
+[ ] SSH
+---
 
+
+
+---
+Question.
+@title
+gcd
 @settings
 id = task-ex-1
 score = 2
 max-attempts = 2
-
 % TODO: allow to access #matriculation-number in questions
-
 @sage
 n = 24;
 a = 6;
 g = gcd(a,n);
-
 @text
 Berechne $\gcd(a,n)=$ #g
 ---
+
 
 !require-min-score 2
 
@@ -49,11 +61,9 @@ Berechne $\gcd(a,n)=$ #g
 
 ---
 JavaQuestion.
-
 @settings
 id = task-prog-1
 min-comment-precentage = 25
-
 @text
 Blub
 ---

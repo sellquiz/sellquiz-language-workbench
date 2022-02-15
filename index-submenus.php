@@ -64,7 +64,7 @@
             &nbsp;&nbsp;&nbsp;
             <span class="text-primary"><i class="fas fa-layer-group"></i></span>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
                     title="course selection">
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="courselist_button" data-bs-toggle="dropdown"
@@ -76,7 +76,7 @@
             &nbsp;&nbsp;&nbsp;
             <span class="text-primary"><i class="fas fa-file"></i></span>
             <div class="dropdown" style="display:inline-block"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
                     title="document selection">
                 <button class="btn btn-sm btn-primary dropdown-toggle"
                     type="button" id="filelist_button" data-bs-toggle="dropdown"
