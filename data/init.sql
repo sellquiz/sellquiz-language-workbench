@@ -32,18 +32,19 @@ INSERT INTO Settings
 
 CREATE TABLE Server (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    serverName TEXT NOT NULL
+    serverName TEXT NOT NULL,
+    serverDescription TEXT NOT NULL
 );
 
 INSERT INTO Server
-    (serverName)
+    (serverName, serverDescription)
     VALUES
-    ('test');
+    ('test', 'test server');
 
 INSERT INTO Server
-    (serverName)
+    (serverName, serverDescription)
     VALUES
-    ('production');
+    ('production', 'production server');
 
 CREATE TABLE Course (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,10 +61,12 @@ INSERT INTO Course
 
 CREATE TABLE Document (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    documentOrderIndex TEXT NOT NULL,
     documentName TEXT NOT NULL,
     documentDesc TEXT,
     documentText TEXT,
-    documentCache TEXT, -- TODO: rename to documentCompiled
+    documentCompiled TEXT,
+    documentState TEXT,
     courseId INTEGER NOT NULL,
     documentDateCreated INTEGER NOT NULL,  -- UNIX time
     documentDateModified INTEGER NOT NULL,  -- UNIX time
@@ -71,20 +74,26 @@ CREATE TABLE Document (
 );
 
 INSERT INTO Document
-    (documentName, documentDesc, documentText, documentCache,
+    (documentName, documentOrderIndex,
+     documentDesc, documentText, documentCompiled,
+     documentState,
      courseId,
      documentDateCreated, documentDateModified)
     VALUES
-    ('its', 'demo document', '', '',
+    ('its', 10, 'demo document', '', '',
+     'work-in-progress',
      (SELECT id FROM Course WHERE courseName='demo'),
      1640991600, 1640991600);
 
 INSERT INTO Document
-    (documentName, documentDesc, documentText, documentCache,
+    (documentName, documentOrderIndex,
+     documentDesc, documentText, documentCompiled,
+     documentState,
      courseId,
      documentDateCreated, documentDateModified)
     VALUES
-    ('demo', 'demo document', '', '',
+    ('demo', 20, 'demo document', '', '',
+     'work-in-progress',
      (SELECT id FROM Course WHERE courseName='demo'),
      1640991600, 1640991600);
 
@@ -95,13 +104,6 @@ CREATE TABLE DocumentBackup (
     documentBackupCreated INTEGER NOT NULL, -- UNIX time
     FOREIGN KEY(documentId) REFERENCES Document(id)
 );
-
--- CREATE TABLE Cache (
---     id INTEGER PRIMARY KEY AUTOINCREMENT,
---     documentId INTEGER NOT NULL,
---     cacheData TEXT,
---     FOREIGN KEY(documentId) REFERENCES Document(id)
--- );
 
 CREATE TABLE UserRole (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -168,20 +170,36 @@ INSERT INTO CourseAccess
     ((SELECT id FROM Course WHERE courseName='demo'),
      (SELECT id FROM User WHERE userLogin='demo'));
 
-CREATE TABLE Ticket (
+CREATE TABLE DiscussionEntry (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    ticketName TEXT NOT NULL,
-    ticketDateCreated INTEGER NOT NULL,  -- UNIX time
-    ticketDateModified INTEGER NOT NULL  -- UNIX time
+    documentId TEXT NOT NULL,
+    discussionEntryTEXT TEXT NOT NULL,
+    discussionEntryDateCreated INTEGER NOT NULL,  -- UNIX time
+    discussionEntryDateModified INTEGER NOT NULL,  -- UNIX time
+    FOREIGN KEY(documentId) REFERENCES Document(id)
 );
 
-CREATE TABLE TicketEntry (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    ticketId INTEGER NOT NULL,
-    ticketEntryUserId INTEGER NOT NULL,
-    ticketEntryText TEXT NOT NULL,
-    ticketEntryDateCreated INTEGER NOT NULL,  -- UNIX time
-    ticketEntryDateModified INTEGER NOT NULL,  -- UNIX time
-    FOREIGN KEY(ticketId) REFERENCES Ticket(id),
-    FOREIGN KEY(ticketEntryUserId) REFERENCES User(id)
-);
+-- CREATE TABLE Ticket (
+--     id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     ticketName TEXT NOT NULL,
+--     ticketDateCreated INTEGER NOT NULL,  -- UNIX time
+--     ticketDateModified INTEGER NOT NULL  -- UNIX time
+-- );
+
+-- INSERT INTO Ticket
+--     (ticketName, ticketDateCreated, ticketDateModified)
+--     VALUES
+--     ('', 1640991600, 1640991600);
+
+-- CREATE TABLE TicketEntry (
+--     id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     ticketId INTEGER NOT NULL,
+--     ticketEntryUserId INTEGER NOT NULL,
+--     ticketEntryText TEXT NOT NULL,
+--     ticketEntryDateCreated INTEGER NOT NULL,  -- UNIX time
+--     ticketEntryDateModified INTEGER NOT NULL,  -- UNIX time
+--     FOREIGN KEY(ticketId) REFERENCES Ticket(id),
+--     FOREIGN KEY(ticketEntryUserId) REFERENCES User(id)
+-- );
+
+
