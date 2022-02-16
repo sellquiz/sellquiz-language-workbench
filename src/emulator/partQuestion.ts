@@ -22,6 +22,7 @@ export enum QuestionVariableType {
 export class QuestionVariable {
     id = '';
     type: QuestionVariableType;
+    text = '';
     values: string[] = []; // index k represents variant k
     toLaTeX(idx: number): string {
         const value = this.values[idx];
@@ -236,6 +237,22 @@ export class PartQuestion extends Part {
         return null;
     }
 
+    private getVariableIdx(id: string): number {
+        for (let i = 0; i < this.variables.length; i++) {
+            const v = this.variables[i];
+            if (v.id === id) return i;
+        }
+        return -1;
+    }
+
+    private getInputFieldIdxByAnswerVariableId(answerVarId: string): number {
+        for (let i = 0; i < this.inputFields.length; i++) {
+            const field = this.inputFields[i];
+            if (field.answerVariable.id === answerVarId) return i;
+        }
+        return -1;
+    }
+
     private getHtmlElementIdx(inputFieldIndex: number): string {
         return '_' + this.index + '_' + inputFieldIndex;
     }
@@ -263,8 +280,38 @@ export class PartQuestion extends Part {
             } while (oldText !== text);
         }
         if (placeInputs) {
-            TODO: '?mc?';
-
+            if (text.includes('?mc?')) {
+                // multiple choice
+                const mc: number[] = []; // answer indices
+                for (const inputField of this.inputFields) {
+                    if (inputField.answerVariable.id.startsWith('mc__')) {
+                        mc.push(mc.length);
+                    }
+                }
+                // shuffle answers
+                for (let i = 0; i < mc.length; i++) {
+                    const u = Math.floor(Math.random() * mc.length);
+                    const v = Math.floor(Math.random() * mc.length);
+                    const tmp = mc[u];
+                    mc[u] = mc[v];
+                    mc[v] = tmp;
+                }
+                // generate checkbox placeholders and answers
+                let mcStr = '<br/>';
+                for (let i = 0; i < mc.length; i++) {
+                    const varIdx = this.getVariableIdx('mc__' + mc[i]);
+                    const fieldIdx = this.getInputFieldIdxByAnswerVariableId(
+                        'mc__' + mc[i],
+                    );
+                    mcStr +=
+                        '?' +
+                        fieldIdx +
+                        '? ' +
+                        this.variables[varIdx].text +
+                        '<br/>';
+                }
+                text = text.replace('?mc?', mcStr);
+            }
             for (let i = 0; i < this.inputFields.length; i++) {
                 text = text.replace(
                     '?' + i + '?',
@@ -288,19 +335,23 @@ export class PartQuestion extends Part {
         divContainer.appendChild(divRow);
         const divCol = document.createElement('div');
         divCol.classList.add('col', 'py-0');
+        divCol.classList.add('border', 'border-dark', 'rounded');
         divRow.appendChild(divCol);
-        let headline = document.createElement('p');
+        let headline = document.createElement('h4'); // p
         headline.classList.add(
             'text-start',
-            'lead',
+            //'lead',
             'py-0',
             'my-0',
             'my-1',
-            'text-light',
+            //'text-light',
+            'text-dark',
             'rounded',
         );
-        headline.innerHTML = '&nbsp;<b>Aufgabe</b>';
-        headline.style.backgroundColor = '#e85b22';
+        const title = this.title.length > 0 ? this.title : 'Aufgabe';
+        headline.innerHTML = '&nbsp;' + title;
+        //headline.style.backgroundColor = '#e85b22';
+        //headline.style.backgroundColor = '#1b72f9';
         divCol.appendChild(headline);
         let textElement = document.createElement('p');
         textElement.classList.add('px-1', 'py-0', 'my-0');
@@ -368,8 +419,8 @@ export class PartQuestion extends Part {
         // save button
         const button = document.createElement('button');
         button.type = 'button';
-        divContainer.appendChild(button);
-        button.classList.add('btn', 'btn-primary', 'my-1');
+        divCol.appendChild(button);
+        button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
         button.innerHTML = 'Auswerten';
         const this_ = this;
         button.addEventListener('click', function () {
@@ -379,13 +430,13 @@ export class PartQuestion extends Part {
         });
         // spacing
         divContainer.appendChild(document.createElement('br'));
-        divContainer.appendChild(document.createElement('br'));
     }
 
     import(data: any): void {
         this.questionText = data['text'];
         this.error = data['error'];
         this.errorLog = data['errorLog'];
+        this.title = data['title'];
         if ('solution' in data) {
             this.solutionText = data['solution'];
         }
@@ -426,6 +477,9 @@ export class PartQuestion extends Part {
                 const value = variant[j];
                 this.variables[j].values.push(value);
             }
+        }
+        for (let i = 0; i < data['variable-texts'].length; i++) {
+            this.variables[i].text = data['variable-texts'][i];
         }
         for (let i = 0; i < data['input-field-types'].length; i++) {
             const inputField = new QuestionInputField(this);

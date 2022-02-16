@@ -97,6 +97,9 @@ export class Question {
                     values.pop();
                     this.variableValues.push(values);
                 }
+                for(let i=0; i<this.variableIDs.length; i++) {
+                    this.variableTexts.push('');
+                }
             }
         }
         this.text = this.compileText(this.text, true);
@@ -202,22 +205,7 @@ export class Question {
         //   @id@   id of variable
         //   $...$  equation
         for (token of tokens) {
-            /*if (token === 'CHECKBOXCHECKED' || token === 'CHECKBOXUNCHECKED') {
-                const checked = token === 'CHECKBOXCHECKED';
-                res += '?' + this.inputFieldAnswers.length + '?';
-                const variableId = 'mc__' + this.inputFieldAnswers.length;
-                this.variableIDs.push(variableId);
-                this.variableTypes.push('bool');
-                if (this.variableValues.length == 0) {
-                    for (let i = 0; i < this.numberOfInstances; i++)
-                        this.variableValues.push([]);
-                }
-                for (let i = 0; i < this.numberOfInstances; i++) {
-                    this.variableValues[i].push(checked ? 'true' : 'false');
-                }
-                this.inputFieldAnswers.push(variableId);
-                this.inputFieldTypes.push('check-box');
-            } else */ if (
+            if (
                 generateInputFields &&
                 inMath == false &&
                 hashtag &&

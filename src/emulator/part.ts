@@ -16,6 +16,7 @@ export abstract class Part {
     htmlElement: HTMLElement = null; // root
     error = false;
     errorLog = '';
+    title = '';
     static indexCounter = 0;
 
     constructor(coursePage: CoursePage) {

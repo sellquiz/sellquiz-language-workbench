@@ -138,6 +138,8 @@ export class Document {
         }
         // post process
         for (const part of this.parts) {
+            if ('title' in part.labeledText)
+                part.title = part.labeledText['title'];
             switch (part.type) {
                 case PartType.paragraph:
                     part.text = this.compileParagraph(part.text);

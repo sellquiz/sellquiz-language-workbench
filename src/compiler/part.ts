@@ -30,6 +30,7 @@ export enum PartType {
 
 export class Part {
     id = '';
+    title = '';
     src = '';
     type = PartType.unknown;
     text = '';
@@ -53,6 +54,7 @@ export class Part {
         j.type = this.type;
         j.inputLineNo = this.inputLineNo;
         j.text = this.text;
+        j.title = this.title;
         j.error = this.error;
         j.errorLog = this.errorLog;
         j.src = this.src;

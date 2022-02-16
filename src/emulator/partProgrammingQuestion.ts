@@ -86,7 +86,7 @@ export class PartProgrammingQuestion extends Part {
         const button = document.createElement('button');
         button.type = 'button';
         divContainer.appendChild(button);
-        button.classList.add('btn', 'btn-primary', 'my-1');
+        button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
         button.innerHTML = 'Speichern';
     }
 
