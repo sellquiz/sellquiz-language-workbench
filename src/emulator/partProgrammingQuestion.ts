@@ -32,15 +32,17 @@ export class PartProgrammingQuestion extends Part {
         divContainer.appendChild(divRow);
         const divCol = document.createElement('div');
         divCol.classList.add('col', 'py-0');
+        divCol.classList.add('border', 'border-dark', 'rounded');
         divRow.appendChild(divCol);
-        const headline = document.createElement('p');
+        const headline = document.createElement('h4'); // p
         headline.classList.add(
             'text-start',
-            'lead',
+            //'lead',
             'py-0',
             'my-0',
             'my-1',
-            'text-light',
+            //'text-light',
+            'text-dark',
             'rounded',
         );
         let typeStr = '';
@@ -52,9 +54,10 @@ export class PartProgrammingQuestion extends Part {
                 typeStr = 'UNIMPLEMENTED STRING';
                 break;
         }
-        headline.innerHTML =
-            '&nbsp;<b>Programmier-Aufgabe (' + typeStr + ')</b>';
-        headline.style.backgroundColor = '#e85b22';
+        const title =
+            this.title.length > 0 ? this.title : 'Aufgabe (' + typeStr + ')';
+        headline.innerHTML = '&nbsp;' + title;
+        //headline.style.backgroundColor = '#e85b22';
         divCol.appendChild(headline);
         const textElement = document.createElement('p');
         textElement.classList.add('px-1', 'py-0', 'my-0');
@@ -66,7 +69,7 @@ export class PartProgrammingQuestion extends Part {
         // editor
         const textareaBorder = document.createElement('div');
         textareaBorder.classList.add('border', 'p-0', 'm-0');
-        divContainer.appendChild(textareaBorder);
+        divCol.appendChild(textareaBorder);
         const textarea = document.createElement('textarea');
         textarea.classList.add('form-control', 'p-0');
         textareaBorder.appendChild(textarea);
@@ -85,7 +88,7 @@ export class PartProgrammingQuestion extends Part {
         // save button
         const button = document.createElement('button');
         button.type = 'button';
-        divContainer.appendChild(button);
+        divCol.appendChild(button);
         button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
         button.innerHTML = 'Speichern';
     }
@@ -93,6 +96,7 @@ export class PartProgrammingQuestion extends Part {
     import(data: any): void {
         this.type = data['programming-type'];
         this.questionText = data['text'];
+        this.title = data['title'];
         this.error = data['error'];
         this.errorLog = data['errorLog'];
         if ('solution' in data) {

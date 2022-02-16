@@ -23,7 +23,50 @@ export class PartAuthentication extends Part {
         divContainer.classList.add('container-fluid');
         rootElement.appendChild(divContainer);
 
-        divContainer.innerHTML = `
+        const divRow = document.createElement('div');
+        divRow.classList.add('row');
+        divContainer.appendChild(divRow);
+        const divCol = document.createElement('div');
+        divCol.classList.add('col', 'py-0');
+        divCol.classList.add('border', 'border-dark', 'rounded');
+        divRow.appendChild(divCol);
+        const headline = document.createElement('h4'); // p
+        headline.classList.add(
+            'text-start',
+            //'lead',
+            'py-0',
+            'my-0',
+            'my-1',
+            //'text-light',
+            'text-dark',
+            'rounded',
+        );
+        const title = 'Authentifikation';
+        headline.innerHTML = '&nbsp;' + title;
+        //headline.style.backgroundColor = '#e85b22';
+        //headline.style.backgroundColor = '#1b72f9';
+        divCol.appendChild(headline);
+
+        const content = document.createElement('div');
+        content.classList.add('col', 'py-1');
+        divCol.appendChild(content);
+
+        content.innerHTML = `
+            <div class="input-group my-1">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i> </span>
+                <input type="text" class="form-control" placeholder="Matrikelnummer (letzte 4 Ziffern)">
+            </div>
+
+            <div class="input-group my-1">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-key"></i></span>
+                <input type="text" class="form-control" placeholder="Zugangstoken">
+            </div>
+
+            <button type="button" class="btn btn-primary">Bestätigen</button>
+        <br/>`;
+
+        return;
+        content.innerHTML = `
         <div class="row">
             <div class="col-md-5 mx-0">
                 <div class="input-group px-0 mx-0">

@@ -11,6 +11,9 @@ import * as mathjs from 'mathjs';
 
 import { Part } from './part';
 
+const CHECK_MARK = '&#x2705;';
+const CHECK_CROSS = '&#x274C;';
+
 export enum QuestionVariableType {
     Bool = 'bool',
     Int = 'int',
@@ -46,6 +49,8 @@ export class QuestionVariable {
     toMathJs(idx: number): mathjs.MathType {
         const value = this.values[idx];
         switch (this.type) {
+            case QuestionVariableType.Bool:
+                return value === 'true' ? 1 : 0;
             case QuestionVariableType.Int:
                 return parseInt(value);
             case QuestionVariableType.Float:
@@ -76,59 +81,54 @@ export class QuestionInputField {
     htmlElement: HTMLElement = null; // root
     htmlInputElements: HTMLInputElement[] = []; // input elements
     htmlFeedbackElement: HTMLElement = null;
+    correct = false;
     constructor(question: PartQuestion) {
         this.question = question;
     }
     evaluate(): void {
-        const sampleSolution =
-            this.answerVariable.values[this.question.variantIdx];
+        const sampleSolution = this.answerVariable.toMathJs(
+            this.question.variantIdx,
+        );
         //console.log('sample solution: ' + sampleSolution);
         const inputStrings: string[] = [];
-        for (const element of this.htmlInputElements)
-            inputStrings.push(element.value);
+        for (const element of this.htmlInputElements) {
+            if (this.type === QuestionInputFieldType.CheckBox)
+                inputStrings.push(element.checked ? '1' : '0');
+            else inputStrings.push(element.value);
+        }
+
         //console.log('user solution: ' + inputStrings);
+
+        let ok = false;
         switch (this.answerVariable.type) {
+            case QuestionVariableType.Bool:
+                ok = sampleSolution == parseInt(inputStrings[0]);
+                break;
             case QuestionVariableType.Int:
             case QuestionVariableType.Float:
-                if (
-                    Math.abs(
-                        parseFloat(sampleSolution) -
-                            parseFloat(inputStrings[0]),
-                    ) < 1e-6
-                ) {
-                    // TODO: configure precision
-                    this.htmlInputElements[0].style.backgroundColor = 'green';
-                    this.htmlInputElements[0].style.color = 'white';
-                } else {
-                    this.htmlInputElements[0].style.backgroundColor = 'red';
-                    this.htmlInputElements[0].style.color = 'white';
-                }
+                ok =
+                    mathjs.abs(
+                        <number>(
+                            mathjs.subtract(
+                                <number>sampleSolution,
+                                <mathjs.MathType>parseFloat(inputStrings[0]),
+                            )
+                        ),
+                    ) < 1e-6; // TODO: configure precision
                 break;
             case QuestionVariableType.Complex:
-                if (
-                    Math.abs(
-                        mathjs.complex(sampleSolution).re -
-                            parseFloat(inputStrings[0]),
-                    ) < 1e-6 // TODO: configure precision
-                ) {
-                    this.htmlInputElements[0].style.backgroundColor = 'green';
-                    this.htmlInputElements[0].style.color = 'white';
-                } else {
-                    this.htmlInputElements[0].style.backgroundColor = 'red';
-                    this.htmlInputElements[0].style.color = 'white';
-                }
-                if (
-                    Math.abs(
-                        mathjs.complex(sampleSolution).im -
-                            parseFloat(inputStrings[1]),
-                    ) < 1e-6
-                ) {
-                    this.htmlInputElements[1].style.backgroundColor = 'green';
-                    this.htmlInputElements[1].style.color = 'white';
-                } else {
-                    this.htmlInputElements[1].style.backgroundColor = 'red';
-                    this.htmlInputElements[1].style.color = 'white';
-                }
+                ok =
+                    mathjs.norm(
+                        <mathjs.Complex>(
+                            mathjs.subtract(
+                                <mathjs.Complex>sampleSolution,
+                                mathjs.complex(
+                                    parseFloat(inputStrings[0]),
+                                    parseFloat(inputStrings[1]),
+                                ),
+                            )
+                        ),
+                    ) < 1e-6; // TODO: configure precision
                 break;
             default:
                 console.assert(
@@ -136,6 +136,11 @@ export class QuestionInputField {
                     'unimplemented QuestionInputField: evaluate() for type ' +
                         this.answerVariable.type,
                 );
+        }
+        this.correct = ok;
+        if (this.answerVariable.id.startsWith('mc__') == false) {
+            this.htmlFeedbackElement.innerHTML =
+                '&nbsp;' + (ok ? CHECK_MARK : CHECK_CROSS);
         }
     }
     createHtmlElement(): void {
@@ -148,7 +153,12 @@ export class QuestionInputField {
                 this.htmlInputElements.push(inputElement);
                 this.htmlElement.appendChild(inputElement);
                 inputElement.type = 'checkbox';
-                // TODO: feedback element
+                // feedback
+                this.htmlFeedbackElement = document.createElement('span');
+                this.htmlFeedbackElement.innerHTML = ''; // TODO
+                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
+                //this.htmlFeedbackElement.style.color = '#ff0000';
+                this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             case QuestionInputFieldType.TextField:
                 inputElement = document.createElement('input');
@@ -162,7 +172,7 @@ export class QuestionInputField {
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
                 //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
-                this.htmlFeedbackElement.style.color = '#ff0000';
+                //this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             case QuestionInputFieldType.ComplexNormalform:
@@ -204,7 +214,7 @@ export class QuestionInputField {
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
                 //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
-                this.htmlFeedbackElement.style.color = '#ff0000';
+                //this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             default:
@@ -225,6 +235,10 @@ export class PartQuestion extends Part {
     variables: QuestionVariable[] = [];
     inputFields: QuestionInputField[] = [];
     variantIdx = 0; // TODO: random!
+    maxScore = 1;
+    actualScore = 0;
+
+    htmlFeedbackElement: HTMLElement = null;
 
     showVariables = false;
     showSolution = false;
@@ -424,10 +438,27 @@ export class PartQuestion extends Part {
         button.innerHTML = 'Auswerten';
         const this_ = this;
         button.addEventListener('click', function () {
+            let allCorrect = true;
+            this_.actualScore = 0;
             for (const inputField of this_.inputFields) {
                 inputField.evaluate();
+                if (inputField.correct) {
+                    this_.actualScore += 1.0 / this_.inputFields.length;
+                } else {
+                    allCorrect = false;
+                }
             }
+            this_.htmlFeedbackElement.innerHTML = allCorrect
+                ? CHECK_MARK
+                : CHECK_CROSS;
+            this_.htmlFeedbackElement.innerHTML +=
+                '&nbsp' + this_.actualScore + ' / ' + this_.maxScore;
         });
+        // feedback element
+        this.htmlFeedbackElement = document.createElement('span');
+        this.htmlFeedbackElement.classList.add('mx-3');
+        this.htmlFeedbackElement.innerHTML = '';
+        divCol.appendChild(this.htmlFeedbackElement);
         // spacing
         divContainer.appendChild(document.createElement('br'));
     }
