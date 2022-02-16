@@ -13,6 +13,8 @@ matriculation-number
 access-token
 ---
 
+# Einleitung
+
 Der Praktikumsversuch ist in zwei Bereiche geteilt:
 - Randomisierte Aufgaben, die zur Freischaltung der Programmieraufgaben führen
 - Programmieraufgaben in Java
@@ -27,20 +29,37 @@ Question.
 IPsec Protocols
 @text
 Which are IPsec protocols?
-[] TLS
+[ ] TLS
 [x] IKE
 [x] ESP
-[] DNS
+[ ] DNS
 [x] AH
 [ ] SSH
 ---
 
-
+---
+Question.
+@title
+Java
+@python
+res=6
+@text
+Was wird nach Ausführung des folgenden Codeausschnitts ausgegeben?
+```
+int x=1, i=3;
+while(i > 0) {
+	x *= i;
+	i --;
+}
+System.out.println(x);
+```
+#res
+---
 
 ---
 Question.
 @title
-gcd
+Größter gemeinsamer Teiler
 @settings
 id = task-ex-1
 score = 2
@@ -61,6 +80,8 @@ Berechne $\gcd(a,n)=$ #g
 
 ---
 JavaQuestion.
+@title
+Hello, World!
 @settings
 id = task-prog-1
 min-comment-precentage = 25
