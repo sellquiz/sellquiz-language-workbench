@@ -84,8 +84,14 @@
                     id === "box" ? "block" : "none";
                 document.getElementById("ticket").style.display =
                     id === "ticket" ? "block" : "none";
-                document.getElementById("document-tree").style.display =
-                    id === "filetree" ? "block" : "none";
+
+                document.getElementById("document-management").style.display =
+                    id === "document-management" ? "block" : "none";
+                document.getElementById("course-management").style.display =
+                    id === "course-management" ? "block" : "none";
+                document.getElementById("server-management").style.display =
+                    id === "server-management" ? "block" : "none";
+
                 document.getElementById("user-management").style.display =
                     id === "users" ? "block" : "none";
                 document.getElementById("bugs").style.display =
@@ -99,14 +105,24 @@
                     id === "box" ? "nav-link active" : "nav-link";
                 document.getElementById("tab-ticket").className =
                     id === "ticket" ? "nav-link active" : "nav-link";
-                document.getElementById("tab-filetree").className =
-                    id === "filetree" ? "nav-link active" : "nav-link";
+
+                document.getElementById("tab-document-management").className =
+                    id === "document-management" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-course-management").className =
+                    id === "course-management" ? "nav-link active" : "nav-link";
+                document.getElementById("tab-server-management").className =
+                    id === "server-management" ? "nav-link active" : "nav-link";
+
                 document.getElementById("tab-users").className =
                     id === "users" ? "nav-link active" : "nav-link";
                 document.getElementById("tab-bugs").className =
                     id === "bugs" ? "nav-link active" : "nav-link";
                 document.getElementById("tab-lab").className =
                     id === "lab" ? "nav-link active" : "nav-link";
+
+                if(id==='document-management') {
+                    slwEditor.refreshDocumentManagement();
+                }
             }
         </script>
 

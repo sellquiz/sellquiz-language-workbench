@@ -43,6 +43,11 @@ export let currentCourseName = '';
 export let currentDocumentId = '';
 export let currentDocumentName = '';
 
+let editDocumentFormElement: HTMLElement = null;
+let editDocumentOrderElement: HTMLInputElement = null;
+let editDocumentNameElement: HTMLInputElement = null;
+let editDocumentDescriptionElement: HTMLInputElement = null;
+
 let editorLastSavedText = '';
 
 let mobileMode = false;
@@ -87,12 +92,12 @@ export function loadDocument(documentId: string) {
             // TODO: check data.error
             //console.log(data);
 
-            currentDocumentName = data.rows[0][1];
+            currentDocumentName = data.rows[0][2];
             const documentListButton =
                 document.getElementById('filelist_button');
             documentListButton.innerHTML = currentDocumentName;
 
-            let text = data.rows[0][3];
+            let text = data.rows[0][4];
             text = text.replace(/\r/g, ''); // remove Windows carriage return
             editor.setValue(text);
             editorLastSavedText = text;
@@ -230,7 +235,7 @@ export function refreshDocumentList() {
                 i = 0;
             for (const row of data.rows) {
                 const documentId = row[0];
-                const documentName = row[1];
+                const documentName = row[2];
                 html +=
                     '<li><a class="dropdown-item" style="cursor:pointer;"' +
                     ' onclick="slwEditor.loadDocument(' +
@@ -252,6 +257,154 @@ export function refreshDocumentList() {
             // TODO
             console.log(error);
         });
+}
+
+export function refreshDocumentManagement() {
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_document_list',
+                    query_values: {
+                        courseId: currentCourseId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(response.data);
+
+            document.getElementById(
+                'document-management-selected-course',
+            ).innerHTML = currentCourseName;
+            const tableBody = document.getElementById(
+                'document-management-list',
+            );
+
+            let html = '';
+            for (const row of response.data.rows) {
+                html += '<tr>';
+                html += '<td>' + row[1] + '</td>'; // order
+                html += '<td>' + row[2] + '</td>'; // name
+                html += '<td>' + row[3] + '</td>'; // description
+                html += '<td>' + row[7] + '</td>'; // state
+                const dateCreated = new Date(row[5] * 1000);
+                html +=
+                    '<td>' +
+                    dateCreated.toLocaleDateString() +
+                    ' ' +
+                    dateCreated.toLocaleTimeString() +
+                    '</td>';
+                const dateModified = new Date(row[6] * 1000);
+                html +=
+                    '<td>' +
+                    dateModified.toLocaleDateString() +
+                    ' ' +
+                    dateModified.toLocaleTimeString() +
+                    '</td>';
+                html +=
+                    `
+                <td>
+                    <button type="button"
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="edit"
+                        onclick="slwEditor.editDocumentMetadata(` +
+                    row[0] +
+                    `)">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                    <button type="button"
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>`;
+                html += '</tr>';
+            }
+
+            tableBody.innerHTML = html;
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
+let editDocumentId = -1;
+
+export function editDocumentMetadata(documentId: number) {
+    editDocumentId = documentId;
+    editDocumentFormElement.style.display = 'block';
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_document',
+                    query_values: {
+                        id: documentId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            //console.log(response.data);
+            editDocumentOrderElement.value = data.rows[0][1];
+            editDocumentNameElement.value = data.rows[0][2];
+            editDocumentDescriptionElement.value = data.rows[0][3];
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
+export function saveDocumentMetadata() {
+    const order = editDocumentOrderElement.value; // TODO: check validity
+    const name = editDocumentNameElement.value; // TODO: check validity
+    const description = editDocumentDescriptionElement.value;
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'change_document_metadata',
+                    query_values: {
+                        id: editDocumentId,
+                        order: order,
+                        name: name,
+                        description: description,
+                        modified: Math.floor(Date.now() / 1000),
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            //const data = response.data;
+            // TODO: check data.error
+            //console.log(response.data);
+            editDocumentFormElement.style.display = 'none';
+            editDocumentId = -1;
+            refreshDocumentManagement();
+            refreshDocumentList();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+export function cancelEditDocumentMetadata() {
+    editDocumentFormElement.style.display = 'none';
+    editDocumentId = -1;
 }
 
 export function refreshCourseList() {
@@ -300,6 +453,18 @@ export function refreshCourseList() {
 }
 
 export function init() {
+    editDocumentFormElement = document.getElementById(
+        'document-management-form',
+    );
+    editDocumentOrderElement = <HTMLInputElement>(
+        document.getElementById('document-management-form-order')
+    );
+    editDocumentNameElement = <HTMLInputElement>(
+        document.getElementById('document-management-form-name')
+    );
+    editDocumentDescriptionElement = <HTMLInputElement>(
+        document.getElementById('document-management-form-description')
+    );
     axios
         .post(
             'services/service.php',
@@ -339,7 +504,7 @@ function init2() {
         start: [
             { regex: /\$(?:[^\\]|\\.)*?(?:\$|$)/, token: 'string' },
             { regex: /\*\*(?:[^\\]|\\.)*?(?:\*\*|$)/, token: 'variable-3' },
-            { regex: /`(?:[^\\]|\\.)*?(?:`)/, token: 'string' },
+            //{ regex: /`(?:[^\\]|\\.)*?(?:`)/, token: 'string' },
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {

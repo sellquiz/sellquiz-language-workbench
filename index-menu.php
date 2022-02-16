@@ -100,22 +100,47 @@
                     <a id="tab-ticket" class="nav-link"
                         data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
-                        title="ticket"
+                        title="discussion"
                         style="cursor:pointer;"
                         onclick="openTab('ticket');">
-                        <i class="fa-solid fa-ticket"></i>
+                        <i class="fa-solid fa-comments"></i>
                     </a>
                 </li>
+
+
                 <li class="nav-item">
-                    <a id="tab-filetree" class="nav-link"
+                    <a id="tab-document-management" class="nav-link"
                         data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
-                        title="file tree"
+                        title="document management"
                         style="cursor:pointer;"
-                        onclick="openTab('filetree');">
+                        onclick="openTab('document-management');">
                         <i class="fas fa-sitemap"></i>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a id="tab-course-management" class="nav-link"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="course management"
+                        style="cursor:pointer;"
+                        onclick="openTab('course-management');">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="tab-server-management" class="nav-link"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        title="server management"
+                        style="cursor:pointer;"
+                        onclick="openTab('server-management');">
+                        <i class="fa-solid fa-database"></i>
+                    </a>
+                </li>
+
+
+
                 <li class="nav-item">
                     <a id="tab-users" class="nav-link"
                     data-bs-toggle="tooltip"
