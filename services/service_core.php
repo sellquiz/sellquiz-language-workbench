@@ -136,7 +136,7 @@ function service($command) {
         case "publish_document":
             // get compiled document
             $res = json_decode(query($db_path,
-                "SELECT d.courseId, d.documentName, d.documentText, d.documentCache, c.courseName FROM Document d, Course c WHERE c.id = d.courseId AND d.id=:documentId;",
+                "SELECT d.courseId, d.documentName, d.documentText, d.documentCompiled, c.courseName FROM Document d, Course c WHERE c.id = d.courseId AND d.id=:documentId;",
                 $command["query_values"]
             )); // TODO: check for errors
             $courseId = $res->rows[0][0];
@@ -183,7 +183,7 @@ function service($command) {
             $fast = strcmp($command["type"], "compile_document_fast") == 0;
             // get input and cache
             $res = json_decode(query($db_path,
-                "SELECT documentText, documentCache FROM Document WHERE id=:documentId;",
+                "SELECT documentText, documentCompiled FROM Document WHERE id=:documentId;",
                 $command["query_values"]
             ));
             $u = $res->rows[0][0];
@@ -194,7 +194,7 @@ function service($command) {
             $v = compile($u, $cache);
             // update cache
             query($db_path,
-                "UPDATE Document SET documentCache=:cache WHERE id=:id;", [
+                "UPDATE Document SET documentCompiled=:cache WHERE id=:id;", [
                     "cache" => $v,
                     "id" => $command["query_values"]["documentId"]
                 ]);
@@ -215,13 +215,19 @@ function service($command) {
 
         case "get_document_list":
             return query($db_path,
-                "SELECT id, documentName, documentDesc, courseId, documentDateCreated, documentDateModified FROM Document WHERE courseId=:courseId;",
+                "SELECT id, documentOrderIndex, documentName, documentDesc, courseId, documentDateCreated, documentDateModified, documentState FROM Document WHERE courseId=:courseId ORDER BY documentOrderIndex ASC;",
                 $command["query_values"]);
             break;
 
         case "get_document":
             return query($db_path,
                 "SELECT * FROM Document WHERE id=:id;",
+                $command["query_values"]);
+            break;
+
+        case "change_document_metadata":
+            return query($db_path,
+                "UPDATE Document SET documentOrderIndex=:order, documentName=:name, documentDesc=:description, documentDateModified=:modified WHERE id=:id;",
                 $command["query_values"]);
             break;
 
