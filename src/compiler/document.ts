@@ -215,10 +215,22 @@ export class Document {
         let isItalic = false;
         let isList = false;
         let isListItem = false;
-        let col = 0;
+        let col = 0; // TODO: col is not always updated...
         for (let i = 0; i < n; i++) {
             const ch = text[i];
-            if (col == 0 && ch === '-') {
+            if (col == 0 && text.substring(i).startsWith('```')) {
+                // code block
+                res += '<code class="text-primary"><pre>';
+                for (let j = i + 3; j < n; j++) {
+                    if (text.substring(j).startsWith('```')) {
+                        i = j + 2;
+                        break;
+                    }
+                    res += text[j];
+                }
+                res += '</pre></code>';
+                continue;
+            } else if (col == 0 && ch === '-') {
                 if (isListItem) res += '</li>';
                 if (!isList) res += '<ul>';
                 isList = true;
