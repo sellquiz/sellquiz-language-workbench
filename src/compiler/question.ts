@@ -17,6 +17,7 @@ import { OCTAVE_PROG, PYTHON_PROG, SAGE_PROG } from './strings';
 export class Question {
     numberOfInstances = 0;
 
+    // multipleChoice* is only used internally. Values are exported to variable*
     multipleChoiceTexts: string[] = [];
     multipleChoiceAnswers: boolean[] = [];
 
@@ -97,7 +98,7 @@ export class Question {
                     values.pop();
                     this.variableValues.push(values);
                 }
-                for(let i=0; i<this.variableIDs.length; i++) {
+                for (let i = 0; i < this.variableIDs.length; i++) {
                     this.variableTexts.push('');
                 }
             }

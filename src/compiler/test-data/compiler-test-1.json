@@ -7,6 +7,7 @@
             "type": "headline-1",
             "inputLineNo": 5,
             "text": "1. Einführung",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
@@ -14,10 +15,83 @@
         {
             "type": "question",
             "inputLineNo": 8,
-            "text": "Which are IPsec protocols?\n@mc@\n",
+            "text": "Welche der folgenden Restklassen sind <b>Körper</b>?\n?mc?\n",
+            "title": "Körper\n",
             "error": false,
             "errorLog": "",
-            "src": " Question.\n@title\nIPsec Protocols\n@text\nWhich are IPsec protocols?\n[ ] TLS\n[x] IKE\n[x] ESP\n[ ] DNS\n[x] AH\n[ ] SSH\n---\n",
+            "src": "Question.\n@title\nKörper\n@text\nWelche der folgenden Restklassen sind **Körper**?\n[x] $ \\mathbb{Z}_3 $\n[ ] $ \\mathbb{Z}_4 $\n[x] $ \\mathbb{Z}_7 $\n[ ] $ \\mathbb{Z}_10 $\n---\n",
+            "solution": "",
+            "variable-ids": [
+                "mc__0",
+                "mc__1",
+                "mc__2",
+                "mc__3"
+            ],
+            "variable-types": [
+                "bool",
+                "bool",
+                "bool",
+                "bool"
+            ],
+            "variable-values": [
+                [
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ]
+            ],
+            "variable-texts": [
+                "$ \\mathbb{Z}_3 $",
+                "$ \\mathbb{Z}_4 $",
+                "$ \\mathbb{Z}_7 $",
+                "$ \\mathbb{Z}_10 $"
+            ],
+            "input-field-types": [
+                "check-box",
+                "check-box",
+                "check-box",
+                "check-box"
+            ],
+            "input-field-answers": [
+                "mc__0",
+                "mc__1",
+                "mc__2",
+                "mc__3"
+            ]
+        },
+        {
+            "type": "question",
+            "inputLineNo": 21,
+            "text": "Which are IPsec protocols?\n?mc?\n",
+            "title": "IPsec Protocols\n",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n@title\nIPsec Protocols\n@text\nWhich are IPsec protocols?\n[ ] TLS\n[x] IKE\n[x] ESP\n[ ] DNS\n[x] AH\n[ ] SSH\n---\n",
             "solution": "",
             "variable-ids": [
                 "mc__0",
@@ -27,15 +101,64 @@
                 "mc__4",
                 "mc__5"
             ],
-            "variable-types": ["bool", "bool", "bool", "bool", "bool", "bool"],
-            "variable-values": [
-                ["false", "true", "true", "false", "true", "false"],
-                ["false", "true", "true", "false", "true", "false"],
-                ["false", "true", "true", "false", "true", "false"],
-                ["false", "true", "true", "false", "true", "false"],
-                ["false", "true", "true", "false", "true", "false"]
+            "variable-types": [
+                "bool",
+                "bool",
+                "bool",
+                "bool",
+                "bool",
+                "bool"
             ],
-            "variable-texts": ["TLS", "IKE", "ESP", "DNS", "AH", "SSH"],
+            "variable-values": [
+                [
+                    "false",
+                    "true",
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "false",
+                    "true",
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "false",
+                    "true",
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "false",
+                    "true",
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ],
+                [
+                    "false",
+                    "true",
+                    "true",
+                    "false",
+                    "true",
+                    "false"
+                ]
+            ],
+            "variable-texts": [
+                "TLS",
+                "IKE",
+                "ESP",
+                "DNS",
+                "AH",
+                "SSH"
+            ],
             "input-field-types": [
                 "check-box",
                 "check-box",
@@ -55,8 +178,9 @@
         },
         {
             "type": "authentication",
-            "inputLineNo": 8,
+            "inputLineNo": 36,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Authentication.\n\n@database\nbatin-its-lab-1\n\n@input\nmatriculation-number\naccess-token\n---\n",
@@ -66,133 +190,222 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 36,
+            "inputLineNo": 48,
             "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "paragraph",
-            "inputLineNo": 38,
+            "inputLineNo": 50,
             "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "new-page",
-            "inputLineNo": 54,
+            "inputLineNo": 66,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "definition",
-            "inputLineNo": 27,
-            "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX",
+            "inputLineNo": 68,
+            "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir\n<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)\n</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)\n</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Definition.\nAuf dem $\\mathbb{R}^2$ definieren wir\n- Die **Addition** durch $(x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)$\n- Die **Multiplikation** $(x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)$\nDie Menge $\\mathbb{R}^2$ mit diesen beiden Operationen wird als Menge $\\mathbb{C}$ der komplexen Zahlen oder als **Gaußsche Zahlenebene** bezeichnet. XXX\n---\n"
         },
         {
             "type": "example",
-            "inputLineNo": 35,
-            "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:<ul><li> \\(z_1+z_2\\)<br/>  \\(=(2-3)+(3+2i)\\)<br/>  \\(=-1+5i\\)</li><li> \\(z_1-z_2\\)<br/>  \\(=z_1+(-z_2)\\)<br/>  \\(=2+3i+(3+(-2)i)\\)<br/>  \\(=(2+3)+(3+(-2))i\\)<br/>  \\(=5+i\\)</li></ul>",
+            "inputLineNo": 76,
+            "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:\n<ul><li> \\(z_1+z_2\\)\n<br/>  \\(=(2-3)+(3+2i)\\)\n<br/>  \\(=-1+5i\\)\n</li><li> \\(z_1-z_2\\)\n<br/>  \\(=z_1+(-z_2)\\)\n<br/>  \\(=2+3i+(3+(-2)i)\\)\n<br/>  \\(=(2+3)+(3+(-2))i\\)\n<br/>  \\(=5+i\\)\n</li></ul>",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Example.\nSei $z_1=2+3i, z_2=-3+2i$. Dann gilt:\n- $z_1+z_2$\n  $=(2-3)+(3+2i)$\n  $=-1+5i$\n- $z_1-z_2$\n  $=z_1+(-z_2)$\n  $=2+3i+(3+(-2)i)$\n  $=(2+3)+(3+(-2))i$\n  $=5+i$\n---\n"
         },
         {
             "type": "new-page",
-            "inputLineNo": 77,
+            "inputLineNo": 89,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "question",
-            "inputLineNo": 50,
-            "text": "Berechne \\(a^b=\\) c",
+            "inputLineNo": 91,
+            "text": "Berechne \\(a^b=\\) c\n\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@maxima\na:3;\nb:4;\nc:a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
             "solution": "",
             "variable-ids": [],
             "variable-types": [],
-            "variable-values": [],
+            "variable-values": [
+                [],
+                [],
+                [],
+                [],
+                []
+            ],
+            "variable-texts": [],
             "input-field-types": [],
             "input-field-answers": []
         },
         {
             "type": "new-page",
-            "inputLineNo": 91,
+            "inputLineNo": 103,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "question",
-            "inputLineNo": 64,
-            "text": "Berechne \\(@a@^@b@=\\) ?0?",
+            "inputLineNo": 105,
+            "text": "Berechne \\(@a@^@b@=\\) ?0?\n\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@octave\na=3;\nb=4;\nc=a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
             "solution": "",
-            "variable-ids": ["a", "b", "c"],
-            "variable-types": ["float", "float", "float"],
-            "variable-values": [["3", "4", "81"]],
-            "input-field-types": ["text-field"],
-            "input-field-answers": ["c"]
+            "variable-ids": [
+                "a",
+                "b",
+                "c"
+            ],
+            "variable-types": [
+                "float",
+                "float",
+                "float"
+            ],
+            "variable-values": [
+                [
+                    "3",
+                    "4",
+                    "81"
+                ]
+            ],
+            "variable-texts": [
+                "",
+                "",
+                ""
+            ],
+            "input-field-types": [
+                "text-field"
+            ],
+            "input-field-answers": [
+                "c"
+            ]
         },
         {
             "type": "new-page",
-            "inputLineNo": 105,
+            "inputLineNo": 117,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "question",
-            "inputLineNo": 78,
-            "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?</li></ul>",
+            "inputLineNo": 119,
+            "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).\n<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?\n</li></ul>\n\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@sage\nn=123456;\na=198;\ng=gcd(a,n);\n\n@text\nSei $\"a\"=a$ und $\"n\"=n$.\n- Berechne $gcd(a,n)=$ #g\n\n@solution\n$gcd(a,n)=g$\n---\n",
-            "solution": "\\(gcd(@a@,@n@)=@g@\\)",
-            "variable-ids": ["a", "g", "n"],
-            "variable-types": ["int", "int", "int"],
-            "variable-values": [
-                ["198", "6", "123456"],
-                ["198", "6", "123456"],
-                ["198", "6", "123456"],
-                ["198", "6", "123456"],
-                ["198", "6", "123456"]
+            "solution": "\\(gcd(@a@,@n@)=@g@\\)\n",
+            "variable-ids": [
+                "a",
+                "g",
+                "n"
             ],
-            "input-field-types": ["text-field"],
-            "input-field-answers": ["g"]
+            "variable-types": [
+                "int",
+                "int",
+                "int"
+            ],
+            "variable-values": [
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ],
+                [
+                    "198",
+                    "6",
+                    "123456"
+                ]
+            ],
+            "variable-texts": [
+                "",
+                "",
+                ""
+            ],
+            "input-field-types": [
+                "text-field"
+            ],
+            "input-field-answers": [
+                "g"
+            ]
         },
         {
             "type": "new-page",
-            "inputLineNo": 123,
+            "inputLineNo": 135,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "question",
-            "inputLineNo": 97,
-            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne<ul><li> \\( z_1 + z_2 = \\) ?0?</li><li> \\( z_1 - z_2 = \\) ?1?</li></ul>",
+            "inputLineNo": 138,
+            "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne\n<ul><li> \\( z_1 + z_2 = \\) ?0?\n</li><li> \\( z_1 - z_2 = \\) ?1?\n</li></ul>\n\n",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@options\nlive check\nrepeat on error\n\n@python\na = random.randint(1,5)\nb = random.randint(1,5)\nc = random.randint(1,5)\nd = random.randint(1,5)\nz1 = a + b*1j\nz2 = c + d*1j\nsum = z1 + z2\ndiff = z1 - z2\n\n@text\nSei $z_1 = z1$, $z_2 = z2$. Berechne\n- $ z_1 + z_2 = $ #sum\n- $ z_1 - z_2 = $ #diff\n\n@solution\n- $ z_1 + z_2 = (a+c) + (b+d)i $\n- $ z_1 - z_2 = (a-c) + (b-d)i $\n---\n",
-            "solution": "<ul><li> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\)</li><li> \\( z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\)</li></ul>",
-            "variable-ids": ["a", "b", "c", "d", "diff", "sum", "z1", "z2"],
+            "solution": "<ul><li> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\)\n</li><li> \\( z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\)\n</li></ul>",
+            "variable-ids": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "diff",
+                "sum",
+                "z1",
+                "z2"
+            ],
             "variable-types": [
                 "int",
                 "int",
@@ -204,51 +417,117 @@
                 "complex"
             ],
             "variable-values": [
-                ["1", "1", "1", "2", "-1i", "2+3i", "1+1i", "1+2i"],
-                ["2", "2", "1", "4", "1-2i", "3+6i", "2+2i", "1+4i"],
-                ["4", "4", "5", "3", "-1+1i", "9+7i", "4+4i", "5+3i"],
-                ["2", "4", "5", "5", "-3-1i", "7+9i", "2+4i", "5+5i"],
-                ["3", "5", "3", "4", "1i", "6+9i", "3+5i", "3+4i"]
+                [
+                    "3",
+                    "5",
+                    "1",
+                    "4",
+                    "2+1i",
+                    "4+9i",
+                    "3+5i",
+                    "1+4i"
+                ],
+                [
+                    "2",
+                    "2",
+                    "4",
+                    "2",
+                    "-2+0i",
+                    "6+4i",
+                    "2+2i",
+                    "4+2i"
+                ],
+                [
+                    "5",
+                    "3",
+                    "3",
+                    "5",
+                    "2-2i",
+                    "8+8i",
+                    "5+3i",
+                    "3+5i"
+                ],
+                [
+                    "2",
+                    "5",
+                    "3",
+                    "4",
+                    "-1+1i",
+                    "5+9i",
+                    "2+5i",
+                    "3+4i"
+                ],
+                [
+                    "3",
+                    "3",
+                    "2",
+                    "3",
+                    "1+0i",
+                    "5+6i",
+                    "3+3i",
+                    "2+3i"
+                ]
             ],
-            "input-field-types": ["complex-normalform", "complex-normalform"],
-            "input-field-answers": ["sum", "diff"]
+            "variable-texts": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "input-field-types": [
+                "complex-normalform",
+                "complex-normalform"
+            ],
+            "input-field-answers": [
+                "sum",
+                "diff"
+            ]
         },
         {
             "type": "error",
-            "inputLineNo": 151,
+            "inputLineNo": 192,
             "text": "error: unknown part type 'Chatquestion.'",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Chatquestion.\n\n@python\nimport random\na = random.randint(1,5)\nb = random.randint(1,5)\nc = random.randint(1,5)\nd = random.randint(1,5)\nz1 = a + b*1j\nz2 = c + d*1j\nsum = z1 + z2\n\n@text\nAddiere $z1$ und $z2$.\n\n@answer\nsum\n\n@solution\nDie Lösung ergibt sich durch $ (a+c) + (b+d)i $.\n---\n"
         },
         {
             "type": "new-page",
-            "inputLineNo": 204,
+            "inputLineNo": 216,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "error",
-            "inputLineNo": 177,
+            "inputLineNo": 218,
             "text": "error: unknown part type 'Speedreview.'",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Speedreview.\n\n@options\ntime per answer = 4\n\n@questions\n$i^2=$\n    $-1$, $1$, $0$, $i$\n$z=x+yi$ heißt...\n    Normalform, Koordinaten, Polarform, Imaginärteil\n$|-2i|=$\n    $2$, $2i$, $1$, $0$\n$1+2i-2i=$\n    $1$, $0$, $1+4i$, $-1$\n---\n"
         },
         {
             "type": "new-page",
-            "inputLineNo": 223,
+            "inputLineNo": 235,
             "text": "",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": ""
         },
         {
             "type": "error",
-            "inputLineNo": 196,
+            "inputLineNo": 237,
             "text": "error: unknown part type 'Links.'",
+            "title": "",
             "error": false,
             "errorLog": "",
             "src": "Links.\n- Komplexe Folgen und Grenzwerte\n- Komplexe Reihen\n- Komplexe Funktionen und Potenzreihen\n- Komplexe Potenzen und Wurzeln\n---\n"

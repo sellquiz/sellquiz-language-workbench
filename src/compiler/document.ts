@@ -60,7 +60,8 @@ export class Document {
                 this.parts.push(part);
                 part.type = PartType.headline1;
                 part.text =
-                    this.section +
+                    '' +
+                    (this.section - 1) +
                     '.' +
                     this.subsection +
                     ' ' +
@@ -72,13 +73,14 @@ export class Document {
                 this.parts.push(part);
                 part.type = PartType.headline1;
                 part.text =
-                    this.section +
+                    '' +
+                    (this.section - 1) +
                     '.' +
-                    this.subsection +
+                    (this.subsection - 1) +
                     '.' +
                     this.susubsection +
                     ' ' +
-                    line.substring(2).trim();
+                    line.substring(3).trim();
                 this.susubsection++;
             } else if (line.startsWith('---')) {
                 const part = new Part(lineIdx + 1);
@@ -193,6 +195,11 @@ export class Document {
         part.question.solutionText = this.compileParagraph(
             part.question.solutionText,
         );
+        for (let i = 0; i < part.question.variableTexts.length; i++) {
+            part.question.variableTexts[i] = this.compileParagraph(
+                part.question.variableTexts[i],
+            );
+        }
     }
 
     private compileProgrammingQuestion(

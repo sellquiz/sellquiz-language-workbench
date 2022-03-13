@@ -59,6 +59,11 @@ INSERT INTO Course
     VALUES
     ('demo', 'demo course', 1640991600, 1640991600);
 
+INSERT INTO Course
+    (courseName, courseDesc, courseDateCreated, courseDateModified)
+    VALUES
+    ('its', 'it-security', 1640991600, 1640991600);
+
 CREATE TABLE Document (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     documentOrderIndex TEXT NOT NULL,
@@ -95,6 +100,18 @@ INSERT INTO Document
     ('demo', 20, 'demo document', '', '',
      'work-in-progress',
      (SELECT id FROM Course WHERE courseName='demo'),
+     1640991600, 1640991600);
+
+INSERT INTO Document
+    (documentName, documentOrderIndex,
+     documentDesc, documentText, documentCompiled,
+     documentState,
+     courseId,
+     documentDateCreated, documentDateModified)
+    VALUES
+    ('its-quiz-all', 10, 'it quizzes', '', '',
+     'work-in-progress',
+     (SELECT id FROM Course WHERE courseName='its'),
      1640991600, 1640991600);
 
 CREATE TABLE DocumentBackup (

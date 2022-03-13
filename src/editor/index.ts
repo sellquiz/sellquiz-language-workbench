@@ -407,6 +407,12 @@ export function cancelEditDocumentMetadata() {
     editDocumentId = -1;
 }
 
+export function loadCourse(courseId: string) {
+    currentCourseId = courseId;
+    refreshDocumentList();
+    // TODO!!
+}
+
 export function refreshCourseList() {
     const courselistButton = document.getElementById('courselist_button');
     const courselistDropdownItems = document.getElementById(
@@ -433,7 +439,10 @@ export function refreshCourseList() {
                 const courseId = row[0];
                 const courseName = row[1];
                 html +=
-                    '<li><a class="dropdown-item" style="cursor:pointer;">' +
+                    '<li><a class="dropdown-item" style="cursor:pointer;"' +
+                    ' onclick="slwEditor.loadCourse(' +
+                    courseId +
+                    ');">' +
                     courseName +
                     '</a></li>';
                 if (i == 0) {
@@ -508,7 +517,7 @@ function init2() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@title|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@title|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@matching|\/\/\/|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
                 token: 'keyword',
             },
         ],

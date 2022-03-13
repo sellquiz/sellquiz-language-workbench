@@ -8,6 +8,19 @@
 ---
 Question.
 @title
+Körper
+@text
+Welche der folgenden Restklassen sind **Körper**?
+[x] $ \mathbb{Z}_3 $
+[ ] $ \mathbb{Z}_4 $
+[x] $ \mathbb{Z}_7 $
+[ ] $ \mathbb{Z}_10 $
+---
+
+
+---
+Question.
+@title
 IPsec Protocols
 @text
 Which are IPsec protocols?
@@ -18,7 +31,6 @@ Which are IPsec protocols?
 [x] AH
 [ ] SSH
 ---
-
 
 
 ---
