@@ -15,6 +15,146 @@
         {
             "type": "question",
             "inputLineNo": 8,
+            "text": "Wähle die richtigen Antworten aus :\n?mc?\n",
+            "title": "Invertierbare Restklassen\n",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n@title\nInvertierbare Restklassen\n@sage\nn = randint(10,20);\na = randint(1, n-1);\nwhile gcd(a, n) != 1:\n\ta = randint(1, n-1);\n@text\nWähle die richtigen Antworten aus :\n[x] $a$ ist invertierbar modulo $n$.\n---\n",
+            "solution": "",
+            "variable-ids": [
+                "a",
+                "n",
+                "mc__0"
+            ],
+            "variable-types": [
+                "int",
+                "int",
+                "bool"
+            ],
+            "variable-values": [
+                [
+                    "1",
+                    "18",
+                    "true"
+                ],
+                [
+                    "1",
+                    "10",
+                    "true"
+                ],
+                [
+                    "5",
+                    "11",
+                    "true"
+                ],
+                [
+                    "13",
+                    "18",
+                    "true"
+                ],
+                [
+                    "11",
+                    "18",
+                    "true"
+                ]
+            ],
+            "variable-texts": [
+                "",
+                "",
+                "\\(@a@\\) ist invertierbar modulo \\(@n@\\)."
+            ],
+            "input-field-types": [
+                "check-box"
+            ],
+            "input-field-answers": [
+                "mc__0"
+            ]
+        },
+        {
+            "type": "question",
+            "inputLineNo": 8,
+            "text": "Gegeben seien die Menge \\( A = \\{ @a1@, @a2@, @a3@ \\} \\) und \\( B = \\{ @b1@, @b2@ \\} \\).\nIst die folgende Aussage wahr?\n?mc?\n",
+            "title": "Mengen\n",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n@title\nMengen\n@python\nimport random\na1 = random.randint(1, 3)\na2 = a1 + random.randint(1, 3)\na3 = a2 + random.randint(1, 3)\nb1 = a1\nb2 = a3\n@text\nGegeben seien die Menge $ A = \\{ a1, a2, a3 \\} $ und $ B = \\{ b1, b2 \\} $.\nIst die folgende Aussage wahr?\n[x] $ B \\subset A $\n---\n",
+            "solution": "",
+            "variable-ids": [
+                "a1",
+                "a2",
+                "a3",
+                "b1",
+                "b2",
+                "mc__0"
+            ],
+            "variable-types": [
+                "int",
+                "int",
+                "int",
+                "int",
+                "int",
+                "bool"
+            ],
+            "variable-values": [
+                [
+                    "3",
+                    "4",
+                    "7",
+                    "3",
+                    "7",
+                    "true"
+                ],
+                [
+                    "1",
+                    "2",
+                    "5",
+                    "1",
+                    "5",
+                    "true"
+                ],
+                [
+                    "2",
+                    "4",
+                    "6",
+                    "2",
+                    "6",
+                    "true"
+                ],
+                [
+                    "1",
+                    "4",
+                    "5",
+                    "1",
+                    "5",
+                    "true"
+                ],
+                [
+                    "1",
+                    "4",
+                    "6",
+                    "1",
+                    "6",
+                    "true"
+                ]
+            ],
+            "variable-texts": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "\\( B \\subset A \\)"
+            ],
+            "input-field-types": [
+                "check-box"
+            ],
+            "input-field-answers": [
+                "mc__0"
+            ]
+        },
+        {
+            "type": "question",
+            "inputLineNo": 26,
             "text": "Welche der folgenden Restklassen sind <b>Körper</b>?\n?mc?\n",
             "title": "Körper\n",
             "error": false,
@@ -66,10 +206,10 @@
                 ]
             ],
             "variable-texts": [
-                "$ \\mathbb{Z}_3 $",
-                "$ \\mathbb{Z}_4 $",
-                "$ \\mathbb{Z}_7 $",
-                "$ \\mathbb{Z}_10 $"
+                "\\( \\mathbb{Z}_3 \\)",
+                "\\( \\mathbb{Z}_4 \\)",
+                "\\( \\mathbb{Z}_7 \\)",
+                "\\( \\mathbb{Z}_10 \\)"
             ],
             "input-field-types": [
                 "check-box",
@@ -86,7 +226,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 21,
+            "inputLineNo": 39,
             "text": "Which are IPsec protocols?\n?mc?\n",
             "title": "IPsec Protocols\n",
             "error": false,
@@ -178,7 +318,7 @@
         },
         {
             "type": "authentication",
-            "inputLineNo": 36,
+            "inputLineNo": 54,
             "text": "",
             "title": "",
             "error": false,
@@ -190,7 +330,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 48,
+            "inputLineNo": 81,
             "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.\n",
             "title": "",
             "error": false,
@@ -199,7 +339,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 50,
+            "inputLineNo": 83,
             "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.\n",
             "title": "",
             "error": false,
@@ -208,7 +348,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 66,
+            "inputLineNo": 99,
             "text": "",
             "title": "",
             "error": false,
@@ -217,7 +357,7 @@
         },
         {
             "type": "definition",
-            "inputLineNo": 68,
+            "inputLineNo": 86,
             "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir\n<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)\n</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)\n</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX\n",
             "title": "",
             "error": false,
@@ -226,7 +366,7 @@
         },
         {
             "type": "example",
-            "inputLineNo": 76,
+            "inputLineNo": 94,
             "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:\n<ul><li> \\(z_1+z_2\\)\n<br/>  \\(=(2-3)+(3+2i)\\)\n<br/>  \\(=-1+5i\\)\n</li><li> \\(z_1-z_2\\)\n<br/>  \\(=z_1+(-z_2)\\)\n<br/>  \\(=2+3i+(3+(-2)i)\\)\n<br/>  \\(=(2+3)+(3+(-2))i\\)\n<br/>  \\(=5+i\\)\n</li></ul>",
             "title": "",
             "error": false,
@@ -235,7 +375,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 89,
+            "inputLineNo": 122,
             "text": "",
             "title": "",
             "error": false,
@@ -244,7 +384,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 91,
+            "inputLineNo": 109,
             "text": "Berechne \\(a^b=\\) c\n\n",
             "title": "",
             "error": false,
@@ -266,7 +406,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 103,
+            "inputLineNo": 136,
             "text": "",
             "title": "",
             "error": false,
@@ -275,7 +415,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 105,
+            "inputLineNo": 123,
             "text": "Berechne \\(@a@^@b@=\\) ?0?\n\n",
             "title": "",
             "error": false,
@@ -313,7 +453,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 117,
+            "inputLineNo": 150,
             "text": "",
             "title": "",
             "error": false,
@@ -322,7 +462,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 119,
+            "inputLineNo": 137,
             "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).\n<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?\n</li></ul>\n\n",
             "title": "",
             "error": false,
@@ -380,7 +520,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 135,
+            "inputLineNo": 168,
             "text": "",
             "title": "",
             "error": false,
@@ -389,7 +529,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 138,
+            "inputLineNo": 156,
             "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne\n<ul><li> \\( z_1 + z_2 = \\) ?0?\n</li><li> \\( z_1 - z_2 = \\) ?1?\n</li></ul>\n\n",
             "title": "",
             "error": false,
@@ -418,54 +558,54 @@
             ],
             "variable-values": [
                 [
+                    "1",
                     "3",
+                    "1",
+                    "3",
+                    "0i",
+                    "2+6i",
+                    "1+3i",
+                    "1+3i"
+                ],
+                [
+                    "2",
                     "5",
+                    "5",
+                    "2",
+                    "-3+3i",
+                    "7+7i",
+                    "2+5i",
+                    "5+2i"
+                ],
+                [
                     "1",
                     "4",
-                    "2+1i",
-                    "4+9i",
-                    "3+5i",
-                    "1+4i"
+                    "3",
+                    "2",
+                    "-2+2i",
+                    "4+6i",
+                    "1+4i",
+                    "3+2i"
                 ],
                 [
-                    "2",
-                    "2",
                     "4",
-                    "2",
-                    "-2+0i",
-                    "6+4i",
-                    "2+2i",
-                    "4+2i"
-                ],
-                [
                     "5",
+                    "4",
                     "3",
-                    "3",
-                    "5",
-                    "2-2i",
+                    "2i",
                     "8+8i",
-                    "5+3i",
-                    "3+5i"
+                    "4+5i",
+                    "4+3i"
                 ],
                 [
-                    "2",
-                    "5",
                     "3",
+                    "1",
                     "4",
-                    "-1+1i",
-                    "5+9i",
-                    "2+5i",
-                    "3+4i"
-                ],
-                [
                     "3",
-                    "3",
-                    "2",
-                    "3",
-                    "1+0i",
-                    "5+6i",
-                    "3+3i",
-                    "2+3i"
+                    "-1-2i",
+                    "7+4i",
+                    "3+1i",
+                    "4+3i"
                 ]
             ],
             "variable-texts": [
@@ -489,7 +629,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 192,
+            "inputLineNo": 210,
             "text": "error: unknown part type 'Chatquestion.'",
             "title": "",
             "error": false,
@@ -498,7 +638,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 216,
+            "inputLineNo": 249,
             "text": "",
             "title": "",
             "error": false,
@@ -507,7 +647,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 218,
+            "inputLineNo": 236,
             "text": "error: unknown part type 'Speedreview.'",
             "title": "",
             "error": false,
@@ -516,7 +656,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 235,
+            "inputLineNo": 268,
             "text": "",
             "title": "",
             "error": false,
@@ -525,7 +665,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 237,
+            "inputLineNo": 255,
             "text": "error: unknown part type 'Links.'",
             "title": "",
             "error": false,

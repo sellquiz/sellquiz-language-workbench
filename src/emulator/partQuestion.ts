@@ -321,7 +321,7 @@ export class PartQuestion extends Part {
                         '?' +
                         fieldIdx +
                         '? ' +
-                        this.variables[varIdx].text +
+                        this.generateText(this.variables[varIdx].text, false) +
                         '<br/>';
                 }
                 text = text.replace('?mc?', mcStr);

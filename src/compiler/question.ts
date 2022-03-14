@@ -145,13 +145,16 @@ export class Question {
             for (let i = 0; i < this.multipleChoiceAnswers.length; i++) {
                 this.variableIDs.push('mc__' + i);
                 this.variableTypes.push('bool');
-                this.variableTexts.push(this.multipleChoiceTexts[i]);
+                this.variableTexts.push(
+                    this.compileText(this.multipleChoiceTexts[i], false),
+                );
                 this.inputFieldTypes.push('check-box');
                 this.inputFieldAnswers.push('mc__' + i);
-                for (let k = 0; k < this.numberOfInstances; k++)
-                    this.variableValues[k][i] = this.multipleChoiceAnswers[i]
-                        ? 'true'
-                        : 'false';
+                for (let k = 0; k < this.numberOfInstances; k++) {
+                    this.variableValues[k].push(
+                        this.multipleChoiceAnswers[i] ? 'true' : 'false',
+                    );
+                }
             }
         }
 

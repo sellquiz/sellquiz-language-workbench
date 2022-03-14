@@ -9,6 +9,7 @@ import { Part } from './part';
 
 export class PartHeadline extends Part {
     text = '';
+    level = 1;
     generateDOM(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
         this.htmlElement = divContainer;
@@ -22,7 +23,17 @@ export class PartHeadline extends Part {
         const divCol = document.createElement('div');
         divCol.classList.add('col', 'py-1');
         divRow.appendChild(divCol);
-        divCol.innerHTML = '<br/><h2>' + this.text + '</h2>';
+        switch (this.level) {
+            case 1:
+                divCol.innerHTML = '<br/><h2><b>' + this.text + '</b></h2>';
+                break;
+            case 2:
+                divCol.innerHTML = '<br/><h3><b>' + this.text + '</b></h3>';
+                break;
+            default:
+                divCol.innerHTML = '<br/><h4>' + this.text + '</h4>';
+                break;
+        }
     }
     import(data: any): void {
         this.text = data['text'];

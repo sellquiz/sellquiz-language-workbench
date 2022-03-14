@@ -58,7 +58,7 @@ export class Document {
             } else if (line.startsWith('## ')) {
                 const part = new Part(lineIdx + 1);
                 this.parts.push(part);
-                part.type = PartType.headline1;
+                part.type = PartType.headline2;
                 part.text =
                     '' +
                     (this.section - 1) +
@@ -71,7 +71,7 @@ export class Document {
             } else if (line.startsWith('### ')) {
                 const part = new Part(lineIdx + 1);
                 this.parts.push(part);
-                part.type = PartType.headline1;
+                part.type = PartType.headline3;
                 part.text =
                     '' +
                     (this.section - 1) +

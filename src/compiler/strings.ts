@@ -100,7 +100,7 @@ $CODE$
         if v.startswith('_') or v.startswith('__') or v in _ignore:
             continue
         value = eval(v)
-        if type(value) == Integer or type(value) == int:
+        if type(value) == Integer or type(value) == int or type(value) == sage.rings.finite_rings.integer_mod.IntegerMod_int:
             _ids.append(v)
             _types.append('int')
             _values.append(value)

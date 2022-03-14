@@ -144,6 +144,17 @@ export class CoursePage {
                 case 'headline-1':
                     partInstance = new PartHeadline(this);
                     partInstance.import(part);
+                    partInstance.level = 1;
+                    break;
+                case 'headline-2':
+                    partInstance = new PartHeadline(this);
+                    partInstance.import(part);
+                    partInstance.level = 2;
+                    break;
+                case 'headline-3':
+                    partInstance = new PartHeadline(this);
+                    partInstance.import(part);
+                    partInstance.level = 3;
                     break;
                 case 'paragraph':
                     partInstance = new PartParagraph(this);
