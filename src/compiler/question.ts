@@ -82,7 +82,8 @@ export class Question {
                 });
             } catch (e) {
                 part.error = true;
-                part.errorLog = (e as any)['stderr'];
+                part.errorLog =
+                    (e as any)['stderr'] + '--- command: ' + command;
                 console.log(part.text);
             }
             deleteTempDirectory(tmpDir);
@@ -108,17 +109,23 @@ export class Question {
     }
 
     private compileText(text: string, generateInputFields = false): string {
-        // extract multiple choice options
+        // extract single choice and multiple choice options
+        // TODO: sc and mc are not separated now...
         if (generateInputFields) {
             let processed = '';
             const lines = text.split('\n');
             let placedMultipleChoiceBlock = false;
             for (let line of lines) {
                 const tmp = line.trim().replace(/ /g, '').replace(/\t/g, '');
-                if (tmp.startsWith('[]') || tmp.startsWith('[x]')) {
+                if (
+                    tmp.startsWith('[]') ||
+                    tmp.startsWith('[x]') ||
+                    tmp.startsWith('()') ||
+                    tmp.startsWith('(x)')
+                ) {
                     let i = 0;
                     while (i < line.length) {
-                        if (line[i] == ']') break;
+                        if (line[i] == ']' || line[i] == ')') break;
                         i++;
                     }
                     line = line.substring(i + 1).trim();
@@ -127,9 +134,9 @@ export class Question {
                         processed += '?mc?';
                         placedMultipleChoiceBlock = true;
                     }
-                    if (tmp.startsWith('[]')) {
+                    if (tmp.startsWith('[]') || tmp.startsWith('()')) {
                         this.multipleChoiceAnswers.push(false);
-                    } else if (tmp.startsWith('[x]')) {
+                    } else if (tmp.startsWith('[x]') || tmp.startsWith('(x)')) {
                         this.multipleChoiceAnswers.push(true);
                     }
                 } else {
