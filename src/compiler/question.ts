@@ -74,16 +74,17 @@ export class Question {
                 .replace('$CODE$', code)
                 .replace('$INSTANCES$', '' + numberOfInstances);
             fs.writeFileSync(tmpDir + filename, prog);
+            let cmd = '';
             try {
-                res = execSync(command + ' ' + tmpDir + filename, {
+                cmd = command + ' ' + tmpDir + filename;
+                res = execSync(cmd, {
                     encoding: 'utf-8',
                     timeout: 10000,
                     stdio: 'pipe',
                 });
             } catch (e) {
                 part.error = true;
-                part.errorLog =
-                    (e as any)['stderr'] + '--- command: ' + command;
+                part.errorLog = (e as any)['stderr'] + '--- command: ' + cmd;
                 console.log(part.text);
             }
             deleteTempDirectory(tmpDir);
