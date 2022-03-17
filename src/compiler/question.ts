@@ -76,7 +76,8 @@ export class Question {
             fs.writeFileSync(tmpDir + filename, prog);
             let cmd = '';
             try {
-                cmd = command + ' ' + tmpDir + filename;
+                //cmd = command + ' ' + tmpDir + filename;
+                cmd = 'cd ' + tmpDir + ' && ' + command + ' ' + filename;
                 res = execSync(cmd, {
                     encoding: 'utf-8',
                     timeout: 10000,
