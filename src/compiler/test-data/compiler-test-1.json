@@ -33,28 +33,28 @@
             ],
             "variable-values": [
                 [
-                    "1",
-                    "18",
+                    "3",
+                    "20",
                     "true"
                 ],
                 [
                     "1",
-                    "10",
+                    "17",
                     "true"
                 ],
                 [
-                    "5",
-                    "11",
+                    "1",
+                    "12",
                     "true"
                 ],
                 [
                     "13",
-                    "18",
+                    "15",
                     "true"
                 ],
                 [
-                    "11",
-                    "18",
+                    "5",
+                    "16",
                     "true"
                 ]
             ],
@@ -72,7 +72,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 8,
+            "inputLineNo": 23,
             "text": "Gegeben seien die Menge \\( A = \\{ @a1@, @a2@, @a3@ \\} \\) und \\( B = \\{ @b1@, @b2@ \\} \\).\nIst die folgende Aussage wahr?\n?mc?\n",
             "title": "Mengen\n",
             "error": false,
@@ -97,8 +97,16 @@
             ],
             "variable-values": [
                 [
+                    "1",
                     "3",
                     "4",
+                    "1",
+                    "4",
+                    "true"
+                ],
+                [
+                    "3",
+                    "5",
                     "7",
                     "3",
                     "7",
@@ -114,26 +122,18 @@
                 ],
                 [
                     "2",
-                    "4",
-                    "6",
+                    "3",
+                    "5",
                     "2",
-                    "6",
-                    "true"
-                ],
-                [
-                    "1",
-                    "4",
-                    "5",
-                    "1",
                     "5",
                     "true"
                 ],
                 [
                     "1",
                     "4",
-                    "6",
+                    "7",
                     "1",
-                    "6",
+                    "7",
                     "true"
                 ]
             ],
@@ -154,7 +154,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 26,
+            "inputLineNo": 41,
             "text": "Welche der folgenden Restklassen sind <b>Körper</b>?\n?mc?\n",
             "title": "Körper\n",
             "error": false,
@@ -226,7 +226,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 39,
+            "inputLineNo": 54,
             "text": "Which are IPsec protocols?\n?mc?\n",
             "title": "IPsec Protocols\n",
             "error": false,
@@ -318,7 +318,7 @@
         },
         {
             "type": "authentication",
-            "inputLineNo": 54,
+            "inputLineNo": 69,
             "text": "",
             "title": "",
             "error": false,
@@ -357,7 +357,7 @@
         },
         {
             "type": "definition",
-            "inputLineNo": 86,
+            "inputLineNo": 101,
             "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir\n<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)\n</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)\n</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX\n",
             "title": "",
             "error": false,
@@ -366,7 +366,7 @@
         },
         {
             "type": "example",
-            "inputLineNo": 94,
+            "inputLineNo": 109,
             "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:\n<ul><li> \\(z_1+z_2\\)\n<br/>  \\(=(2-3)+(3+2i)\\)\n<br/>  \\(=-1+5i\\)\n</li><li> \\(z_1-z_2\\)\n<br/>  \\(=z_1+(-z_2)\\)\n<br/>  \\(=2+3i+(3+(-2)i)\\)\n<br/>  \\(=(2+3)+(3+(-2))i\\)\n<br/>  \\(=5+i\\)\n</li></ul>",
             "title": "",
             "error": false,
@@ -384,7 +384,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 109,
+            "inputLineNo": 124,
             "text": "Berechne \\(a^b=\\) c\n\n",
             "title": "",
             "error": false,
@@ -415,7 +415,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 123,
+            "inputLineNo": 138,
             "text": "Berechne \\(@a@^@b@=\\) ?0?\n\n",
             "title": "",
             "error": false,
@@ -462,7 +462,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 137,
+            "inputLineNo": 152,
             "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).\n<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?\n</li></ul>\n\n",
             "title": "",
             "error": false,
@@ -529,7 +529,7 @@
         },
         {
             "type": "question",
-            "inputLineNo": 156,
+            "inputLineNo": 171,
             "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne\n<ul><li> \\( z_1 + z_2 = \\) ?0?\n</li><li> \\( z_1 - z_2 = \\) ?1?\n</li></ul>\n\n",
             "title": "",
             "error": false,
@@ -559,52 +559,52 @@
             "variable-values": [
                 [
                     "1",
-                    "3",
-                    "1",
-                    "3",
-                    "0i",
-                    "2+6i",
-                    "1+3i",
-                    "1+3i"
-                ],
-                [
-                    "2",
-                    "5",
-                    "5",
-                    "2",
-                    "-3+3i",
-                    "7+7i",
-                    "2+5i",
-                    "5+2i"
-                ],
-                [
-                    "1",
                     "4",
+                    "5",
+                    "3",
+                    "-4+1i",
+                    "6+7i",
+                    "1+4i",
+                    "5+3i"
+                ],
+                [
+                    "4",
+                    "5",
+                    "1",
+                    "5",
+                    "3+0i",
+                    "5+10i",
+                    "4+5i",
+                    "1+5i"
+                ],
+                [
+                    "5",
+                    "1",
                     "3",
                     "2",
-                    "-2+2i",
-                    "4+6i",
-                    "1+4i",
+                    "2-1i",
+                    "8+3i",
+                    "5+1i",
                     "3+2i"
                 ],
                 [
-                    "4",
-                    "5",
-                    "4",
-                    "3",
-                    "2i",
-                    "8+8i",
-                    "4+5i",
-                    "4+3i"
-                ],
-                [
                     "3",
                     "1",
+                    "3",
+                    "5",
+                    "-4i",
+                    "6+6i",
+                    "3+1i",
+                    "3+5i"
+                ],
+                [
+                    "1",
+                    "3",
                     "4",
                     "3",
-                    "-1-2i",
-                    "7+4i",
-                    "3+1i",
+                    "-3+0i",
+                    "5+6i",
+                    "1+3i",
                     "4+3i"
                 ]
             ],
@@ -629,7 +629,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 210,
+            "inputLineNo": 225,
             "text": "error: unknown part type 'Chatquestion.'",
             "title": "",
             "error": false,
@@ -647,7 +647,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 236,
+            "inputLineNo": 251,
             "text": "error: unknown part type 'Speedreview.'",
             "title": "",
             "error": false,
@@ -665,7 +665,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 255,
+            "inputLineNo": 270,
             "text": "error: unknown part type 'Links.'",
             "title": "",
             "error": false,

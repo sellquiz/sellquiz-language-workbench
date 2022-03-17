@@ -4,7 +4,11 @@ data/servers/*.db
 
 node_modules/
 cache/
-services/cache/
+
+!services/*
+services/cache/*
+!services/cache/.htaccess
+
 tmp/
 config.txt
 package-lock.json

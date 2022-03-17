@@ -24,12 +24,11 @@ export interface JSONType {
 
 export function makeTempDirectory(): string {
     const tmp =
-        os.tmpdir() +
+        /*os.tmpdir() +
         path.sep +
         'sellquiz-language-workbench' +
-        path.sep +
-        Math.floor(Math.random() * 1e15).toString() +
-        path.sep;
+        path.sep +*/
+        'cache/' + Math.floor(Math.random() * 1e15).toString() + path.sep;
     fs.mkdirSync(tmp, { recursive: true });
     return tmp;
 }
