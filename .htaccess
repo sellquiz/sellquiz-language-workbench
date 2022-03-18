@@ -1,4 +1,6 @@
-<Files "config.txt">  
-  Order Allow,Deny
-  Deny from all
+<Files "index.php">
+AuthName "Login Sellquiz Language Workbench"
+AuthType Basic
+AuthUserFile /opt/passwd/.htpasswd
+Require valid-user
 </Files>
