@@ -17,6 +17,15 @@ const coursePage = new CoursePage(mathjaxInstance, {
     showSolution: false,
 });
 
+export function initBase64(id: string): void {
+    id = window.atob(id);
+    const tokens = id.split('#');
+    const serverName = tokens[0];
+    const courseName = tokens[1];
+    const documentName = tokens[2];
+    init(serverName, courseName, documentName);
+}
+
 export function init(
     serverName: string,
     courseName: string,

@@ -50,10 +50,11 @@
         </div>
 
         <script>
-            slwEMU.init(
-                '<?php echo $_GET['server']; ?>',
-                '<?php echo $_GET['course']; ?>',
-                '<?php echo $_GET['document']; ?>');
+            /*slwEMU.init(
+                '< ?php echo $_GET['server']; ?>',
+                '< ?php echo $_GET['course']; ?>',
+                '< ?php echo $_GET['document']; ?>');*/
+            slwEMU.initBase64('<?php echo $_GET['id']; ?>');
         </script>
 
         <script>

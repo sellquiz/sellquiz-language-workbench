@@ -769,7 +769,11 @@ export function visitServer() {
     const server = currentServerName;
     const course = currentCourseName;
     const document = currentDocumentName;
-    window
+
+    const id = window.btoa(server + '#' + course + '#' + document);
+    window.open('emulator.php?id=' + encodeURIComponent(id), '_blank').focus();
+
+    /*window
         .open(
             'emulator.php?server=' +
                 encodeURIComponent(server) +
@@ -779,7 +783,7 @@ export function visitServer() {
                 encodeURIComponent(document),
             '_blank',
         )
-        .focus();
+        .focus();*/
 }
 
 export function toggleButton(buttonName: string) {
