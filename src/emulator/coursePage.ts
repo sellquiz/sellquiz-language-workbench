@@ -23,6 +23,7 @@ import { PartProgrammingQuestion } from './partProgrammingQuestion';
 export interface CoursePageOptions {
     renderProgressBars: boolean;
     showQuestionVariables: boolean;
+    showQuestionScore: boolean;
     showSolution: boolean;
 }
 
@@ -37,12 +38,14 @@ export class CoursePage {
     private mathjaxInst: MathJax = null;
     private renderProgressBars = false;
     private showQuestionVariables = false;
+    private showQuestionScore = false;
     private showSolution = false;
 
     constructor(mathjaxInst: MathJax, options: CoursePageOptions) {
         this.mathjaxInst = mathjaxInst;
         this.renderProgressBars = options.renderProgressBars;
         this.showQuestionVariables = options.showQuestionVariables;
+        this.showQuestionScore = options.showQuestionScore;
         this.showSolution = options.showSolution;
     }
 
@@ -179,6 +182,7 @@ export class CoursePage {
                 case 'question':
                     partInstance = new PartQuestion(this);
                     partInstance.showVariables = this.showQuestionVariables;
+                    partInstance.showScore = this.showQuestionScore;
                     partInstance.showSolution = this.showSolution;
                     partInstance.import(part);
                     break;

@@ -101,12 +101,15 @@
                     </tbody>
                 </table>
 
-                <button type="button"
-                    class="btn btn-primary btn-sm my-2"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="right"
-                    title="create a new document">Create Document
-                </button>
+                <span data-bs-toggle="modal"
+                    data-bs-target="#createDocumentModal">
+                    <button type="button"
+                        class="btn btn-primary btn-sm my-2"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="create a new document">Create Document
+                    </button>
+                </span>
 
                 <br/>
 

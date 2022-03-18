@@ -14,6 +14,7 @@ const mathjaxInstance = new MathJax();
 const coursePage = new CoursePage(mathjaxInstance, {
     renderProgressBars: false,
     showQuestionVariables: false,
+    showQuestionScore: false,
     showSolution: false,
 });
 

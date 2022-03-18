@@ -241,6 +241,7 @@ export class PartQuestion extends Part {
     htmlFeedbackElement: HTMLElement = null;
 
     showVariables = false;
+    showScore = false;
     showSolution = false;
 
     private getVariable(id: string): QuestionVariable {
@@ -451,8 +452,10 @@ export class PartQuestion extends Part {
             this_.htmlFeedbackElement.innerHTML = allCorrect
                 ? CHECK_MARK
                 : CHECK_CROSS;
-            this_.htmlFeedbackElement.innerHTML +=
-                '&nbsp' + this_.actualScore + ' / ' + this_.maxScore;
+            if (this_.showScore) {
+                this_.htmlFeedbackElement.innerHTML +=
+                    '&nbsp' + this_.actualScore + ' / ' + this_.maxScore;
+            }
         });
         // feedback element
         this.htmlFeedbackElement = document.createElement('span');

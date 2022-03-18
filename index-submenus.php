@@ -145,9 +145,16 @@
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show variables"
                 onclick="hide_tooltips();slwEditor.toggleButton('preview-show-variables');">
-                <!--<i class="fas fa-chevron-down"></i>-->
                 &nbsp;<i class="fa-solid fa-info"></i>&nbsp;
             </button>
+
+            <button id="preview-show-score" type="button" class="btn btn-outline-dark mx-0 btn-sm"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="show scoring"
+                onclick="hide_tooltips();slwEditor.toggleButton('preview-show-score');">
+                &nbsp;<i class="fa-solid fa-check-double"></i>&nbsp;
+            </button>
+
             <button id="preview-show-export" type="button" class="btn btn-outline-dark mx-0 btn-sm"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="show 'export' buttons"

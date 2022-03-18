@@ -44,6 +44,7 @@ export const toggle_states: { [key: string]: boolean } = {
     'preview-show-solutions': false,
     'preview-show-variables': false,
     'preview-show-export': false,
+    'preview-show-score': false,
 };
 
 export function refresh_filelist() {
@@ -356,7 +357,7 @@ export function init() {
             .replace(/\t/g, '\\t');
         html +=
             `<a class="list-group-item list-group-item-action"
-                    onclick="slw.insertCode('` +
+                    onclick="slwEditor.insertCode('` +
             code +
             `');"
                     style="cursor:pointer;"
@@ -473,6 +474,8 @@ export function toggle(buttonName: string) {
     } else if (buttonName === 'preview-show-solutions') {
         update();
     } else if (buttonName === 'preview-show-variables') {
+        update();
+    } else if (buttonName === 'preview-show-score') {
         update();
     } else if (buttonName === 'preview-show-export') {
         update();

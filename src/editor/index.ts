@@ -67,8 +67,64 @@ export const toggle_states: { [key: string]: boolean } = {
     'preview-show-source-links': true,
     'preview-show-solutions': false,
     'preview-show-variables': false,
+    'preview-show-score': false,
     'preview-show-export': false,
 };
+
+function isID(id: string): boolean {
+    for (let i = 0; i < id.length; i++) {
+        if (id[i] === '_') continue;
+        if (id[i] >= 'A' && id[i] <= 'Z') continue;
+        if (id[i] >= 'a' && id[i] <= 'z') continue;
+        if (i > 0 && id[i] >= '0' && id[i] <= '6') continue;
+        return false;
+    }
+    return true;
+}
+
+export function createDocument() {
+    const order = (<HTMLInputElement>(
+        document.getElementById('createDocumentModalOrder')
+    )).value;
+    const name = (<HTMLInputElement>(
+        document.getElementById('createDocumentModalId')
+    )).value;
+    const desc = (<HTMLInputElement>(
+        document.getElementById('createDocumentModalDesc')
+    )).value;
+    // TODO: check, if order is a number
+    if (isID(name) == false) {
+        alert('invalid ID!!'); // TODO: better message; alerts are bad practice!!
+        return;
+    }
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'create_document',
+                    query_values: {
+                        name: name,
+                        order: order,
+                        desc: desc,
+                        courseId: currentCourseId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(data);
+
+            refreshDocumentList();
+            refreshDocumentManagement();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
 
 export function loadDocument(documentId: string) {
     if (editor.getValue() !== editorLastSavedText) {
@@ -430,6 +486,7 @@ export function loadCourse(courseId: string) {
                 document.getElementById('courselist_button');
             courseListButton.innerHTML = currentCourseName;
             refreshDocumentList();
+            refreshDocumentManagement();
         })
         .catch(function (error) {
             // TODO
@@ -629,10 +686,12 @@ function init2() {
         '\n---\nDefinition.\n---\n\n',
         'Theorem',
         '\n---\nTheorem.\n---\n\n',
-        'SELL-Quiz',
-        '\n---\nSell. My Quiz\n\tx, y in {1,2,3}\n\\tz := x + y\n$ x + y = #z $\n---\n\n',
-        'STACK-Quiz',
-        '\n---\nStack. My Quiz\n\n@code\nx:random(10)\ny:random(10)\nz:x+y;\n\n@text\n$x+y=#z$\n\n@solution\nJust add both numbers!\n---\n\n',
+        'Multiple Choice Question',
+        '\n---\nQuestion.\n@title\nMy Multiple Choice question\n@text\nSelect the correct answers:\n[x] correct answer\n[ ] incorrect answer\n[x] correct answer\n---\n\n',
+        'Quiz with random variables (Python-based)',
+        '\n---\nQuestion.\n@title\nMy question with random variables (Python)\n@python\nimport random\na = random.randint(0, 25)\nb = random.randint(0, 25)\nc = a + b\n@text\nCalculate $a + b = $ #c\n---\n\n',
+        'Quiz with random variables (SageMath-based)',
+        '\n---\nQuestion.\n@title\nMy question with random variables (Sage Math)\n@sage\na = randint(1, 10);\nb = randint(1, 10);\nc = a + b;\n@text\nCalculate $a + b = $ #c\n---\n\n',
     ];
     html = '';
     for (let i = 0; i < code_templates.length / 2; i++) {
@@ -642,7 +701,7 @@ function init2() {
             .replace(/\t/g, '\\t');
         html +=
             `<a class="list-group-item list-group-item-action"
-                     onclick="slw.insertCode('` +
+                     onclick="slwEditor.insertCode('` +
             code +
             `');"
                      style="cursor:pointer;"
@@ -701,6 +760,7 @@ export function updateEmulator(fastUpdate = true) {
             const doc = new emulatorCoursePage.CoursePage(mathjaxInstance, {
                 renderProgressBars: false,
                 showQuestionVariables: toggle_states['preview-show-variables'],
+                showQuestionScore: toggle_states['preview-show-score'],
                 showSolution: toggle_states['preview-show-solutions'],
             });
             doc.import(data);
@@ -801,6 +861,8 @@ export function toggleButton(buttonName: string) {
     } else if (buttonName === 'preview-show-solutions') {
         updateEmulator();
     } else if (buttonName === 'preview-show-variables') {
+        updateEmulator();
+    } else if (buttonName === 'preview-show-score') {
         updateEmulator();
     } else if (buttonName === 'preview-show-export') {
         updateEmulator();

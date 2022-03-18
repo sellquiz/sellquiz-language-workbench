@@ -21,6 +21,7 @@ const CHAT_DEF_PATH = 'data/courses/demo/demo-app-chat.json';
 const coursePage = new CoursePage(mathjaxInstance, {
     renderProgressBars: true,
     showQuestionVariables: false,
+    showQuestionScore: false,
     showSolution: false,
 });
 

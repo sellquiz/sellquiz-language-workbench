@@ -225,6 +225,14 @@ function service($command) {
                 $command["query_values"]);
             break;
 
+        case "create_document":
+            $command["query_values"]["dateCreated"] = time();
+            $command["query_values"]["dateModified"] = time();
+            return query($db_path,
+                "INSERT INTO Document (documentName, documentOrderIndex, documentDesc, documentText, documentCompiled, documentState, courseId, documentDateCreated, documentDateModified) VALUES (:name, :order, :desc, '', '', 'work-in-progress', :courseId, :dateCreated, :dateModified);",
+                $command["query_values"]);
+            break;
+
         case "get_document":
             return query($db_path,
                 "SELECT * FROM Document WHERE id=:id;",
@@ -238,8 +246,12 @@ function service($command) {
             break;
 
         case "save_document":
+            $command["query_values"]["dateModified"] = time();
+            query($db_path,
+                "UPDATE Document SET documentText=:text, documentDateModified=:dateModified WHERE id=:id;",
+                $command["query_values"]);
             return query($db_path,
-                "UPDATE Document SET documentText=:text WHERE id=:id;",
+                "INSERT INTO DocumentBackup (documentId, documentBackupText, documentBackupCreated) VALUES (:id,:text,:dateModified);",
                 $command["query_values"]);
             break;
 
