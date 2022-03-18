@@ -213,6 +213,12 @@ function service($command) {
                 $command["query_values"]);
             break;
 
+        case "get_course":
+            return query($db_path,
+                "SELECT id, courseName, courseDesc, courseDateCreated, courseDateModified FROM Course WHERE id=:id;",
+                $command["query_values"]);
+            break;
+
         case "get_document_list":
             return query($db_path,
                 "SELECT id, documentOrderIndex, documentName, documentDesc, courseId, documentDateCreated, documentDateModified, documentState FROM Document WHERE courseId=:courseId ORDER BY documentOrderIndex ASC;",

@@ -409,8 +409,32 @@ export function cancelEditDocumentMetadata() {
 
 export function loadCourse(courseId: string) {
     currentCourseId = courseId;
-    refreshDocumentList();
-    // TODO!!
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'get_course',
+                    query_values: {
+                        id: currentCourseId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            //console.log(data);
+            currentCourseName = data.rows[0][1];
+            const courseListButton =
+                document.getElementById('courselist_button');
+            courseListButton.innerHTML = currentCourseName;
+            refreshDocumentList();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
 }
 
 export function refreshCourseList() {
