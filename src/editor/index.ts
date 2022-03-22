@@ -71,9 +71,10 @@ export const toggle_states: { [key: string]: boolean } = {
     'preview-show-export': false,
 };
 
-function isID(id: string): boolean {
+function isID(id: string, allowHyphen = true): boolean {
     for (let i = 0; i < id.length; i++) {
         if (id[i] === '_') continue;
+        if (id[i] === '-') continue;
         if (id[i] >= 'A' && id[i] <= 'Z') continue;
         if (id[i] >= 'a' && id[i] <= 'z') continue;
         if (i > 0 && id[i] >= '0' && id[i] <= '6') continue;
