@@ -115,6 +115,8 @@ function check_system() {
 
 function service($command) {
 
+    $userId = 1; // TODO!!
+
     // TODO: check privileges for all queries!!
     global $sql_list, $db_path, $db_server_path;
     switch($command["type"]) {
@@ -233,6 +235,11 @@ function service($command) {
                 $command["query_values"]);
             break;
 
+        case "delete_document":
+            return query($db_path, "DELETE FROM Document WHERE id=:id",
+                $command["query_values"]);
+            break;
+
         case "get_document":
             return query($db_path,
                 "SELECT * FROM Document WHERE id=:id;",
@@ -247,11 +254,12 @@ function service($command) {
 
         case "save_document":
             $command["query_values"]["dateModified"] = time();
+            $command["query_values"]["userId"] = $userId;
             query($db_path,
                 "UPDATE Document SET documentText=:text, documentDateModified=:dateModified WHERE id=:id;",
                 $command["query_values"]);
             return query($db_path,
-                "INSERT INTO DocumentBackup (documentId, documentBackupText, documentBackupCreated) VALUES (:id,:text,:dateModified);",
+                "INSERT INTO DocumentBackup (documentId, documentBackupText, userId, documentBackupCreated) VALUES (:id,:text,:userId,:dateModified);",
                 $command["query_values"]);
             break;
 

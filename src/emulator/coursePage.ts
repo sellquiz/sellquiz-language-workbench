@@ -7,7 +7,7 @@
 
 import { MathJax } from '../shared/mathjax';
 import { Part } from './part';
-import { PartDefinition } from './partDefinition';
+import { PartDefinitionTheoremProof, Type } from './partDefinitionTheoremProof';
 import { PartExample } from './partExample';
 import { PartHeadline } from './partHeadline';
 import { PartImage } from './partImage';
@@ -25,6 +25,7 @@ export interface CoursePageOptions {
     showQuestionVariables: boolean;
     showQuestionScore: boolean;
     showSolution: boolean;
+    showSourceCodeLinks: boolean;
 }
 
 export class CoursePage {
@@ -40,6 +41,7 @@ export class CoursePage {
     private showQuestionVariables = false;
     private showQuestionScore = false;
     private showSolution = false;
+    private showSourceLinks = false;
 
     constructor(mathjaxInst: MathJax, options: CoursePageOptions) {
         this.mathjaxInst = mathjaxInst;
@@ -47,6 +49,7 @@ export class CoursePage {
         this.showQuestionVariables = options.showQuestionVariables;
         this.showQuestionScore = options.showQuestionScore;
         this.showSolution = options.showSolution;
+        this.showSourceLinks = options.showSourceCodeLinks;
     }
 
     getMathJaxInst(): MathJax {
@@ -59,6 +62,10 @@ export class CoursePage {
 
     getVisiblePageIdx(): number {
         return this.visiblePageIdx;
+    }
+
+    getShowSourceLinks(): boolean {
+        return this.showSourceLinks;
     }
 
     incrementNumPages(): void {
@@ -168,7 +175,20 @@ export class CoursePage {
                     partInstance.import(part);
                     break;
                 case 'definition':
-                    partInstance = new PartDefinition(this);
+                case 'theorem':
+                case 'proof':
+                    partInstance = new PartDefinitionTheoremProof(this);
+                    switch (part['type']) {
+                        case 'definition':
+                            partInstance.type = Type.Definition;
+                            break;
+                        case 'theorem':
+                            partInstance.type = Type.Theorem;
+                            break;
+                        case 'proof':
+                            partInstance.type = Type.Proof;
+                            break;
+                    }
                     partInstance.import(part);
                     break;
                 case 'image':
@@ -218,7 +238,7 @@ export class CoursePage {
         for (const part of this.parts) {
             if (
                 part instanceof PartParagraph ||
-                part instanceof PartDefinition ||
+                part instanceof PartDefinitionTheoremProof ||
                 part instanceof PartExample
             ) {
                 numTextPartsTotal++;

@@ -151,6 +151,10 @@ export class Document {
                         this.compileAuthentication(part);
                     } else if (part.id === 'Definition.') {
                         this.compileDefinition(part);
+                    } else if (part.id === 'Theorem.') {
+                        this.compileTheorem(part);
+                    } else if (part.id === 'Proof.') {
+                        this.compileProof(part);
                     } else if (part.id === 'Example.') {
                         this.compileExample(part);
                     } else if (part.id === 'Question.') {
@@ -180,6 +184,16 @@ export class Document {
 
     private compileDefinition(part: Part): void {
         part.type = PartType.definition;
+        part.text = this.compileParagraph(part.labeledText['']);
+    }
+
+    private compileTheorem(part: Part): void {
+        part.type = PartType.theorem;
+        part.text = this.compileParagraph(part.labeledText['']);
+    }
+
+    private compileProof(part: Part): void {
+        part.type = PartType.proof;
         part.text = this.compileParagraph(part.labeledText['']);
     }
 

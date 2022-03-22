@@ -18,6 +18,7 @@ export class Question {
     numberOfInstances = 0;
 
     // multipleChoice* is only used internally. Values are exported to variable*
+    isSingleChoice = false;
     multipleChoiceTexts: string[] = [];
     multipleChoiceAnswers: boolean[] = [];
 
@@ -125,6 +126,7 @@ export class Question {
                     tmp.startsWith('()') ||
                     tmp.startsWith('(x)')
                 ) {
+                    if (tmp.startsWith('(')) this.isSingleChoice = true;
                     let i = 0;
                     while (i < line.length) {
                         if (line[i] == ']' || line[i] == ')') break;
@@ -133,7 +135,7 @@ export class Question {
                     line = line.substring(i + 1).trim();
                     this.multipleChoiceTexts.push(line);
                     if (placedMultipleChoiceBlock == false) {
-                        processed += '?mc?';
+                        processed += this.isSingleChoice ? '?sc?' : '?mc?';
                         placedMultipleChoiceBlock = true;
                     }
                     if (tmp.startsWith('[]') || tmp.startsWith('()')) {
@@ -152,6 +154,9 @@ export class Question {
                     this.variableValues.push([]);
             }
             for (let i = 0; i < this.multipleChoiceAnswers.length; i++) {
+                // note: 'mc__' is used for BOTH multiple-choice AND single-
+                // choice answers. This enables simpler implementation of the
+                // compiler and the emulator.
                 this.variableIDs.push('mc__' + i);
                 this.variableTypes.push('bool');
                 this.variableTexts.push(

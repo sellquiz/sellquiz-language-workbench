@@ -118,8 +118,10 @@ CREATE TABLE DocumentBackup (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     documentId INTEGER NOT NULL,
     documentBackupText TEXT,
+    userId INTEGER NOT NULL,
     documentBackupCreated INTEGER NOT NULL, -- UNIX time
-    FOREIGN KEY(documentId) REFERENCES Document(id)
+    FOREIGN KEY(documentId) REFERENCES Document(id),
+    FOREIGN KEY(userId) REFERENCES User(id)
 );
 
 CREATE TABLE UserRole (

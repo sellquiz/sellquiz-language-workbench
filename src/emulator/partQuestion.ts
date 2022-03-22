@@ -152,7 +152,9 @@ export class QuestionInputField {
                 inputElement = document.createElement('input');
                 this.htmlInputElements.push(inputElement);
                 this.htmlElement.appendChild(inputElement);
-                inputElement.type = 'checkbox';
+                if (this.question.isSingleChoice) inputElement.type = 'radio';
+                else inputElement.type = 'checkbox';
+                inputElement.name = 'button_group_' + this.question.uniqueId;
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
@@ -244,6 +246,12 @@ export class PartQuestion extends Part {
     showScore = false;
     showSolution = false;
 
+    isSingleChoice = false; // only used, if variables starting with 'mc__'
+    // exists (these are used for both multiple-choice and single-choice
+    // questions)
+
+    uniqueId = ''; // used to name single-choice button groups
+
     private getVariable(id: string): QuestionVariable {
         for (let i = 0; i < this.variables.length; i++) {
             const v = this.variables[i];
@@ -295,8 +303,10 @@ export class PartQuestion extends Part {
             } while (oldText !== text);
         }
         if (placeInputs) {
-            if (text.includes('?mc?')) {
-                // multiple choice
+            // multiple choice and single choice
+            if (text.includes('?mc?') || text.includes('?sc?')) {
+                this.isSingleChoice = text.includes('?sc?');
+                // multiple choice and single choice
                 const mc: number[] = []; // answer indices
                 for (const inputField of this.inputFields) {
                     if (inputField.answerVariable.id.startsWith('mc__')) {
@@ -325,7 +335,8 @@ export class PartQuestion extends Part {
                         this.generateText(this.variables[varIdx].text, false) +
                         '<br/>';
                 }
-                text = text.replace('?mc?', mcStr);
+                if (this.isSingleChoice) text = text.replace('?sc?', mcStr);
+                else text = text.replace('?mc?', mcStr);
             }
             for (let i = 0; i < this.inputFields.length; i++) {
                 text = text.replace(
@@ -380,7 +391,8 @@ export class PartQuestion extends Part {
         if (this.showVariables) {
             let variableValues = '';
             for (const v of this.variables) {
-                variableValues += v.id + '=' + v.toMathJs(0) + ', &nbsp;';
+                variableValues +=
+                    v.id + '=' + v.toMathJs(this.variantIdx) + ', &nbsp;';
             }
             headline = document.createElement('p');
             headline.classList.add(
@@ -467,6 +479,7 @@ export class PartQuestion extends Part {
     }
 
     import(data: any): void {
+        this.uniqueId = data['inputLineNo'];
         this.questionText = data['text'];
         this.error = data['error'];
         this.errorLog = data['errorLog'];
@@ -505,13 +518,15 @@ export class PartQuestion extends Part {
                     );
             }
         }
-        for (let i = 0; i < data['variable-values'].length; i++) {
+        const numVariants = data['variable-values'].length;
+        for (let i = 0; i < numVariants; i++) {
             const variant = data['variable-values'][i];
             for (let j = 0; j < variant.length; j++) {
                 const value = variant[j];
                 this.variables[j].values.push(value);
             }
         }
+        this.variantIdx = Math.floor(Math.random() * numVariants);
         for (let i = 0; i < data['variable-texts'].length; i++) {
             this.variables[i].text = data['variable-texts'][i];
         }

@@ -8,8 +8,15 @@
 import { Part } from './part';
 import { CoursePage } from './coursePage';
 
-export class PartDefinition extends Part {
+export enum Type {
+    Definition,
+    Theorem,
+    Proof,
+}
+
+export class PartDefinitionTheoremProof extends Part {
     text = '';
+    type = Type.Definition;
     constructor(coursePage: CoursePage) {
         super(coursePage);
         this.allowReadFlag = true;
@@ -38,7 +45,17 @@ export class PartDefinition extends Part {
             'text-light',
             'rounded',
         );
-        headline.innerHTML = '&nbsp;<b>Definition</b>';
+        switch (this.type) {
+            case Type.Definition:
+                headline.innerHTML = '&nbsp;<b>Definition</b>';
+                break;
+            case Type.Theorem:
+                headline.innerHTML = '&nbsp;<b>Satz</b>';
+                break;
+            case Type.Proof:
+                headline.innerHTML = '&nbsp;<b>Beweis</b>';
+                break;
+        }
         divCol.appendChild(headline);
         const text = document.createElement('p');
         text.classList.add('px-1', 'py-0', 'my-0');

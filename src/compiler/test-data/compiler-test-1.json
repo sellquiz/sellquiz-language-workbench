@@ -14,6 +14,68 @@
         },
         {
             "type": "question",
+            "inputLineNo": 7,
+            "text": "?sc?\n",
+            "title": "Single-Choice Test\n",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n@title\nSingle-Choice Test\n@text\n(x) correct  answer\n( ) incorrect answer\n( ) incorrect  answer\n---\n",
+            "solution": "",
+            "variable-ids": [
+                "sc__0",
+                "sc__1",
+                "sc__2"
+            ],
+            "variable-types": [
+                "bool",
+                "bool",
+                "bool"
+            ],
+            "variable-values": [
+                [
+                    "true",
+                    "false",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "false"
+                ],
+                [
+                    "true",
+                    "false",
+                    "false"
+                ]
+            ],
+            "variable-texts": [
+                "correct  answer",
+                "incorrect answer",
+                "incorrect  answer"
+            ],
+            "input-field-types": [
+                "check-box",
+                "check-box",
+                "check-box"
+            ],
+            "input-field-answers": [
+                "sc__0",
+                "sc__1",
+                "sc__2"
+            ]
+        },
+        {
+            "type": "question",
             "inputLineNo": 8,
             "text": "Wähle die richtigen Antworten aus :\n?mc?\n",
             "title": "Invertierbare Restklassen\n",
@@ -330,7 +392,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 81,
+            "inputLineNo": 91,
             "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.\n",
             "title": "",
             "error": false,
@@ -339,7 +401,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 83,
+            "inputLineNo": 93,
             "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.\n",
             "title": "",
             "error": false,
@@ -348,7 +410,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 99,
+            "inputLineNo": 109,
             "text": "",
             "title": "",
             "error": false,
@@ -375,7 +437,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 122,
+            "inputLineNo": 132,
             "text": "",
             "title": "",
             "error": false,
@@ -406,7 +468,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 136,
+            "inputLineNo": 146,
             "text": "",
             "title": "",
             "error": false,
@@ -453,7 +515,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 150,
+            "inputLineNo": 160,
             "text": "",
             "title": "",
             "error": false,
@@ -520,7 +582,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 168,
+            "inputLineNo": 178,
             "text": "",
             "title": "",
             "error": false,
@@ -638,7 +700,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 249,
+            "inputLineNo": 259,
             "text": "",
             "title": "",
             "error": false,
@@ -656,7 +718,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 268,
+            "inputLineNo": 278,
             "text": "",
             "title": "",
             "error": false,

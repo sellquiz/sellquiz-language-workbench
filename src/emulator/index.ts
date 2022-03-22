@@ -16,6 +16,7 @@ const coursePage = new CoursePage(mathjaxInstance, {
     showQuestionVariables: false,
     showQuestionScore: false,
     showSolution: false,
+    showSourceCodeLinks: false,
 });
 
 export function initBase64(id: string): void {

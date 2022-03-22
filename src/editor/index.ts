@@ -82,18 +82,52 @@ function isID(id: string): boolean {
     return true;
 }
 
+export function deleteDocument(id: number) {
+    // TODO: yes/no dialog!!
+    axios
+        .post(
+            'services/service.php',
+            new URLSearchParams({
+                command: JSON.stringify({
+                    type: 'delete_document',
+                    query_values: {
+                        id: id,
+                        courseId: currentCourseId,
+                    },
+                }),
+            }),
+        )
+        .then(function (response) {
+            const data = response.data;
+            // TODO: check data.error
+            console.log(data);
+
+            refreshDocumentList();
+            refreshDocumentManagement();
+        })
+        .catch(function (error) {
+            // TODO
+            console.log(error);
+        });
+}
+
 export function createDocument() {
-    const order = (<HTMLInputElement>(
+    const order = <HTMLInputElement>(
         document.getElementById('createDocumentModalOrder')
-    )).value;
-    const name = (<HTMLInputElement>(
+    );
+    const name = <HTMLInputElement>(
         document.getElementById('createDocumentModalId')
-    )).value;
-    const desc = (<HTMLInputElement>(
+    );
+    const desc = <HTMLInputElement>(
         document.getElementById('createDocumentModalDesc')
-    )).value;
+    );
+
     // TODO: check, if order is a number
-    if (isID(name) == false) {
+    let orderValue = order.value;
+    const nameValue = name.value;
+    const descValue = desc.value;
+    if (orderValue.length == 0) orderValue = '0';
+    if (isID(nameValue) == false) {
         alert('invalid ID!!'); // TODO: better message; alerts are bad practice!!
         return;
     }
@@ -104,9 +138,9 @@ export function createDocument() {
                 command: JSON.stringify({
                     type: 'create_document',
                     query_values: {
-                        name: name,
-                        order: order,
-                        desc: desc,
+                        name: nameValue,
+                        order: orderValue,
+                        desc: descValue,
                         courseId: currentCourseId,
                     },
                 }),
@@ -116,6 +150,10 @@ export function createDocument() {
             const data = response.data;
             // TODO: check data.error
             console.log(data);
+
+            name.value = '';
+            order.value = '';
+            desc.value = '';
 
             refreshDocumentList();
             refreshDocumentManagement();
@@ -378,7 +416,11 @@ export function refreshDocumentManagement() {
                         class="btn btn-primary btn-sm"
                         data-bs-toggle="tooltip"
                         data-bs-placement="bottom"
-                        title="delete">
+                        title="delete"
+                        onclick="slwEditor.deleteDocument(` +
+                    row[0] +
+                    `);"
+                        >
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>`;
@@ -598,7 +640,7 @@ function init2() {
             { regex: /%.*/, token: 'comment' },
             { regex: /#.*/, token: 'keyword', sol: true },
             {
-                regex: /---|========|Definition\.|Example\.|Theorem\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@title|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@matching|\/\/\/|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
+                regex: /---|========|Definition\.|Example\.|Theorem\.|Proof\.|Chatquestion\.|Question\.|Remark\.|JavaQuestion\.|Python\.|Authentication\.|Tikz\.|Speedreview\.|Links\.|Plot2d\.|!tex|!require-authentication|!require-min-score|@tags|@title|@code|@text|@solution|@given|@asserts|@options|@questions|@forbidden-keywords|@python|@matching|\/\/\/|@settings|@sage|@octave|@maxima|@answer|@database|@input|@required-keywords/,
                 token: 'keyword',
             },
         ],
@@ -673,6 +715,7 @@ function init2() {
     document.getElementById('math-symbols').innerHTML = html;
 
     // populate code templates
+    // TODO: Theorem, Proof
     const code_templates = [
         'Document Title',
         '\n##### My Title\n',
@@ -712,13 +755,12 @@ function init2() {
     document.getElementById('insertCodeList').innerHTML = html;
 }
 
-/*
- export function jump(lineNo: number) {
-     editor.scrollTo(
-         null,
-         editor.charCoords({ line: lineNo, ch: 0 }, 'local').top,
-     );
- }*/
+export function jumpToSourceCodeLine(lineNo: number) {
+    editor.scrollTo(
+        null,
+        editor.charCoords({ line: lineNo - 1, ch: 0 }, 'local').top,
+    );
+}
 
 export function insertCode(text: string) {
     const doc = editor.getDoc();
@@ -762,6 +804,7 @@ export function updateEmulator(fastUpdate = true) {
                 showQuestionVariables: toggle_states['preview-show-variables'],
                 showQuestionScore: toggle_states['preview-show-score'],
                 showSolution: toggle_states['preview-show-solutions'],
+                showSourceCodeLinks: toggle_states['preview-show-source-links'],
             });
             doc.import(data);
             renderedContentElement.innerHTML = '';
@@ -858,6 +901,8 @@ export function toggleButton(buttonName: string) {
              spellInst = new spell.Spell();
          } else update();*/
         // TODO
+    } else if (buttonName === 'preview-show-source-links') {
+        updateEmulator();
     } else if (buttonName === 'preview-show-solutions') {
         updateEmulator();
     } else if (buttonName === 'preview-show-variables') {

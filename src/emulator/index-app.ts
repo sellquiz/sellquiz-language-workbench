@@ -23,6 +23,7 @@ const coursePage = new CoursePage(mathjaxInstance, {
     showQuestionVariables: false,
     showQuestionScore: false,
     showSolution: false,
+    showSourceCodeLinks: false,
 });
 
 export function init() {

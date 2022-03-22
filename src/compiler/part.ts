@@ -20,6 +20,8 @@ export enum PartType {
     headline3 = 'headline-3',
     paragraph = 'paragraph',
     definition = 'definition',
+    theorem = 'theorem',
+    proof = 'proof',
     example = 'example',
     question = 'question',
     programmingQuestion = 'programming-question',

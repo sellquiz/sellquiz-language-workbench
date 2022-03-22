@@ -10,6 +10,7 @@ import { Part } from './part';
 export class PartHeadline extends Part {
     text = '';
     level = 1;
+    inputLineNo = 1; // source code line
     generateDOM(rootElement: HTMLElement): void {
         const divContainer = document.createElement('div');
         this.htmlElement = divContainer;
@@ -23,19 +24,31 @@ export class PartHeadline extends Part {
         const divCol = document.createElement('div');
         divCol.classList.add('col', 'py-1');
         divRow.appendChild(divCol);
+
+        let text = this.text;
+        if (this.coursePage.getShowSourceLinks()) {
+            text =
+                '<span onclick="slwEditor.jumpToSourceCodeLine(' +
+                this.inputLineNo +
+                ');">' +
+                text +
+                '</span>';
+        }
+
         switch (this.level) {
             case 1:
-                divCol.innerHTML = '<br/><h2><b>' + this.text + '</b></h2>';
+                divCol.innerHTML = '<br/><h2><b>' + text + '</b></h2>';
                 break;
             case 2:
-                divCol.innerHTML = '<br/><h3><b>' + this.text + '</b></h3>';
+                divCol.innerHTML = '<br/><h3><b>' + text + '</b></h3>';
                 break;
             default:
-                divCol.innerHTML = '<br/><h4>' + this.text + '</h4>';
+                divCol.innerHTML = '<br/><h4>' + text + '</h4>';
                 break;
         }
     }
     import(data: any): void {
         this.text = data['text'];
+        this.inputLineNo = data['inputLineNo'];
     }
 }
