@@ -51,7 +51,9 @@ export class Document {
                 const part = new Part(lineIdx + 1);
                 this.parts.push(part);
                 part.type = PartType.headline1;
-                part.text = this.section + '. ' + line.substring(2).trim();
+                const rest = line.substring(2).trim();
+                if (rest.startsWith('*')) part.text = rest.substring(1);
+                else part.text = this.section + '. ' + rest;
                 this.section++;
                 this.subsection = 1;
                 this.susubsection = 1;
