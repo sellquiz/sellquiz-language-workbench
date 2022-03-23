@@ -17,6 +17,8 @@ import { OCTAVE_PROG, PYTHON_PROG, SAGE_PROG } from './strings';
 export class Question {
     numberOfInstances = 0;
 
+    isPseudoQuestion = false; // true := question has no "evaluate" button
+
     // multipleChoice* is only used internally. Values are exported to variable*
     isSingleChoice = false;
     multipleChoiceTexts: string[] = [];
@@ -40,6 +42,10 @@ export class Question {
         }
         if ('solution' in part.labeledText) {
             this.solutionText = part.labeledText['solution'];
+        }
+        if ('options' in part.labeledText) {
+            this.isPseudoQuestion =
+                part.labeledText['options'].includes('hide-button');
         }
         if (
             'python' in part.labeledText ||
@@ -254,6 +260,7 @@ export class Question {
     }
 
     toJson(json: JSONType): void {
+        json['is-pseudo-question'] = this.isPseudoQuestion;
         json['text'] = this.text;
         json['solution'] = this.solutionText;
         json['variable-ids'] = this.variableIDs;

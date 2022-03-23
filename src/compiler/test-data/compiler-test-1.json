@@ -4,8 +4,31 @@
     "tags": [],
     "parts": [
         {
+            "type": "question",
+            "inputLineNo": 6,
+            "text": "Hier Text\n<ul><li> zum Beispiel eine Aufzählung\n</li><li> <b>fetter Text</b>\n</li><li> <i>kursiver Text</i>\n</li></ul>Weitere Formatwünsche können noch kurzfristig umgesetzt werden (sofern nicht zu kompliziert :-)\n\n",
+            "title": "Frage ohne Button\n",
+            "error": false,
+            "errorLog": "",
+            "src": "Question.\n@title\nFrage ohne Button\n@text\nHier Text\n- zum Beispiel eine Aufzählung\n- **fetter Text**\n- *kursiver Text*\nWeitere Formatwünsche können noch kurzfristig umgesetzt werden (sofern nicht zu kompliziert :-)\n@options\nhide-button\n---\n",
+            "is-pseudo-question": true,
+            "solution": "",
+            "variable-ids": [],
+            "variable-types": [],
+            "variable-values": [
+                [],
+                [],
+                [],
+                [],
+                []
+            ],
+            "variable-texts": [],
+            "input-field-types": [],
+            "input-field-answers": []
+        },
+        {
             "type": "headline-1",
-            "inputLineNo": 5,
+            "inputLineNo": 22,
             "text": "1. Einführung",
             "title": "",
             "error": false,
@@ -14,17 +37,18 @@
         },
         {
             "type": "question",
-            "inputLineNo": 7,
+            "inputLineNo": 24,
             "text": "?sc?\n",
             "title": "Single-Choice Test\n",
             "error": false,
             "errorLog": "",
             "src": "Question.\n@title\nSingle-Choice Test\n@text\n(x) correct  answer\n( ) incorrect answer\n( ) incorrect  answer\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
-                "sc__0",
-                "sc__1",
-                "sc__2"
+                "mc__0",
+                "mc__1",
+                "mc__2"
             ],
             "variable-types": [
                 "bool",
@@ -69,19 +93,20 @@
                 "check-box"
             ],
             "input-field-answers": [
-                "sc__0",
-                "sc__1",
-                "sc__2"
+                "mc__0",
+                "mc__1",
+                "mc__2"
             ]
         },
         {
             "type": "question",
-            "inputLineNo": 8,
+            "inputLineNo": 35,
             "text": "Wähle die richtigen Antworten aus :\n?mc?\n",
             "title": "Invertierbare Restklassen\n",
             "error": false,
             "errorLog": "",
             "src": "Question.\n@title\nInvertierbare Restklassen\n@sage\nn = randint(10,20);\na = randint(1, n-1);\nwhile gcd(a, n) != 1:\n\ta = randint(1, n-1);\n@text\nWähle die richtigen Antworten aus :\n[x] $a$ ist invertierbar modulo $n$.\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
                 "a",
@@ -95,13 +120,18 @@
             ],
             "variable-values": [
                 [
-                    "3",
-                    "20",
+                    "12",
+                    "13",
                     "true"
                 ],
                 [
-                    "1",
-                    "17",
+                    "14",
+                    "19",
+                    "true"
+                ],
+                [
+                    "9",
+                    "20",
                     "true"
                 ],
                 [
@@ -110,13 +140,8 @@
                     "true"
                 ],
                 [
-                    "13",
-                    "15",
-                    "true"
-                ],
-                [
-                    "5",
-                    "16",
+                    "7",
+                    "12",
                     "true"
                 ]
             ],
@@ -134,12 +159,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 23,
+            "inputLineNo": 50,
             "text": "Gegeben seien die Menge \\( A = \\{ @a1@, @a2@, @a3@ \\} \\) und \\( B = \\{ @b1@, @b2@ \\} \\).\nIst die folgende Aussage wahr?\n?mc?\n",
             "title": "Mengen\n",
             "error": false,
             "errorLog": "",
             "src": "Question.\n@title\nMengen\n@python\nimport random\na1 = random.randint(1, 3)\na2 = a1 + random.randint(1, 3)\na3 = a2 + random.randint(1, 3)\nb1 = a1\nb2 = a3\n@text\nGegeben seien die Menge $ A = \\{ a1, a2, a3 \\} $ und $ B = \\{ b1, b2 \\} $.\nIst die folgende Aussage wahr?\n[x] $ B \\subset A $\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
                 "a1",
@@ -159,27 +185,11 @@
             ],
             "variable-values": [
                 [
-                    "1",
-                    "3",
-                    "4",
-                    "1",
-                    "4",
-                    "true"
-                ],
-                [
-                    "3",
-                    "5",
-                    "7",
-                    "3",
-                    "7",
-                    "true"
-                ],
-                [
-                    "1",
                     "2",
-                    "5",
-                    "1",
-                    "5",
+                    "4",
+                    "7",
+                    "2",
+                    "7",
                     "true"
                 ],
                 [
@@ -191,11 +201,27 @@
                     "true"
                 ],
                 [
-                    "1",
-                    "4",
+                    "3",
+                    "6",
                     "7",
-                    "1",
+                    "3",
                     "7",
+                    "true"
+                ],
+                [
+                    "2",
+                    "3",
+                    "6",
+                    "2",
+                    "6",
+                    "true"
+                ],
+                [
+                    "2",
+                    "3",
+                    "6",
+                    "2",
+                    "6",
                     "true"
                 ]
             ],
@@ -216,12 +242,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 41,
+            "inputLineNo": 68,
             "text": "Welche der folgenden Restklassen sind <b>Körper</b>?\n?mc?\n",
             "title": "Körper\n",
             "error": false,
             "errorLog": "",
             "src": "Question.\n@title\nKörper\n@text\nWelche der folgenden Restklassen sind **Körper**?\n[x] $ \\mathbb{Z}_3 $\n[ ] $ \\mathbb{Z}_4 $\n[x] $ \\mathbb{Z}_7 $\n[ ] $ \\mathbb{Z}_10 $\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
                 "mc__0",
@@ -288,12 +315,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 54,
+            "inputLineNo": 81,
             "text": "Which are IPsec protocols?\n?mc?\n",
             "title": "IPsec Protocols\n",
             "error": false,
             "errorLog": "",
             "src": "Question.\n@title\nIPsec Protocols\n@text\nWhich are IPsec protocols?\n[ ] TLS\n[x] IKE\n[x] ESP\n[ ] DNS\n[x] AH\n[ ] SSH\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
                 "mc__0",
@@ -380,7 +408,7 @@
         },
         {
             "type": "authentication",
-            "inputLineNo": 69,
+            "inputLineNo": 96,
             "text": "",
             "title": "",
             "error": false,
@@ -392,7 +420,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 91,
+            "inputLineNo": 108,
             "text": "Über den reellen Zahlen können Gleichungen wie \\(x^2 = −1\\) nicht gelöst werden, da keine Quadratwurzeln aus negativen Zahlen existieren.\n",
             "title": "",
             "error": false,
@@ -401,7 +429,7 @@
         },
         {
             "type": "paragraph",
-            "inputLineNo": 93,
+            "inputLineNo": 110,
             "text": "Deshalb erweitert man den Zahlbereich auf die sogenannten <b>komplexen Zahlen</b>, die wir später als Ausdrücke der Form \\(x+y\\sqrt{-1}=x+y i\\) mit \\(x,y \\in \\mathbb{R}\\) darstellen werden.\n",
             "title": "",
             "error": false,
@@ -410,7 +438,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 109,
+            "inputLineNo": 126,
             "text": "",
             "title": "",
             "error": false,
@@ -419,7 +447,7 @@
         },
         {
             "type": "definition",
-            "inputLineNo": 101,
+            "inputLineNo": 128,
             "text": "Auf dem \\(\\mathbb{R}^2\\) definieren wir\n<ul><li> Die <b>Addition</b> durch \\((x_1,y_1) + (x_2,y_2) = (x_1+x_2, y_1+y_2)\\)\n</li><li> Die <b>Multiplikation</b> \\((x_1,y_1) \\cdot (x_2,y_2) = (x_1 x_2-y_1 y_2, x_1 y_2+x_2 y_1)\\)\n</li></ul>Die Menge \\(\\mathbb{R}^2\\) mit diesen beiden Operationen wird als Menge \\(\\mathbb{C}\\) der komplexen Zahlen oder als <b>Gaußsche Zahlenebene</b> bezeichnet. XXX\n",
             "title": "",
             "error": false,
@@ -428,7 +456,7 @@
         },
         {
             "type": "example",
-            "inputLineNo": 109,
+            "inputLineNo": 136,
             "text": "Sei \\(z_1=2+3i, z_2=-3+2i\\). Dann gilt:\n<ul><li> \\(z_1+z_2\\)\n<br/>  \\(=(2-3)+(3+2i)\\)\n<br/>  \\(=-1+5i\\)\n</li><li> \\(z_1-z_2\\)\n<br/>  \\(=z_1+(-z_2)\\)\n<br/>  \\(=2+3i+(3+(-2)i)\\)\n<br/>  \\(=(2+3)+(3+(-2))i\\)\n<br/>  \\(=5+i\\)\n</li></ul>",
             "title": "",
             "error": false,
@@ -437,7 +465,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 132,
+            "inputLineNo": 149,
             "text": "",
             "title": "",
             "error": false,
@@ -446,12 +474,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 124,
+            "inputLineNo": 151,
             "text": "Berechne \\(a^b=\\) c\n\n",
             "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@maxima\na:3;\nb:4;\nc:a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [],
             "variable-types": [],
@@ -468,7 +497,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 146,
+            "inputLineNo": 163,
             "text": "",
             "title": "",
             "error": false,
@@ -477,12 +506,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 138,
+            "inputLineNo": 165,
             "text": "Berechne \\(@a@^@b@=\\) ?0?\n\n",
             "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@octave\na=3;\nb=4;\nc=a^b;\n\n@text\nBerechne $a^b=$ #c\n---\n",
+            "is-pseudo-question": false,
             "solution": "",
             "variable-ids": [
                 "a",
@@ -515,7 +545,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 160,
+            "inputLineNo": 177,
             "text": "",
             "title": "",
             "error": false,
@@ -524,12 +554,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 152,
+            "inputLineNo": 179,
             "text": "Sei \\(a=@a@\\) und \\(n=@n@\\).\n<ul><li> Berechne \\(gcd(@a@,@n@)=\\) ?0?\n</li></ul>\n\n",
             "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@sage\nn=123456;\na=198;\ng=gcd(a,n);\n\n@text\nSei $\"a\"=a$ und $\"n\"=n$.\n- Berechne $gcd(a,n)=$ #g\n\n@solution\n$gcd(a,n)=g$\n---\n",
+            "is-pseudo-question": false,
             "solution": "\\(gcd(@a@,@n@)=@g@\\)\n",
             "variable-ids": [
                 "a",
@@ -582,7 +613,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 178,
+            "inputLineNo": 195,
             "text": "",
             "title": "",
             "error": false,
@@ -591,12 +622,13 @@
         },
         {
             "type": "question",
-            "inputLineNo": 171,
+            "inputLineNo": 198,
             "text": "Sei \\(z_1 = @z1@\\), \\(z_2 = @z2@\\). Berechne\n<ul><li> \\( z_1 + z_2 = \\) ?0?\n</li><li> \\( z_1 - z_2 = \\) ?1?\n</li></ul>\n\n",
             "title": "",
             "error": false,
             "errorLog": "",
             "src": "Question.\n\n@options\nlive check\nrepeat on error\n\n@python\na = random.randint(1,5)\nb = random.randint(1,5)\nc = random.randint(1,5)\nd = random.randint(1,5)\nz1 = a + b*1j\nz2 = c + d*1j\nsum = z1 + z2\ndiff = z1 - z2\n\n@text\nSei $z_1 = z1$, $z_2 = z2$. Berechne\n- $ z_1 + z_2 = $ #sum\n- $ z_1 - z_2 = $ #diff\n\n@solution\n- $ z_1 + z_2 = (a+c) + (b+d)i $\n- $ z_1 - z_2 = (a-c) + (b-d)i $\n---\n",
+            "is-pseudo-question": false,
             "solution": "<ul><li> \\( z_1 + z_2 = (@a@+@c@) + (@b@+@d@)i \\)\n</li><li> \\( z_1 - z_2 = (@a@-@c@) + (@b@-@d@)i \\)\n</li></ul>",
             "variable-ids": [
                 "a",
@@ -621,53 +653,53 @@
             "variable-values": [
                 [
                     "1",
-                    "4",
-                    "5",
                     "3",
-                    "-4+1i",
-                    "6+7i",
-                    "1+4i",
-                    "5+3i"
+                    "1",
+                    "2",
+                    "1i",
+                    "2+5i",
+                    "1+3i",
+                    "1+2i"
+                ],
+                [
+                    "2",
+                    "5",
+                    "5",
+                    "4",
+                    "-3+1i",
+                    "7+9i",
+                    "2+5i",
+                    "5+4i"
                 ],
                 [
                     "4",
-                    "5",
-                    "1",
-                    "5",
-                    "3+0i",
-                    "5+10i",
-                    "4+5i",
-                    "1+5i"
-                ],
-                [
-                    "5",
-                    "1",
+                    "4",
                     "3",
                     "2",
-                    "2-1i",
-                    "8+3i",
-                    "5+1i",
+                    "1+2i",
+                    "7+6i",
+                    "4+4i",
                     "3+2i"
                 ],
                 [
-                    "3",
+                    "2",
+                    "1",
                     "1",
                     "3",
-                    "5",
-                    "-4i",
-                    "6+6i",
-                    "3+1i",
-                    "3+5i"
+                    "1-2i",
+                    "3+4i",
+                    "2+1i",
+                    "1+3i"
                 ],
                 [
-                    "1",
-                    "3",
                     "4",
                     "3",
-                    "-3+0i",
-                    "5+6i",
-                    "1+3i",
-                    "4+3i"
+                    "4",
+                    "2",
+                    "1i",
+                    "8+5i",
+                    "4+3i",
+                    "4+2i"
                 ]
             ],
             "variable-texts": [
@@ -691,7 +723,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 225,
+            "inputLineNo": 252,
             "text": "error: unknown part type 'Chatquestion.'",
             "title": "",
             "error": false,
@@ -700,7 +732,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 259,
+            "inputLineNo": 276,
             "text": "",
             "title": "",
             "error": false,
@@ -709,7 +741,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 251,
+            "inputLineNo": 278,
             "text": "error: unknown part type 'Speedreview.'",
             "title": "",
             "error": false,
@@ -718,7 +750,7 @@
         },
         {
             "type": "new-page",
-            "inputLineNo": 278,
+            "inputLineNo": 295,
             "text": "",
             "title": "",
             "error": false,
@@ -727,7 +759,7 @@
         },
         {
             "type": "error",
-            "inputLineNo": 270,
+            "inputLineNo": 297,
             "text": "error: unknown part type 'Links.'",
             "title": "",
             "error": false,

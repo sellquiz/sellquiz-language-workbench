@@ -230,6 +230,8 @@ export class QuestionInputField {
 }
 
 export class PartQuestion extends Part {
+    isPseudoQuestion = false; // If true, then question has NO evaluate button
+
     chatMode = false;
     questionText = '';
     solutionText = '';
@@ -444,31 +446,33 @@ export class PartQuestion extends Part {
             divCol.appendChild(textElement);
         }
         // save button
-        const button = document.createElement('button');
-        button.type = 'button';
-        divCol.appendChild(button);
-        button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
-        button.innerHTML = 'Auswerten';
-        const this_ = this;
-        button.addEventListener('click', function () {
-            let allCorrect = true;
-            this_.actualScore = 0;
-            for (const inputField of this_.inputFields) {
-                inputField.evaluate();
-                if (inputField.correct) {
-                    this_.actualScore += 1.0 / this_.inputFields.length;
-                } else {
-                    allCorrect = false;
+        if (this.isPseudoQuestion == false) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            divCol.appendChild(button);
+            button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
+            button.innerHTML = 'Auswerten';
+            const this_ = this;
+            button.addEventListener('click', function () {
+                let allCorrect = true;
+                this_.actualScore = 0;
+                for (const inputField of this_.inputFields) {
+                    inputField.evaluate();
+                    if (inputField.correct) {
+                        this_.actualScore += 1.0 / this_.inputFields.length;
+                    } else {
+                        allCorrect = false;
+                    }
                 }
-            }
-            this_.htmlFeedbackElement.innerHTML = allCorrect
-                ? CHECK_MARK
-                : CHECK_CROSS;
-            if (this_.showScore) {
-                this_.htmlFeedbackElement.innerHTML +=
-                    '&nbsp' + this_.actualScore + ' / ' + this_.maxScore;
-            }
-        });
+                this_.htmlFeedbackElement.innerHTML = allCorrect
+                    ? CHECK_MARK
+                    : CHECK_CROSS;
+                if (this_.showScore) {
+                    this_.htmlFeedbackElement.innerHTML +=
+                        '&nbsp' + this_.actualScore + ' / ' + this_.maxScore;
+                }
+            });
+        }
         // feedback element
         this.htmlFeedbackElement = document.createElement('span');
         this.htmlFeedbackElement.classList.add('mx-3');
@@ -484,6 +488,9 @@ export class PartQuestion extends Part {
         this.error = data['error'];
         this.errorLog = data['errorLog'];
         this.title = data['title'];
+        if ('is-pseudo-question' in data) {
+            this.isPseudoQuestion = data['is-pseudo-question'];
+        }
         if ('solution' in data) {
             this.solutionText = data['solution'];
         }
