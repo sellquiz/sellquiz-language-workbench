@@ -23,7 +23,9 @@ export const PYTHON_PROG = `
 import math
 import numpy
 import random
-_import_names = ['math', 'numpy', 'random']
+import types
+from inspect import isfunction
+_import_names = ['math', 'numpy', 'random', 'np', 'types', 'isfunction']
 
 __s = ''
 _vars = [];
@@ -41,11 +43,23 @@ $CODE$
             continue
         if v in _import_names:
             continue
+        if isinstance(v, types.ModuleType):
+            continue
+        if isfunction(eval(v)):
+            continue
+
         value = eval(v)
+
+        # preprocessing
+        if isinstance(value, list):
+            value = numpy.asmatrix(value)
+
+        # generation
         if isinstance(value, numpy.matrix):
-            value = numpy.array2string(A, separator=',').replace('\\n','')
+            rows, cols = value.shape
+            value = numpy.array2string(value, separator=',').replace('\\n','')
             _ids.append(v)
-            _types.append('matrix')
+            _types.append('matrix' + ':' + str(rows) + ':' + str(cols))
             _values.append(value)
         elif isinstance(value, int):
             _ids.append(v)
@@ -63,6 +77,11 @@ $CODE$
             if c.startswith('('):
                 c = c[1:-1]
             _values.append(c)
+        elif isinstance(value, set):
+            _ids.append(v)
+            _types.append('set:' + str(len(value)))
+            value = str(value)
+            _values.append(value)
         else:
             _ids.append(v)
             _types.append('unknown')

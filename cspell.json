@@ -6,6 +6,7 @@
     "words": [
         "Andreas",
         "asciimath",
+        "asmatrix",
         "Auswerten",
         "batin",
         "Bemerkung",
@@ -33,6 +34,7 @@
         "Hochschule",
         "inputenc",
         "ipython",
+        "isfunction",
         "isinstance",
         "javablock",
         "katex",
@@ -53,6 +55,7 @@
         "outfile",
         "pagestyle",
         "pdflatex",
+        "pmatrix",
         "prts",
         "randi",
         "randint",

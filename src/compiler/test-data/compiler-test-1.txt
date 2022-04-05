@@ -6,6 +6,40 @@
 ---
 Question.
 @title
+Vectors, Matrices and Sets
+@python
+a = numpy.matrix('1 2; 3 4')
+x = [1, 2, 3, 4, 5]
+s = set([1,2,3])
+
+def xx(y):
+	return y
+
+@text
+- $a=$ #a
+- $x=$ #x
+- $s=$ #s
+---
+
+@stop
+
+---
+Question.
+@title
+Vectors and Matrices x
+@python
+import numpy as np
+#w = 3.14
+#x = [1, 2, 3]
+a = np.matrix('1 2; 3 4')
+@text
+test matrix $a$ xxx
+---
+
+
+---
+Question.
+@title
 Frage ohne Button
 @text
 Hier Text

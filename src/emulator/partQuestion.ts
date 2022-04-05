@@ -20,6 +20,8 @@ export enum QuestionVariableType {
     Float = 'float',
     Complex = 'complex',
     Matrix = 'matrix',
+    Set = 'set',
+    Unknown = 'unknown',
 }
 
 export class QuestionVariable {
@@ -27,6 +29,9 @@ export class QuestionVariable {
     type: QuestionVariableType;
     text = '';
     values: string[] = []; // index k represents variant k
+    rows = 1; // only used if type == QuestionVariableType.Matrix
+    cols = 1; // only used if type == QuestionVariableType.Matrix
+    entries = 1; // only used if type == QuestionVariableType.Set
     toLaTeX(idx: number): string {
         const value = this.values[idx];
         let s = '';
@@ -37,12 +42,29 @@ export class QuestionVariable {
             case QuestionVariableType.Complex:
                 s = value;
                 break;
+            case QuestionVariableType.Matrix:
+                // convert e.g. "[[1,2], [3,4]]"
+                //   to "\begin{pmatrix}A11 & 2 & 3\\ a & b & c\end{pmatrix}"
+                // 1.) "], [" -> "\\ "
+                s = value.replace(/\], \[/g, '\\\\ ');
+                // 2.)  "," -> " & "
+                s = s.replace(/,/g, ' & ');
+                // 3.)  "[" -> ""
+                s = s.replace(/\[/g, '');
+                // 4.)  "]" -> ""
+                s = s.replace(/\]/g, '');
+                s = '\\begin{pmatrix}' + s + '\\end{pmatrix}';
+                break;
+            case QuestionVariableType.Set:
+                s = value.replace('{', '\\{').replace('}', '\\}');
+                break;
             default:
-                console.assert(
+                /*console.assert(
                     false,
                     'unimplemented QuestionVariable.toLaTex(..) for type ' +
                         this.type,
-                );
+                );*/
+                s = '{UNSUPPORTED:' + this.type + '}';
         }
         return s;
     }
@@ -57,6 +79,13 @@ export class QuestionVariable {
                 return parseFloat(value);
             case QuestionVariableType.Complex:
                 return mathjs.complex(value);
+            case QuestionVariableType.Matrix:
+                return mathjs.evaluate(value);
+            case QuestionVariableType.Set:
+                // internally stored as vector, since mathjs cannot handle sets
+                return mathjs.evaluate(
+                    value.replace(/{/g, '[').replace(/}/g, ']'),
+                );
             default:
                 console.assert(
                     false,
@@ -72,6 +101,9 @@ export enum QuestionInputFieldType {
     TextField = 'text-field',
     ComplexNormalform = 'complex-normalform',
     CheckBox = 'check-box',
+    Matrix = 'matrix',
+    Set = 'set',
+    Unknown = 'unknown',
 }
 
 export class QuestionInputField {
@@ -82,6 +114,9 @@ export class QuestionInputField {
     htmlInputElements: HTMLInputElement[] = []; // input elements
     htmlFeedbackElement: HTMLElement = null;
     correct = false;
+    rows = 1; // only used, if type == QuestionInputFieldType.Matrix
+    cols = 1; // only used, if type == QuestionInputFieldType.Matrix
+    entries = 1; // only used, if type == QuestionInputFieldType.Set
     constructor(question: PartQuestion) {
         this.question = question;
     }
@@ -100,9 +135,15 @@ export class QuestionInputField {
         //console.log('user solution: ' + inputStrings);
 
         let ok = false;
+        let matrix: mathjs.MathType;
+        let vector: number[] = [];
+        let hint = '';
+
         switch (this.answerVariable.type) {
             case QuestionVariableType.Bool:
-                ok = sampleSolution == parseInt(inputStrings[0]);
+                ok =
+                    sampleSolution ==
+                    parseInt(inputStrings[0].replace(',', '.'));
                 break;
             case QuestionVariableType.Int:
             case QuestionVariableType.Float:
@@ -111,7 +152,11 @@ export class QuestionInputField {
                         <number>(
                             mathjs.subtract(
                                 <number>sampleSolution,
-                                <mathjs.MathType>parseFloat(inputStrings[0]),
+                                <mathjs.MathType>(
+                                    parseFloat(
+                                        inputStrings[0].replace(',', '.'),
+                                    )
+                                ),
                             )
                         ),
                     ) < 1e-6; // TODO: configure precision
@@ -123,12 +168,101 @@ export class QuestionInputField {
                             mathjs.subtract(
                                 <mathjs.Complex>sampleSolution,
                                 mathjs.complex(
-                                    parseFloat(inputStrings[0]),
-                                    parseFloat(inputStrings[1]),
+                                    parseFloat(
+                                        inputStrings[0].replace(',', '.'),
+                                    ),
+                                    parseFloat(
+                                        inputStrings[1].replace(',', '.'),
+                                    ),
                                 ),
                             )
                         ),
                     ) < 1e-6; // TODO: configure precision
+                break;
+            case QuestionVariableType.Matrix:
+                // construct user matrix
+                matrix = mathjs.zeros(this.rows, this.cols);
+                for (let i = 0; i < this.rows; i++) {
+                    for (let j = 0; j < this.cols; j++) {
+                        const k = i * this.cols + j;
+                        let value = parseFloat(
+                            inputStrings[k].replace(',', '.'),
+                        );
+                        if (isNaN(value)) value = 1e12; // pseudo answer
+                        (<mathjs.Matrix>matrix).subset(
+                            mathjs.index(i, j),
+                            value,
+                        );
+                    }
+                }
+                // compare
+                ok = true;
+                for (let i = 0; i < this.rows; i++) {
+                    for (let j = 0; j < this.cols; j++) {
+                        const user = (<mathjs.Matrix>matrix).subset(
+                            mathjs.index(i, j),
+                        );
+                        const sample = (<mathjs.Matrix>sampleSolution).subset(
+                            mathjs.index(i, j),
+                        );
+                        //alert(user);
+                        //alert(sample);
+                        if (Math.abs(<any>user - <any>sample) > 1e-5) {
+                            // TODO: precision
+                            ok = false;
+                            if (this.rows == 1)
+                                hint =
+                                    ' <span style="color:red;">Tipp: Eintrag ' +
+                                    (j + 1) +
+                                    ' anschauen</span> ';
+                            else
+                                hint =
+                                    ' <span style="color:red;">Tipp: Eintrag (' +
+                                    (i + 1) +
+                                    ', ' +
+                                    (j + 1) +
+                                    ') anschauen</span> ';
+                            break;
+                        }
+                    }
+                    if (!ok) break;
+                }
+                break;
+            case QuestionVariableType.Set:
+                ok = true;
+                // construct user vector
+                vector = [];
+                for (let i = 0; i < this.entries; i++) {
+                    let value = parseFloat(inputStrings[i].replace(',', '.'));
+                    if (isNaN(value)) value = 1e12; // pseudo answer
+                    vector.push(value);
+                }
+                // compare
+                for (let i = 0; i < this.entries; i++) {
+                    const sample = (<mathjs.Matrix>sampleSolution).subset(
+                        mathjs.index(i),
+                    );
+                    let found = false;
+                    for (let j = 0; j < this.entries; j++) {
+                        const user = vector[j];
+                        if (Math.abs(<any>user - <any>sample) < 1e-5) {
+                            // TODO: precision
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        ok = false;
+                        break;
+                    }
+                    if (!ok) break;
+                }
+                /*TODO: hint if (!ok) {
+                    hint +=
+                        ' <span style="color:red;">Tipp: Eingabe an Stelle ' +
+                        (i + 1) +
+                        ' ist falsch</span> ';
+                }*/
                 break;
             default:
                 console.assert(
@@ -140,12 +274,15 @@ export class QuestionInputField {
         this.correct = ok;
         if (this.answerVariable.id.startsWith('mc__') == false) {
             this.htmlFeedbackElement.innerHTML =
-                '&nbsp;' + (ok ? CHECK_MARK : CHECK_CROSS);
+                '&nbsp;' + (ok ? CHECK_MARK : CHECK_CROSS) + ' ' + hint;
         }
     }
     createHtmlElement(): void {
         this.htmlElement = document.createElement('span');
-        let tmpElement: HTMLElement;
+        let tmpElement: HTMLElement,
+            table: HTMLTableElement,
+            tableRow: HTMLTableRowElement,
+            tableCell: HTMLTableCellElement;
         let inputElement: HTMLInputElement;
         switch (this.type) {
             case QuestionInputFieldType.CheckBox:
@@ -158,8 +295,6 @@ export class QuestionInputField {
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
-                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
-                //this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             case QuestionInputFieldType.TextField:
@@ -167,14 +302,12 @@ export class QuestionInputField {
                 this.htmlInputElements.push(inputElement);
                 this.htmlElement.appendChild(inputElement);
                 inputElement.type = 'text';
-                inputElement.classList.add('mx-1');
+                inputElement.classList.add('mx-1', 'my-1');
                 inputElement.placeholder = '';
                 inputElement.size = 5;
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
-                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
-                //this.htmlFeedbackElement.style.color = '#ff0000';
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             case QuestionInputFieldType.ComplexNormalform:
@@ -183,12 +316,9 @@ export class QuestionInputField {
                 this.htmlInputElements.push(inputElement);
                 this.htmlElement.appendChild(inputElement);
                 inputElement.type = 'text';
-                inputElement.classList.add('mx-1');
+                inputElement.classList.add('mx-1', 'my-1');
                 inputElement.placeholder = '';
                 inputElement.size = 5;
-                /*inputElement.addEventListener('keyup', () => {
-                    this.evaluate();
-                });*/
                 // "+"
                 tmpElement = document.createElement('span');
                 tmpElement.innerHTML = this.question.coursePage
@@ -200,12 +330,9 @@ export class QuestionInputField {
                 this.htmlInputElements.push(inputElement);
                 this.htmlElement.appendChild(inputElement);
                 inputElement.type = 'text';
-                inputElement.classList.add('mx-1');
+                inputElement.classList.add('mx-1', 'my-1');
                 inputElement.placeholder = '';
                 inputElement.size = 5;
-                /*inputElement.addEventListener('keyup', () => {
-                    this.evaluate();
-                });*/
                 // "i"
                 tmpElement = document.createElement('span');
                 tmpElement.innerHTML = this.question.coursePage
@@ -215,8 +342,86 @@ export class QuestionInputField {
                 // feedback
                 this.htmlFeedbackElement = document.createElement('span');
                 this.htmlFeedbackElement.innerHTML = ''; // TODO
-                //'&nbsp;&nbsp;<i class="fas fa-question"></i>';
-                //this.htmlFeedbackElement.style.color = '#ff0000';
+                this.htmlElement.appendChild(this.htmlFeedbackElement);
+                break;
+            case QuestionInputFieldType.Matrix:
+                table = document.createElement('table');
+                //table.style.display = 'inline-table';
+                table.style.borderSpacing = '0';
+                table.style.borderCollapse = 'collapse';
+                table.style.borderLeft = '2px solid black';
+                table.style.borderRight = '2px solid black';
+                this.htmlElement.appendChild(table);
+                for (let i = 0; i < this.rows; i++) {
+                    tableRow = document.createElement('tr');
+                    table.appendChild(tableRow);
+                    // insert a column for left parenthesis of matrix
+                    tableCell = document.createElement('td');
+                    tableCell.innerHTML = ' ';
+                    if (i == 0) tableCell.style.borderTop = '2px solid black';
+                    if (i == this.rows - 1)
+                        tableCell.style.borderBottom = '2px solid black';
+                    tableRow.appendChild(tableCell);
+                    // content
+                    for (let j = 0; j < this.cols; j++) {
+                        tableCell = document.createElement('td');
+                        tableRow.appendChild(tableCell);
+                        inputElement = document.createElement('input');
+                        this.htmlInputElements.push(inputElement);
+                        tableCell.appendChild(inputElement);
+                        inputElement.type = 'text';
+                        inputElement.classList.add('mx-0', 'my-0');
+                        inputElement.placeholder = '';
+                        inputElement.size = 2;
+                    }
+                    // insert a column for right parenthesis of matrix
+                    tableCell = document.createElement('td');
+                    tableCell.innerHTML = ' ';
+                    if (i == 0) tableCell.style.borderTop = '2px solid black';
+                    if (i == this.rows - 1)
+                        tableCell.style.borderBottom = '2px solid black';
+                    tableRow.appendChild(tableCell);
+                }
+                // feedback
+                this.htmlFeedbackElement = document.createElement('span');
+                this.htmlFeedbackElement.innerHTML = ''; // TODO
+                this.htmlElement.appendChild(this.htmlFeedbackElement);
+                break;
+            case QuestionInputFieldType.Set:
+                // "{"
+                tmpElement = document.createElement('span');
+                tmpElement.innerHTML = this.question.coursePage
+                    .getMathJaxInst()
+                    .convertHTML('{');
+                this.htmlElement.appendChild(tmpElement);
+                // elements
+                for (let i = 0; i < this.entries; i++) {
+                    if (i > 0) {
+                        // ","
+                        tmpElement = document.createElement('span');
+                        tmpElement.innerHTML = this.question.coursePage
+                            .getMathJaxInst()
+                            .convertHTML(',');
+                        this.htmlElement.appendChild(tmpElement);
+                    }
+                    // input bot
+                    inputElement = document.createElement('input');
+                    this.htmlInputElements.push(inputElement);
+                    this.htmlElement.appendChild(inputElement);
+                    inputElement.type = 'text';
+                    inputElement.classList.add('mx-1', 'my-1');
+                    inputElement.placeholder = '';
+                    inputElement.size = 3;
+                }
+                // "}"
+                tmpElement = document.createElement('span');
+                tmpElement.innerHTML = this.question.coursePage
+                    .getMathJaxInst()
+                    .convertHTML('}');
+                this.htmlElement.appendChild(tmpElement);
+                // feedback
+                this.htmlFeedbackElement = document.createElement('span');
+                this.htmlFeedbackElement.innerHTML = ''; // TODO
                 this.htmlElement.appendChild(this.htmlFeedbackElement);
                 break;
             default:
@@ -387,6 +592,9 @@ export class PartQuestion extends Part {
             textElement.innerHTML = '<pre>' + this.errorLog + '</pre>';
         } else textElement.innerHTML = questionText;
         divCol.appendChild(textElement);
+
+        if (this.error) return;
+
         //this.addReadEventListener(divContainer);
         this.generateInputElements();
         // variable values
@@ -505,7 +713,7 @@ export class PartQuestion extends Part {
             this.variables.push(variable);
             variable.id = vId;
             const typeStr = data['variable-types'][i];
-            switch (typeStr) {
+            switch (typeStr.split(':')[0]) {
                 case 'bool':
                     variable.type = QuestionVariableType.Bool;
                     break;
@@ -517,6 +725,23 @@ export class PartQuestion extends Part {
                     break;
                 case 'complex':
                     variable.type = QuestionVariableType.Complex;
+                    break;
+                case 'matrix':
+                    variable.type = QuestionVariableType.Matrix;
+                    variable.rows = parseInt(typeStr.split(':')[1]);
+                    variable.cols = parseInt(typeStr.split(':')[2]);
+                    break;
+                case 'set':
+                    variable.type = QuestionVariableType.Set;
+                    variable.entries = parseInt(typeStr.split(':')[1]);
+                    break;
+                case 'unknown':
+                    variable.type = QuestionVariableType.Unknown;
+                    this.error = true;
+                    this.errorLog +=
+                        'variable type of ' +
+                        vId +
+                        ' is not yet supported<br/>';
                     break;
                 default:
                     console.assert(
@@ -541,7 +766,7 @@ export class PartQuestion extends Part {
             const inputField = new QuestionInputField(this);
             this.inputFields.push(inputField);
             const inputFieldTypeStr = data['input-field-types'][i];
-            switch (inputFieldTypeStr) {
+            switch (inputFieldTypeStr.split(':')[0]) {
                 case 'text-field':
                     inputField.type = QuestionInputFieldType.TextField;
                     break;
@@ -550,6 +775,23 @@ export class PartQuestion extends Part {
                     break;
                 case 'check-box':
                     inputField.type = QuestionInputFieldType.CheckBox;
+                    break;
+                case 'matrix':
+                    inputField.type = QuestionInputFieldType.Matrix;
+                    inputField.rows = parseInt(inputFieldTypeStr.split(':')[1]);
+                    inputField.cols = parseInt(inputFieldTypeStr.split(':')[2]);
+                    break;
+                case 'set':
+                    inputField.type = QuestionInputFieldType.Set;
+                    inputField.entries = parseInt(
+                        inputFieldTypeStr.split(':')[1],
+                    );
+                    break;
+                case 'unknown':
+                    inputField.type = QuestionInputFieldType.Unknown;
+                    this.error = true;
+                    this.errorLog +=
+                        'input file type of TODO is not yet supported<br/>';
                     break;
                 default:
                     console.assert(

@@ -125,6 +125,7 @@ export class Question {
             const lines = text.split('\n');
             let placedMultipleChoiceBlock = false;
             for (let line of lines) {
+                if (line.trim().startsWith('%')) continue;
                 const tmp = line.trim().replace(/ /g, '').replace(/\t/g, '');
                 if (
                     tmp.startsWith('[]') ||
@@ -240,7 +241,10 @@ export class Question {
                 let type = this.variableTypes[this.variableIDs.indexOf(token)];
                 if (type === 'int') type = 'text-field';
                 else if (type === 'float') type = 'text-field';
-                else if (type === 'complex') type = 'complex-normalform'; // TODO: needs to be configurable
+                else if (type === 'complex') type = 'complex-normalform';
+                // TODO: needs to be configurable
+                else if (type === 'matrix') type = 'matrix';
+                else if (type === 'set') type = 'set';
                 this.inputFieldTypes.push(type);
             } else if (token === '$') {
                 inMath = !inMath;

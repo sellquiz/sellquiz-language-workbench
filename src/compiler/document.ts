@@ -36,6 +36,7 @@ export class Document {
             if (line.trim().startsWith('%'))
                 // TODO: comments within line
                 continue;
+            if (line.trim().startsWith('@stop')) break;
             if (line.trim().length == 0) {
                 this.forceNewParagraph = true;
             } else if (line.startsWith('##### ')) {
@@ -206,7 +207,7 @@ export class Document {
 
     private compileQuestion(part: Part): void {
         part.question = new Question();
-        part.question.compileQuestion(part, 5); // TODO: config number of instances
+        part.question.compileQuestion(part, 10); // TODO: config number of instances
         part.question.text = this.compileParagraph(part.question.text);
         part.question.solutionText = this.compileParagraph(
             part.question.solutionText,
