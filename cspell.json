@@ -73,6 +73,7 @@
         "subsubsec",
         "Subsubsection",
         "susubsection",
+        "sympy",
         "tikz",
         "tikzpicture",
         "typedoc",
