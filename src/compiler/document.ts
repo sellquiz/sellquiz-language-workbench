@@ -283,6 +283,17 @@ export class Document {
                     eqn += ch2;
                 }
                 res += '\\(' + eqn + '\\)';
+            } else if (ch === '`') {
+                let code = '';
+                for (let j = i + 1; j < n; j++) {
+                    const ch2 = text[j];
+                    if (ch2 == '`') {
+                        i = j;
+                        break;
+                    }
+                    code += ch2;
+                }
+                res += '<code class="text-primary">' + code + '</code>';
             } else if (ch === '*') {
                 if (text.substring(i).startsWith('**')) {
                     i++;
