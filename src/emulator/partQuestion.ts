@@ -659,7 +659,8 @@ export class PartQuestion extends Part {
             button.type = 'button';
             divCol.appendChild(button);
             button.classList.add('btn', 'btn-primary', 'btn-sm', 'my-1');
-            button.innerHTML = 'Auswerten';
+            button.innerHTML =
+                this.coursePage.getLanguage() === 'DE' ? 'Auswerten' : 'Check';
             const this_ = this;
             button.addEventListener('click', function () {
                 let allCorrect = true;

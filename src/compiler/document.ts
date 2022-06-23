@@ -17,6 +17,7 @@ import { Authentication } from './authentication';
 
 export class Document {
     private type = 'course-page';
+    private language = 'DE';
     private isAsciiMath = true;
     private title = '';
     private tags: string[] = [];
@@ -47,7 +48,7 @@ export class Document {
                 part.type = PartType.newPage;
             } else if (line.startsWith('!')) {
                 if (line.startsWith('!tex')) this.isAsciiMath = false;
-                // TODO
+                else if (line.startsWith('!lang=EN')) this.language = 'EN';
             } else if (line.startsWith('# ')) {
                 const part = new Part(lineIdx + 1);
                 this.parts.push(part);
@@ -321,6 +322,7 @@ export class Document {
         const j: JSONType = {};
         j.type = this.type;
         j.title = this.title;
+        j.language = this.language;
         j.tags = this.tags;
         j.parts = [];
         for (const part of this.parts) {

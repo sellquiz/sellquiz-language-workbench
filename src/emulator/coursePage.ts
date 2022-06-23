@@ -30,6 +30,7 @@ export interface CoursePageOptions {
 
 export class CoursePage {
     private title = '';
+    private language = 'DE';
     private parts: Part[] = [];
     private textProgress = 0;
 
@@ -66,6 +67,10 @@ export class CoursePage {
 
     getShowSourceLinks(): boolean {
         return this.showSourceLinks;
+    }
+
+    getLanguage(): string {
+        return this.language;
     }
 
     incrementNumPages(): void {
@@ -144,6 +149,7 @@ export class CoursePage {
 
     import(json: any): void {
         this.title = json['title'];
+        this.language = json['language'];
         for (const part of json['parts']) {
             let partInstance = null;
             switch (part['type']) {
